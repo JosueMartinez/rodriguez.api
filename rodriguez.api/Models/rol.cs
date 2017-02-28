@@ -12,7 +12,7 @@ namespace rodriguez.api.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public rol()
         {
-            usuario = new HashSet<usuario>();
+            usuarios = new HashSet<usuario>();
         }
 
         public int id { get; set; }
@@ -22,6 +22,6 @@ namespace rodriguez.api.Models
         public string descripcion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<usuario> usuario { get; set; }
+        public virtual ICollection<usuario> usuarios { get; set; }
     }
 }

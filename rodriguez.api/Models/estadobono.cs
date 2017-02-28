@@ -6,14 +6,14 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("smrodriguez.estado_bono")]
-    public partial class estado_bono
+    [Table("smrodriguez.estadobono")]
+    public partial class estadobono
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public estado_bono()
+        public estadobono()
         {
-            bono = new HashSet<bono>();
-            historial_bono = new HashSet<historial_bono>();
+            bonoes = new HashSet<bono>();
+            historialbonoes = new HashSet<historialbono>();
         }
 
         public int id { get; set; }
@@ -23,9 +23,9 @@ namespace rodriguez.api.Models
         public string descripcion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bono> bono { get; set; }
+        public virtual ICollection<bono> bonoes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<historial_bono> historial_bono { get; set; }
+        public virtual ICollection<historialbono> historialbonoes { get; set; }
     }
 }

@@ -15,7 +15,12 @@ namespace rodriguez.api.Models
         [StringLength(30)]
         public string nombre { get; set; }
 
-        [StringLength(20)]
-        public string medida { get; set; }
+        public int medidaId { get; set; }
+
+        public int categoriaId { get; set; }
+
+        public virtual categoria categoria { get; set; }
+
+        public virtual medida medida { get; set; }
     }
 }

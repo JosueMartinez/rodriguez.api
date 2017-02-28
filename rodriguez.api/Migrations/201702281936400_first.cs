@@ -3,14 +3,16 @@ namespace rodriguez.api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class first : DbMigration
     {
         public override void Up()
         {
+            
         }
         
         public override void Down()
         {
+            
         }
     }
 }

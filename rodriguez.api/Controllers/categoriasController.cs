@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using rodriguez.api.Models;
-using rodriguez.api.Clases;
 
 namespace rodriguez.api.Controllers
 {
@@ -18,19 +17,17 @@ namespace rodriguez.api.Controllers
     {
         private RodriguezModel db = new RodriguezModel();
 
-        //Obtener todas las categorias
         // GET: api/categorias
-        public IQueryable<categoria> Getcategoria()
+        public IQueryable<categoria> Getcategorias()
         {
-            return db.categoria;
+            return db.categorias;
         }
 
-        //Obtener una categoria en especifico
-        // GET: api/categorias/{id}
+        // GET: api/categorias/5
         [ResponseType(typeof(categoria))]
         public async Task<IHttpActionResult> Getcategoria(int id)
         {
-            categoria categoria = await db.categoria.FindAsync(id);
+            categoria categoria = await db.categorias.FindAsync(id);
             if (categoria == null)
             {
                 return NotFound();
@@ -39,7 +36,6 @@ namespace rodriguez.api.Controllers
             return Ok(categoria);
         }
 
-        //Actualizar categoria
         // PUT: api/categorias/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putcategoria(int id, categoria categoria)
@@ -75,51 +71,32 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        //Insertar categoria
         // POST: api/categorias
         [ResponseType(typeof(categoria))]
         public async Task<IHttpActionResult> Postcategoria(categoria categoria)
         {
-            if (categoria == null)  //el request no contiene categoria
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            //si la descripcion de la categoria esta en blanco
-            if(String.IsNullOrEmpty(categoria.descripcion) || String.IsNullOrWhiteSpace(categoria.descripcion))
-            {
-                return BadRequest("La categoría debe tener una descripción.");
-            }
+            db.categorias.Add(categoria);
+            await db.SaveChangesAsync();
 
-            try
-            {
-                categoria.descripcion = Utilidades.capitalize(categoria.descripcion);
-                //verificar si no existe una categoria con el mismo nombre
-                if(db.categoria.Where(x => x.descripcion.Equals(categoria.descripcion)).Count() == 0)
-                {
-                    db.categoria.Add(categoria);
-                    await db.SaveChangesAsync();
-                    return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
-                }
-                return BadRequest("Esta categoría ya existe");
-            }
-            catch(Exception e)
-            {
-                return InternalServerError(e);
-            }
+            return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
         }
 
         // DELETE: api/categorias/5
         [ResponseType(typeof(categoria))]
         public async Task<IHttpActionResult> Deletecategoria(int id)
         {
-            categoria categoria = await db.categoria.FindAsync(id);
+            categoria categoria = await db.categorias.FindAsync(id);
             if (categoria == null)
             {
                 return NotFound();
             }
 
-            db.categoria.Remove(categoria);
+            db.categorias.Remove(categoria);
             await db.SaveChangesAsync();
 
             return Ok(categoria);
@@ -136,7 +113,7 @@ namespace rodriguez.api.Controllers
 
         private bool categoriaExists(int id)
         {
-            return db.categoria.Count(e => e.id == id) > 0;
+            return db.categorias.Count(e => e.id == id) > 0;
         }
     }
 }

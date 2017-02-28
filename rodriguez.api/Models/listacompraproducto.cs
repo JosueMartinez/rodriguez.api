@@ -6,17 +6,17 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("lista_compra_producto")]
-    public partial class lista_compra_producto
+    [Table("smrodriguez.listacompraproducto")]
+    public partial class listacompraproducto
     {
         public int id { get; set; }
 
-        public int lista { get; set; }
+        public int listaCompraId { get; set; }
 
-        public int producto { get; set; }
+        public int productoId { get; set; }
 
         public int cantidad { get; set; }
 
-        public virtual lista_compra lista_compra { get; set; }
+        public virtual listacompra listacompra { get; set; }
     }
 }

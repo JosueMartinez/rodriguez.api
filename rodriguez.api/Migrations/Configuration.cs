@@ -28,6 +28,54 @@ namespace rodriguez.api.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            #region rol
+            context.rols.AddOrUpdate(
+                   r => r.descripcion,
+                   new Models.rol { descripcion = "Developer" },
+                   new Models.rol { descripcion = "Admin" },
+                   new Models.rol { descripcion = "Power User" },
+                   new Models.rol { descripcion = "Empleado" }
+                );
+            #endregion
+            #region medidas
+            context.medidas.AddOrUpdate(
+                    m => m.descripcion,
+                    new Models.medida { descripcion = "Libra", simbolo = "lb" },
+                    new Models.medida { descripcion = "Litro", simbolo = "lt" },
+                    new Models.medida { descripcion = "Galón", simbolo = "gl" },
+                    new Models.medida { descripcion = "Yarda", simbolo = "yd" },
+                    new Models.medida { descripcion = "Onza", simbolo = "oz" }
+                );
+            #endregion
+
+            #region categorias
+            context.categorias.AddOrUpdate(
+                    c => c.descripcion,
+                    new Models.categoria { descripcion = "Ferreteria" },
+                    new Models.categoria { descripcion = "Carniceria" },
+                    new Models.categoria { descripcion = "Embutidos" },
+                    new Models.categoria { descripcion = "Frutas" },
+                    new Models.categoria { descripcion = "Verduras" },
+                    new Models.categoria { descripcion = "Vegetales" },
+                    new Models.categoria { descripcion = "Panaderia" },
+                    new Models.categoria { descripcion = "Dulces" },
+                    new Models.categoria { descripcion = "Huevos" },
+                    new Models.categoria { descripcion = "Lacteos" },
+                    new Models.categoria { descripcion = "Pastas" },
+                    new Models.categoria { descripcion = "Aceites" },
+                    new Models.categoria { descripcion = "Conservas" },
+                    new Models.categoria { descripcion = "Comida Preparada" },
+                    new Models.categoria { descripcion = "Zumos" },
+                    new Models.categoria { descripcion = "Bebidas" },
+                    new Models.categoria { descripcion = "Aperitivos" },
+                    new Models.categoria { descripcion = "Infantil" },
+                    new Models.categoria { descripcion = "Cosmeticos" },
+                    new Models.categoria { descripcion = "Cuidado Personal" },
+                    new Models.categoria { descripcion = "Hogar" },
+                    new Models.categoria { descripcion = "Limpieza" }
+                );
+            #endregion
         }
     }
 }

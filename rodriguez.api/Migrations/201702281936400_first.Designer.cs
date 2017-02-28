@@ -7,13 +7,13 @@ namespace rodriguez.api.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class LCActiva : IMigrationMetadata
+    public sealed partial class first : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(LCActiva));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(first));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702011855020_LCActiva"; }
+            get { return "201702281936400_first"; }
         }
         
         string IMigrationMetadata.Source

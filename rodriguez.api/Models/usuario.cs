@@ -11,22 +11,26 @@ namespace rodriguez.api.Models
     {
         public int id { get; set; }
 
+        [Required]
         [StringLength(40)]
         public string nombres { get; set; }
 
+        [Required]
         [StringLength(80)]
         public string apellidos { get; set; }
 
+        [Required]
         [StringLength(20)]
-        public string nombre_usuario { get; set; }
+        public string nombreUsuario { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string contrasena { get; set; }
 
-        public bool? activo { get; set; }
+        public bool activo { get; set; }
 
-        public int? rol { get; set; }
+        public int rolId { get; set; }
 
-        public virtual rol rol1 { get; set; }
+        public virtual rol rol { get; set; }
     }
 }

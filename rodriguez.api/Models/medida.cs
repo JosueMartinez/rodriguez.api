@@ -9,6 +9,12 @@ namespace rodriguez.api.Models
     [Table("smrodriguez.medida")]
     public partial class medida
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public medida()
+        {
+            productoes = new HashSet<producto>();
+        }
+
         public int id { get; set; }
 
         [Required]
@@ -18,5 +24,8 @@ namespace rodriguez.api.Models
         [Required]
         [StringLength(4)]
         public string simbolo { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<producto> productoes { get; set; }
     }
 }

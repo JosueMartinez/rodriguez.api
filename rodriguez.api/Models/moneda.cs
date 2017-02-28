@@ -12,7 +12,7 @@ namespace rodriguez.api.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public moneda()
         {
-            bono = new HashSet<bono>();
+            bonoes = new HashSet<bono>();
         }
 
         public int id { get; set; }
@@ -26,6 +26,6 @@ namespace rodriguez.api.Models
         public string simbolo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bono> bono { get; set; }
+        public virtual ICollection<bono> bonoes { get; set; }
     }
 }

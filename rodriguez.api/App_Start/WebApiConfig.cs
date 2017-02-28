@@ -9,6 +9,13 @@ namespace rodriguez.api
     {
         public static void Register(HttpConfiguration config)
         {
+
+            //JSON formatter
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.UseDataContractJsonSerializer = false;
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
             // Web API configuration and services
             config.EnableCors();
             // Web API routes

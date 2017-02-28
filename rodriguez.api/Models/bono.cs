@@ -12,40 +12,40 @@ namespace rodriguez.api.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public bono()
         {
-            historial_bono = new HashSet<historial_bono>();
+            historialbonoes = new HashSet<historialbono>();
         }
 
         public int id { get; set; }
 
         public double monto { get; set; }
 
-        public int moneda { get; set; }
+        public int monedaId { get; set; }
 
-        public int remitente { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string nombre_destino { get; set; }
+        public int clienteId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string apellido_destino { get; set; }
+        public string nombreDestino { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string apellidoDestino { get; set; }
 
         [Required]
         [StringLength(11)]
-        public string cedula_destino { get; set; }
+        public string cedulaDestino { get; set; }
 
-        public int estado { get; set; }
+        public int estadoBonoId { get; set; }
 
         public DateTime fechaCompra { get; set; }
 
         public virtual cliente cliente { get; set; }
 
-        public virtual moneda moneda1 { get; set; }
+        public virtual moneda moneda { get; set; }
 
-        public virtual estado_bono estado_bono { get; set; }
+        public virtual estadobono estadobono { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<historial_bono> historial_bono { get; set; }
+        public virtual ICollection<historialbono> historialbonoes { get; set; }
     }
 }

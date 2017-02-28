@@ -12,8 +12,8 @@ namespace rodriguez.api.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public cliente()
         {
-            bono = new HashSet<bono>();
-            lista_compra = new HashSet<lista_compra>();
+            bonoes = new HashSet<bono>();
+            listacompras = new HashSet<listacompra>();
         }
 
         public int id { get; set; }
@@ -37,9 +37,9 @@ namespace rodriguez.api.Models
         public string email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bono> bono { get; set; }
+        public virtual ICollection<bono> bonoes { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<lista_compra> lista_compra { get; set; }
+        public virtual ICollection<listacompra> listacompras { get; set; }
     }
 }

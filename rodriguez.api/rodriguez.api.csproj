@@ -214,27 +214,22 @@
     <Compile Include="Clases\Utilidades.cs" />
     <Compile Include="Controllers\categoriasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702011743108_InitialCreate.cs" />
-    <Compile Include="Migrations\201702011743108_InitialCreate.Designer.cs">
-      <DependentUpon>201702011743108_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702011855020_LCActiva.cs" />
-    <Compile Include="Migrations\201702011855020_LCActiva.Designer.cs">
-      <DependentUpon>201702011855020_LCActiva.cs</DependentUpon>
+    <Compile Include="Migrations\201702281936400_first.cs" />
+    <Compile Include="Migrations\201702281936400_first.Designer.cs">
+      <DependentUpon>201702281936400_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
     <Compile Include="Models\cliente.cs" />
-    <Compile Include="Models\estado_bono.cs" />
-    <Compile Include="Models\historial_bono.cs" />
-    <Compile Include="Models\lista_compra.cs" />
-    <Compile Include="Models\lista_compra_producto.cs" />
+    <Compile Include="Models\estadobono.cs" />
+    <Compile Include="Models\historialbono.cs" />
+    <Compile Include="Models\listacompra.cs" />
+    <Compile Include="Models\listacompraproducto.cs" />
     <Compile Include="Models\medida.cs" />
     <Compile Include="Models\moneda.cs" />
     <Compile Include="Models\producto.cs" />
@@ -321,11 +316,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702011743108_InitialCreate.resx">
-      <DependentUpon>201702011743108_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702011855020_LCActiva.resx">
-      <DependentUpon>201702011855020_LCActiva.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702281936400_first.resx">
+      <DependentUpon>201702281936400_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

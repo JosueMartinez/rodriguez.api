@@ -6,13 +6,13 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("smrodriguez.lista_compra")]
-    public partial class lista_compra
+    [Table("smrodriguez.listacompra")]
+    public partial class listacompra
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public lista_compra()
+        public listacompra()
         {
-            lista_compra_producto = new HashSet<lista_compra_producto>();
+            listacompraproductoes = new HashSet<listacompraproducto>();
         }
 
         public int id { get; set; }
@@ -20,17 +20,15 @@ namespace rodriguez.api.Models
         [StringLength(50)]
         public string nombre { get; set; }
 
-        public int creador { get; set; }
+        public int clienteId { get; set; }
 
-        public DateTime fecha_creacion { get; set; }
+        public DateTime fechaCreacion { get; set; }
 
-        public DateTime? fecha_ultima_modificacion { get; set; }
-
-        public bool activa { get; set; }
+        public DateTime? fechaUltimaModificacion { get; set; }
 
         public virtual cliente cliente { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<lista_compra_producto> lista_compra_producto { get; set; }
+        public virtual ICollection<listacompraproducto> listacompraproductoes { get; set; }
     }
 }
