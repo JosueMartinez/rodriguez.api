@@ -21,7 +21,8 @@ namespace rodriguez.api.Controllers
         // GET: api/productos
         public IQueryable<producto> Getproductos()
         {
-            return db.productos;
+
+            return db.productos.Include(p => p.categoria).Include(p => p.medida);
         }
 
         // GET: api/productos/5
