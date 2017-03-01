@@ -116,7 +116,7 @@ namespace rodriguez.api.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<medida>()
-                .HasMany(e => e.productoes)
+                .HasMany(e => e.productos)
                 .WithRequired(e => e.medida)
                 .WillCascadeOnDelete(false);
 

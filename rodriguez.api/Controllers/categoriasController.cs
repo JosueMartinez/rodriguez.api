@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using rodriguez.api.Models;
+using rodriguez.api.Clases;
 
 namespace rodriguez.api.Controllers
 {
@@ -20,7 +21,7 @@ namespace rodriguez.api.Controllers
         // GET: api/categorias
         public IQueryable<categoria> Getcategorias()
         {
-            return db.categorias;
+            return db.categorias.OrderBy(c => c.descripcion);
         }
 
         // GET: api/categorias/5
@@ -75,15 +76,33 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(categoria))]
         public async Task<IHttpActionResult> Postcategoria(categoria categoria)
         {
-            if (!ModelState.IsValid)
+            if (categoria == null)  //el request no contiene categoria
             {
                 return BadRequest(ModelState);
             }
 
-            db.categorias.Add(categoria);
-            await db.SaveChangesAsync();
+            //si la descripcion de la categoria esta en blanco
+            if (String.IsNullOrEmpty(categoria.descripcion) || String.IsNullOrWhiteSpace(categoria.descripcion))
+            {
+                return BadRequest("La categoría debe tener una descripción.");
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
+            try
+            {
+                categoria.descripcion = Utilidades.capitalize(categoria.descripcion);
+                //verificar si no existe una categoria con el mismo nombre
+                if (categoriaExists(categoria.descripcion))
+                {
+                    db.categorias.Add(categoria);
+                    await db.SaveChangesAsync();
+                    return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
+                }
+                return BadRequest("Esta categoría ya existe");
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         // DELETE: api/categorias/5
@@ -111,9 +130,14 @@ namespace rodriguez.api.Controllers
             base.Dispose(disposing);
         }
 
-        private bool categoriaExists(int id)
+        public bool categoriaExists(int id)
         {
             return db.categorias.Count(e => e.id == id) > 0;
+        }
+
+        private bool categoriaExists(String descripcion)
+        {
+            return db.categorias.Where(x => x.descripcion.Equals(descripcion)).Count() == 0;
         }
     }
 }
