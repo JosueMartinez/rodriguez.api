@@ -13,6 +13,13 @@ namespace rodriguez.api.Models
             this.Configuration.ProxyCreationEnabled = false;
         }
 
+        static RodriguezModel()
+        {
+            DbConfiguration.SetConfiguration(new MySql.Data.Entity.MySqlEFConfiguration());
+        }
+
+
+
         public virtual DbSet<bono> bonos { get; set; }
         public virtual DbSet<categoria> categorias { get; set; }
         public virtual DbSet<cliente> clientes { get; set; }

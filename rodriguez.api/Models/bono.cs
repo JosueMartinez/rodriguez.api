@@ -35,9 +35,9 @@ namespace rodriguez.api.Models
         [StringLength(11)]
         public string cedulaDestino { get; set; }
 
-        [Required]
-        [StringLength(10)]
-        public string telefonoDestino { get; set; }
+        //[Required]
+        //[StringLength(10)]
+        //public string telefonoDestino { get; set; }
 
         public int estadoBonoId { get; set; }
 

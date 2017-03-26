@@ -224,10 +224,6 @@
     <Compile Include="Migrations\201702281936400_first.Designer.cs">
       <DependentUpon>201702281936400_first.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703260220334_telefono-bono.cs" />
-    <Compile Include="Migrations\201703260220334_telefono-bono.Designer.cs">
-      <DependentUpon>201703260220334_telefono-bono.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -324,9 +320,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702281936400_first.resx">
       <DependentUpon>201702281936400_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703260220334_telefono-bono.resx">
-      <DependentUpon>201703260220334_telefono-bono.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
