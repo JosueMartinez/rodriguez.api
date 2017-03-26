@@ -76,6 +76,25 @@ namespace rodriguez.api.Migrations
                     new Models.categoria { descripcion = "Limpieza" }
                 );
             #endregion
+
+            #region monedas
+            context.monedas.AddOrUpdate(
+                   m => m.descripcion,
+                   new Models.moneda { descripcion = "Peso Dominicano", simbolo = "RD" },
+                   new Models.moneda { descripcion = "Dolar Estadounidense", simbolo = "USD" },
+                   new Models.moneda { descripcion = "Euro", simbolo = "EUR" }
+
+                );
+            #endregion
+
+            #region estados
+            context.estadobonos.AddOrUpdate(
+                    m => m.descripcion,
+                    new Models.estadobono { descripcion = "Comprado" },
+                    new Models.estadobono { descripcion = "Combrado" },
+                    new Models.estadobono { descripcion = "Cancelado" }
+                );
+            #endregion
         }
     }
 }
