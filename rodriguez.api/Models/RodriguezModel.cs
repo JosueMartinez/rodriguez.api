@@ -13,13 +13,12 @@ namespace rodriguez.api.Models
             this.Configuration.ProxyCreationEnabled = false;
         }
 
-        static RodriguezModel()
-        {
-            DbConfiguration.SetConfiguration(new MySql.Data.Entity.MySqlEFConfiguration());
-        }
-
-
-
+        //static RodriguezModel()
+        //{
+        //    DbConfiguration.SetConfiguration(new MySql.Data.Entity.MySqlEFConfiguration());
+        //}
+        
+        
         public virtual DbSet<bono> bonos { get; set; }
         public virtual DbSet<categoria> categorias { get; set; }
         public virtual DbSet<cliente> clientes { get; set; }
@@ -35,6 +34,7 @@ namespace rodriguez.api.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<bono>()
                 .Property(e => e.nombreDestino)
                 .IsUnicode(false);
@@ -168,6 +168,9 @@ namespace rodriguez.api.Models
             modelBuilder.Entity<usuario>()
                 .Property(e => e.contrasena)
                 .IsUnicode(false);
+
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

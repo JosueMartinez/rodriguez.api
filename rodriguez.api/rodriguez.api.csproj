@@ -215,6 +215,7 @@
     <Compile Include="Controllers\categoriasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\medidasController.cs" />
+    <Compile Include="Controllers\monedasController.cs" />
     <Compile Include="Controllers\productosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
