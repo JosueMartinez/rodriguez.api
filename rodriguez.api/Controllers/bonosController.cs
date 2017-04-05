@@ -84,15 +84,27 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(bono))]
         public async Task<IHttpActionResult> Postbono(bono bono)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                //ESTADO BONO SIEMPRE COMPRADO
+                bono.estadoBonoId =  db.estadobonos.Where(x => x.descripcion.Equals("comprado")).FirstOrDefault().id;
+                //FECHA COMPRA NOW
+                bono.fechaCompra = DateTime.Now;
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
+                db.bonos.Add(bono);
+                await db.SaveChangesAsync();
+                return Ok(bono);
+                //return CreatedAtRoute("DefaultApi", new { id = bono.id }, bono);
+            }catch(Exception e)
+            {
+                throw new HttpResponseException(HttpStatusCode.ExpectationFailed);
             }
-
-            db.bonos.Add(bono);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = bono.id }, bono);
+            
         }
 
         // DELETE: api/bonos/5
