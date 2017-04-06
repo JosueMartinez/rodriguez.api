@@ -13,8 +13,10 @@ namespace rodriguez.api.Models
         public moneda()
         {
             bonoes = new HashSet<bono>();
+            tasas = new HashSet<tasamoneda>();
         }
 
+        [Key]
         public int id { get; set; }
 
         [Required]
@@ -27,5 +29,8 @@ namespace rodriguez.api.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bono> bonoes { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tasamoneda> tasas { get; set; }
     }
 }

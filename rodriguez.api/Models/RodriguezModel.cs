@@ -31,6 +31,7 @@ namespace rodriguez.api.Models
         public virtual DbSet<producto> productos { get; set; }
         public virtual DbSet<rol> rols { get; set; }
         public virtual DbSet<usuario> usuarios { get; set; }
+        public virtual DbSet<tasamoneda> tasasmonedas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -137,6 +138,11 @@ namespace rodriguez.api.Models
 
             modelBuilder.Entity<moneda>()
                 .HasMany(e => e.bonoes)
+                .WithRequired(e => e.moneda)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<moneda>()
+                .HasMany(e => e.tasas)
                 .WithRequired(e => e.moneda)
                 .WillCascadeOnDelete(false);
 
