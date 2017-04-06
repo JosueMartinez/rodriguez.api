@@ -88,16 +88,18 @@ namespace rodriguez.api.Controllers
             //Fin desactivacion
 
             //agregar fecha y activar
-            tasa.fecha = DateTime.Now;
-            tasa.activo = true;
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+                tasa.fecha = DateTime.Now;
+                tasa.activo = true;
+                var monedas = db.monedas.Where(x => x.id == tasa.monedaId);
+
+                if(tasa.valor <= 0 && monedas.Count() == 0)
+                {
+                    return BadRequest();
+                }
+
+                tasa.moneda = monedas.First();
                 db.tasasmonedas.Add(tasa);
                 await db.SaveChangesAsync();
 
