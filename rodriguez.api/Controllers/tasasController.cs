@@ -39,7 +39,8 @@ namespace rodriguez.api.Controllers
                 
                 
                 var tasasFecha = db.tasasmonedas.Where(x => x.moneda.id == monedaId).OrderByDescending(x => x.fecha);
-                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.FirstAsync() : null;
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.moneda).FirstAsync() : null;
+                
                 if (tasa == null)
                 {
                     return NotFound();
@@ -64,7 +65,7 @@ namespace rodriguez.api.Controllers
                 }
 
                 var tasasFecha = db.tasasmonedas.Where(x => x.moneda.simbolo.Equals(simbolo)).OrderByDescending(x => x.fecha);
-                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.FirstAsync(): null;
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.moneda).FirstAsync(): null;
                 if (tasa == null)
                 {
                     return NotFound();

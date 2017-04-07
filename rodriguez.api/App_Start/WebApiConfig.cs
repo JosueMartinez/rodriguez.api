@@ -12,9 +12,11 @@ namespace rodriguez.api
         {
 
             //JSON formatter
-            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             //json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
 
             // Web API configuration and services
             //CROSS ORIGIN
