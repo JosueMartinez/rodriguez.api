@@ -217,7 +217,7 @@
     <Compile Include="Controllers\medidasController.cs" />
     <Compile Include="Controllers\monedasController.cs" />
     <Compile Include="Controllers\productosController.cs" />
-    <Compile Include="Controllers\tasaController.cs" />
+    <Compile Include="Controllers\tasasController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +233,14 @@
     <Compile Include="Migrations\201704061802050_Tasa.cs" />
     <Compile Include="Migrations\201704061802050_Tasa.Designer.cs">
       <DependentUpon>201704061802050_Tasa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704062126230_revokingUnique.cs" />
+    <Compile Include="Migrations\201704062126230_revokingUnique.Designer.cs">
+      <DependentUpon>201704062126230_revokingUnique.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704062135231_pending.cs" />
+    <Compile Include="Migrations\201704062135231_pending.Designer.cs">
+      <DependentUpon>201704062135231_pending.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
@@ -337,6 +345,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704061802050_Tasa.resx">
       <DependentUpon>201704061802050_Tasa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704062126230_revokingUnique.resx">
+      <DependentUpon>201704062126230_revokingUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704062135231_pending.resx">
+      <DependentUpon>201704062135231_pending.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,7 +15,6 @@ namespace rodriguez.api.Models
         public int id { get; set; }
 
         [Required]
-        [Index("UQ_tasa",1,IsUnique = true)]
         public int monedaId { get; set; }
 
         [Required]
@@ -24,7 +23,7 @@ namespace rodriguez.api.Models
         [Required]
         public DateTime fecha { get; set; }
 
-        [Index("UQ_tasa", 2, IsUnique = true)]
+        
         public bool activo { get; set; }
 
         [JsonIgnore]

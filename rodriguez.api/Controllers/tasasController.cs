@@ -13,7 +13,7 @@ using rodriguez.api.Models;
 
 namespace rodriguez.api.Controllers
 {
-    public class tasaController : ApiController
+    public class tasasController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
 
@@ -25,15 +25,69 @@ namespace rodriguez.api.Controllers
 
         // GET: api/tasa/5
         [ResponseType(typeof(tasamoneda))]
-        public async Task<IHttpActionResult> Gettasamoneda(int id)
+        [Route("api/monedas/{monedaId:int}/tasa")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Gettasamoneda(int monedaId)
         {
-            tasamoneda tasamoneda = await db.tasasmonedas.FindAsync(id);
-            if (tasamoneda == null)
+            using(RodriguezModel db = new RodriguezModel())
             {
-                return NotFound();
-            }
+                var moneda = await db.monedas.FindAsync(monedaId);
+                if (moneda == null)
+                {
+                    return NotFound();
+                }
+                
+                if (db.tasasmonedas.Count(x => x.moneda.id == moneda.id && x.activo == true) > 0)
+                {
+                    tasamoneda tasamoneda = await db.tasasmonedas.FirstAsync(x => x.moneda.id == moneda.id && x.activo == true);
+                    if (tasamoneda == null)
+                    {
+                        return NotFound();
+                    }
 
-            return Ok(tasamoneda);
+                    return Ok(tasamoneda);
+                }
+                else
+                {
+                    var tasasFecha = db.tasasmonedas.Where(x => x.moneda.id == monedaId).OrderByDescending(x => x.fecha);
+                    var tasa = tasasFecha.FirstAsync();
+                    if (tasa == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(tasa);
+                }
+            }
+        }
+
+        [ResponseType(typeof(tasamoneda))]
+        [Route("api/monedas/{simbolo}/tasa")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Gettasamoneda(string simbolo)
+        {
+            try
+            {
+                if (db.tasasmonedas.Count(x => x.moneda.simbolo.Equals(simbolo)) > 0)
+                {
+                    tasamoneda tasa = await db.tasasmonedas.Where(x => x.moneda.simbolo.Equals(simbolo)).FirstAsync();
+                    if (tasa == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(tasa);
+
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch(Exception e)
+            {
+                return InternalServerError();
+            }
+            
         }
 
         // PUT: api/tasa/5
