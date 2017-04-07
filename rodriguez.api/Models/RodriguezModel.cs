@@ -136,10 +136,10 @@ namespace rodriguez.api.Models
                 .Property(e => e.simbolo)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<moneda>()
-                .HasMany(e => e.bonoes)
-                .WithRequired(e => e.moneda)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<moneda>()
+            //    .HasMany(e => e.bonoes)
+            //    .WithRequired(e => e.moneda)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<moneda>()
                 .HasMany(e => e.tasas)

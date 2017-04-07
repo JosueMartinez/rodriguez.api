@@ -42,7 +42,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IQueryable<bono> GetBonoCliente(int clienteId)
         {
-            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.moneda);
+            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa);
         }
 
         // PUT: api/bonos/5

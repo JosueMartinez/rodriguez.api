@@ -250,6 +250,18 @@
     <Compile Include="Migrations\201704070042148_unknown1.Designer.cs">
       <DependentUpon>201704070042148_unknown1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704070134367_pending1.cs" />
+    <Compile Include="Migrations\201704070134367_pending1.Designer.cs">
+      <DependentUpon>201704070134367_pending1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704070151377_moneda-bono.cs" />
+    <Compile Include="Migrations\201704070151377_moneda-bono.Designer.cs">
+      <DependentUpon>201704070151377_moneda-bono.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704070202523_no.cs" />
+    <Compile Include="Migrations\201704070202523_no.Designer.cs">
+      <DependentUpon>201704070202523_no.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -365,6 +377,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704070042148_unknown1.resx">
       <DependentUpon>201704070042148_unknown1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704070134367_pending1.resx">
+      <DependentUpon>201704070134367_pending1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704070151377_moneda-bono.resx">
+      <DependentUpon>201704070151377_moneda-bono.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704070202523_no.resx">
+      <DependentUpon>201704070202523_no.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

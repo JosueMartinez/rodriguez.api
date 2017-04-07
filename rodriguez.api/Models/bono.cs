@@ -19,9 +19,11 @@ namespace rodriguez.api.Models
 
         public double monto { get; set; }
 
-        public int monedaId { get; set; }
+        //public int monedaId { get; set; }
 
         public int clienteId { get; set; }
+
+        public int tasaId { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -45,9 +47,11 @@ namespace rodriguez.api.Models
 
         public virtual cliente cliente { get; set; }
 
-        public virtual moneda moneda { get; set; }
+        //public virtual moneda moneda { get; set; }
 
         public virtual estadobono estadobono { get; set; }
+
+        public virtual tasamoneda tasa { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<historialbono> historialbonoes { get; set; }
