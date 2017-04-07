@@ -37,27 +37,16 @@ namespace rodriguez.api.Controllers
                     return NotFound();
                 }
                 
-                if (db.tasasmonedas.Count(x => x.moneda.id == moneda.id && x.activo == true) > 0)
+                
+                var tasasFecha = db.tasasmonedas.Where(x => x.moneda.id == monedaId).OrderByDescending(x => x.fecha);
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.FirstAsync() : null;
+                if (tasa == null)
                 {
-                    tasamoneda tasamoneda = await db.tasasmonedas.FirstAsync(x => x.moneda.id == moneda.id && x.activo == true);
-                    if (tasamoneda == null)
-                    {
-                        return NotFound();
-                    }
-
-                    return Ok(tasamoneda);
+                    return NotFound();
                 }
-                else
-                {
-                    var tasasFecha = db.tasasmonedas.Where(x => x.moneda.id == monedaId).OrderByDescending(x => x.fecha);
-                    var tasa = tasasFecha.FirstAsync();
-                    if (tasa == null)
-                    {
-                        return NotFound();
-                    }
 
-                    return Ok(tasa);
-                }
+                return Ok(tasa);
+                
             }
         }
 
@@ -68,24 +57,23 @@ namespace rodriguez.api.Controllers
         {
             try
             {
-                if (db.tasasmonedas.Count(x => x.moneda.simbolo.Equals(simbolo)) > 0)
-                {
-                    tasamoneda tasa = await db.tasasmonedas.Where(x => x.moneda.simbolo.Equals(simbolo)).FirstAsync();
-                    if (tasa == null)
-                    {
-                        return NotFound();
-                    }
-                    return Ok(tasa);
-
-                }
-                else
+                if (db.monedas.Count(x => x.simbolo.Equals(simbolo)) == 0)
                 {
                     return NotFound();
                 }
+
+                var tasasFecha = db.tasasmonedas.Where(x => x.moneda.simbolo.Equals(simbolo)).OrderByDescending(x => x.fecha);
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.FirstAsync(): null;
+                if (tasa == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(tasa);
             }
             catch(Exception e)
             {
-                return InternalServerError();
+                return InternalServerError(e);
             }
             
         }
@@ -129,23 +117,10 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(tasamoneda))]
         public async Task<IHttpActionResult> Posttasamoneda(tasamoneda tasa)
         {
-            //desactivar demas tasas de esta moneda
-            try
-            {
-                var tasas = db.tasasmonedas.Where(x => x.monedaId == tasa.monedaId).ToList();
-                tasas.ForEach(x => x.activo = false);
-                db.SaveChanges();
-            }catch(Exception e)
-            {
-                return InternalServerError();
-            }
-            //Fin desactivacion
-
             //agregar fecha y activar
             try
             {
                 tasa.fecha = DateTime.Now;
-                tasa.activo = true;
                 var monedas = db.monedas.Where(x => x.id == tasa.monedaId);
 
                 if(tasa.valor <= 0 && monedas.Count() == 0)
