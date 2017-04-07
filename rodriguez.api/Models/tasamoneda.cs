@@ -23,7 +23,6 @@ namespace rodriguez.api.Models
         [Required]
         public DateTime fecha { get; set; }
 
-        
         public virtual moneda moneda { get; set; }
     }
 }
