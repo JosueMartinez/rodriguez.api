@@ -111,7 +111,7 @@ namespace rodriguez.api.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<listacompra>()
-                .HasMany(e => e.listacompraproductoes)
+                .HasMany(e => e.productosLista)
                 .WithRequired(e => e.listacompra)
                 .WillCascadeOnDelete(false);
 

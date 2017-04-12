@@ -12,7 +12,7 @@ namespace rodriguez.api.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public listacompra()
         {
-            listacompraproductoes = new HashSet<listacompraproducto>();
+            productosLista = new HashSet<listacompraproducto>();
         }
 
         public int id { get; set; }
@@ -29,6 +29,6 @@ namespace rodriguez.api.Models
         public virtual cliente cliente { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<listacompraproducto> listacompraproductoes { get; set; }
+        public virtual ICollection<listacompraproducto> productosLista { get; set; }
     }
 }

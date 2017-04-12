@@ -18,14 +18,14 @@ namespace rodriguez.api.Controllers
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/productos
+        // GET: api/productosLista
         public IQueryable<producto> Getproductos()
         {
 
             return db.productos.Include(p => p.categoria).Include(p => p.medida);
         }
 
-        // GET: api/productos/5
+        // GET: api/productosLista/5
         [ResponseType(typeof(producto))]
         public async Task<IHttpActionResult> Getproducto(int id)
         {
@@ -38,7 +38,7 @@ namespace rodriguez.api.Controllers
             return Ok(producto);
         }
 
-        // PUT: api/productos/5
+        // PUT: api/productosLista/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putproducto(int id, producto producto)
         {
@@ -73,7 +73,7 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/productos
+        // POST: api/productosLista
         [ResponseType(typeof(producto))]
         public async Task<IHttpActionResult> Postproducto(producto producto)
         {
@@ -125,7 +125,7 @@ namespace rodriguez.api.Controllers
             
         }
 
-        // DELETE: api/productos/5
+        // DELETE: api/productosLista/5
         [ResponseType(typeof(producto))]
         public async Task<IHttpActionResult> Deleteproducto(int id)
         {
