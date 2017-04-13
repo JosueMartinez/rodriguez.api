@@ -28,13 +28,33 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(listacompra))]
         public async Task<IHttpActionResult> Getlistacompra(int id)
         {
-            listacompra listacompra = await db.listacompras.FindAsync(id);
+            var listas = db.listacompras.Where(x => x.id == id);
+            if(listas.Count() > 0)
+            {
+                return NotFound();
+            }
+
+            listacompra listacompra = await listas.FirstAsync();
             if (listacompra == null)
             {
                 return NotFound();
             }
 
             return Ok(listacompra);
+        }
+
+        [HttpGet]
+        [Route("api/cliente/{idCliente}/listas")]
+        public async Task<IHttpActionResult> listasCliente(int idCliente)
+        {
+            cliente cliente = await db.clientes.FindAsync(idCliente);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            var listas =  db.listacompras.Where(x => x.clienteId == idCliente);
+            return Ok(listas);
         }
 
         // PUT: api/listacompra/5
