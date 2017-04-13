@@ -264,6 +264,10 @@
     <Compile Include="Migrations\201704122012327_empty.Designer.cs">
       <DependentUpon>201704122012327_empty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704131331019_productoLista.cs" />
+    <Compile Include="Migrations\201704131331019_productoLista.Designer.cs">
+      <DependentUpon>201704131331019_productoLista.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -388,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704122012327_empty.resx">
       <DependentUpon>201704122012327_empty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704131331019_productoLista.resx">
+      <DependentUpon>201704131331019_productoLista.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

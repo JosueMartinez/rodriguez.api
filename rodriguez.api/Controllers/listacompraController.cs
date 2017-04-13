@@ -28,8 +28,10 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(listacompra))]
         public async Task<IHttpActionResult> Getlistacompra(int id)
         {
-            var listas = db.listacompras.Where(x => x.id == id);
-            if(listas.Count() > 0)
+            //var listas = db.listacompras.Where(x => x.id == id).Include(y => y.productosLista);
+            var listas = db.listacompras.Where(x => x.id == id).Include("productosLista.producto");
+
+            if (listas.Count() > 0)
             {
                 return NotFound();
             }
@@ -53,7 +55,7 @@ namespace rodriguez.api.Controllers
                 return NotFound();
             }
 
-            var listas =  db.listacompras.Where(x => x.clienteId == idCliente);
+            var listas =  db.listacompras.Where(x => x.clienteId == idCliente).Include("productosLista.producto");
             return Ok(listas);
         }
 

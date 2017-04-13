@@ -18,5 +18,7 @@ namespace rodriguez.api.Models
         public int cantidad { get; set; }
 
         public virtual listacompra listacompra { get; set; }
+
+        public virtual producto producto { get; set; }
     }
 }
