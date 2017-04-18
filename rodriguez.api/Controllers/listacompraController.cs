@@ -21,7 +21,7 @@ namespace rodriguez.api.Controllers
         // GET: api/listacompra
         public IQueryable<listacompra> Getlistacompras()
         {
-            return db.listacompras.Include(x => x.productosLista);
+            return db.listacompras.Include("productosLista.producto.categoria");
         }
 
         // GET: api/listacompra/5
@@ -29,7 +29,7 @@ namespace rodriguez.api.Controllers
         public async Task<IHttpActionResult> Getlistacompra(int id)
         {
             //var listas = db.listacompras.Where(x => x.id == id).Include(y => y.productosLista);
-            var listas = db.listacompras.Where(x => x.id == id).Include("productosLista.producto");
+            var listas = db.listacompras.Where(x => x.id == id).Include("productosLista.producto.categoria");
 
             if (listas.Count() > 0)
             {
@@ -55,7 +55,7 @@ namespace rodriguez.api.Controllers
                 return NotFound();
             }
 
-            var listas =  db.listacompras.Where(x => x.clienteId == idCliente).Include("productosLista.producto");
+            var listas = db.listacompras.Where(x => x.clienteId == idCliente).Include("productosLista.producto.categoria");//.Include("producto.categoria");
             return Ok(listas);
         }
 
