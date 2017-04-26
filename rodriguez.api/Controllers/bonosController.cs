@@ -20,7 +20,7 @@ namespace rodriguez.api.Controllers
         // GET: api/bonos
         public IQueryable<bono> Getbonos()
         {
-            return db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include(p => p.estadobono);
+            return db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono);
         }
 
         // GET: api/bonos/5
@@ -42,7 +42,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IQueryable<bono> GetBonoCliente(int clienteId)
         {
-            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa).Include(p => p.estadobono);
+            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono);
         }
 
         // PUT: api/bonos/5
