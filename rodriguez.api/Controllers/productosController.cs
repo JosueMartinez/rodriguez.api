@@ -18,18 +18,17 @@ namespace rodriguez.api.Controllers
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/productosLista
+        // GET: api/productos
         public IQueryable<producto> Getproductos()
-        {
-
-            return db.productos.Include(p => p.categoria).Include(p => p.medida);
+        {   
+            return db.productos.Include("categoria").Include("medida");
         }
 
-        // GET: api/productosLista/5
+        // GET: api/productos/5
         [ResponseType(typeof(producto))]
         public async Task<IHttpActionResult> Getproducto(int id)
         {
-            producto producto = await db.productos.FindAsync(id);
+            producto producto = await db.productos.Where(x => x.id == id).Include("categoria").Include("medida").FirstOrDefaultAsync();//.FindAsync(id);
             if (producto == null)
             {
                 return NotFound();
@@ -38,7 +37,7 @@ namespace rodriguez.api.Controllers
             return Ok(producto);
         }
 
-        // PUT: api/productosLista/5
+        // PUT: api/productos/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> Putproducto(int id, producto producto)
         {

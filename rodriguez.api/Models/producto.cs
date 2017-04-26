@@ -5,6 +5,7 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Runtime.Serialization;
 
     [Table("smrodriguez.producto")]
     public partial class producto
@@ -18,9 +19,9 @@ namespace rodriguez.api.Models
         public int medidaId { get; set; }
 
         public int categoriaId { get; set; }
-
+        
         public virtual categoria categoria { get; set; }
-
+        
         public virtual medida medida { get; set; }
     }
 }
