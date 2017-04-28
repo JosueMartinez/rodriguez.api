@@ -27,7 +27,7 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(bono))]
         public async Task<IHttpActionResult> Getbono(int id)
         {
-            bono bono = await db.bonos.FindAsync(id);
+            bono bono = await db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono).SingleOrDefaultAsync(i => i.id == id);
             if (bono == null)
             {
                 return NotFound();
