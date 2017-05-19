@@ -7,12 +7,12 @@ namespace rodriguez.api.Migrations
     {
         public override void Up()
         {
-            DropColumn("tasamoneda", "activo");
+            //DropColumn("tasamoneda", "activo");
         }
         
         public override void Down()
         {
-            AddColumn("tasamoneda", "activo", c => c.Boolean(nullable: false));
+            //AddColumn("tasamoneda", "activo", c => c.Boolean(nullable: false));
         }
     }
 }

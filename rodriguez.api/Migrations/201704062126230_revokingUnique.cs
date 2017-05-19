@@ -7,14 +7,14 @@ namespace rodriguez.api.Migrations
     {
         public override void Up()
         {
-            DropIndex("tasamoneda", "UQ_tasa");
-            CreateIndex("tasamoneda", "monedaId");
+            //DropIndex("tasamoneda", "UQ_tasa");
+            //CreateIndex("tasamoneda", "monedaId");
         }
         
         public override void Down()
         {
-            DropIndex("tasamoneda", new[] { "monedaId" });
-            CreateIndex("tasamoneda", new[] { "monedaId", "activo" }, unique: true, name: "UQ_tasa");
+            //DropIndex("tasamoneda", new[] { "monedaId" });
+            //CreateIndex("tasamoneda", new[] { "monedaId", "activo" }, unique: true, name: "UQ_tasa");
         }
     }
 }

@@ -11,6 +11,7 @@ namespace rodriguez.api.Models
     [Table("smrodriguez.tasamoneda")]
     public partial class tasamoneda
     {
+
         [Key]
         public int id { get; set; }
 
@@ -22,6 +23,9 @@ namespace rodriguez.api.Models
 
         [Required]
         public DateTime fecha { get; set; }
+
+        [Required]
+        public bool activo { get; set; }
 
         public virtual moneda moneda { get; set; }
     }

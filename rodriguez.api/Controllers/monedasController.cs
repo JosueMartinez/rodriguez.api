@@ -20,7 +20,7 @@ namespace rodriguez.api.Controllers
         // GET: api/monedas
         public IQueryable<moneda> Getmonedas()
         {
-            return db.monedas;
+            return db.monedas.Include("tasas");
         }
 
         // GET: api/monedas/5
