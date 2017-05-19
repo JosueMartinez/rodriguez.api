@@ -131,7 +131,7 @@ namespace rodriguez.api.Controllers
                 }
 
                 tasa.moneda = monedas.First();
-                disableTasas(tasa.moneda.id);
+                disableTasas(tasa.moneda.id);    //desactivando todas demas tasas
                 db.tasasmonedas.Add(tasa);
                 await db.SaveChangesAsync();
 
