@@ -47,8 +47,6 @@ namespace rodriguez.api.Models
 
         public virtual cliente cliente { get; set; }
 
-        //public virtual moneda moneda { get; set; }
-
         public virtual estadobono estadobono { get; set; }
 
         public virtual tasamoneda tasa { get; set; }

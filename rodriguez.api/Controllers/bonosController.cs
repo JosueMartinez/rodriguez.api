@@ -20,14 +20,14 @@ namespace rodriguez.api.Controllers
         // GET: api/bonos
         public IQueryable<bono> Getbonos()
         {
-            return db.bonos;
+            return db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono).OrderByDescending(x => x.fechaCompra);
         }
 
         // GET: api/bonos/5
         [ResponseType(typeof(bono))]
         public async Task<IHttpActionResult> Getbono(int id)
         {
-            bono bono = await db.bonos.FindAsync(id);
+            bono bono = await db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono).SingleOrDefaultAsync(i => i.id == id);
             if (bono == null)
             {
                 return NotFound();
@@ -42,7 +42,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IQueryable<bono> GetBonoCliente(int clienteId)
         {
-            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa).Include(p => p.estadobono);
+            return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono);
         }
 
         // PUT: api/bonos/5
