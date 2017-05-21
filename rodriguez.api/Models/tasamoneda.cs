@@ -25,7 +25,7 @@ namespace rodriguez.api.Models
         public DateTime fecha { get; set; }
 
         [Required]
-        public bool activo { get; set; }
+        public bool activa { get; set; }
 
         public virtual moneda moneda { get; set; }
     }

@@ -122,7 +122,7 @@ namespace rodriguez.api.Controllers
             try
             {
                 tasa.fecha = DateTime.Now;
-                tasa.activo = true;
+                tasa.activa = true;
                 var monedas = db.monedas.Where(x => x.id == tasa.monedaId);
 
                 if(tasa.valor <= 0 && monedas.Count() == 0)
@@ -177,7 +177,7 @@ namespace rodriguez.api.Controllers
         {
             var tasas = db.tasasmonedas.Where(x => x.moneda.id ==(monedaId));
             tasas.ForEachAsync((tasamoneda t) => {
-                t.activo = false;
+                t.activa = false;
                 db.Entry(t).State = EntityState.Modified;
             });
 

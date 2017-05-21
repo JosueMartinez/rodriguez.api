@@ -20,7 +20,15 @@ namespace rodriguez.api.Controllers
         // GET: api/monedas
         public IQueryable<moneda> Getmonedas()
         {
-            return db.monedas.Include("tasas");
+            var query = from m in db.monedas
+                        select new
+                        {
+                             moneda = m,
+                             tasas = m.tasas.Where(t => t.activa == true)
+                        };
+
+            var monedas = query.ToArray().Select(m => m.moneda);
+            return monedas.AsQueryable();
         }
 
         // GET: api/monedas/5

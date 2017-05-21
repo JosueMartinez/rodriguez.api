@@ -272,6 +272,10 @@
     <Compile Include="Migrations\201705191744087_activo.Designer.cs">
       <DependentUpon>201705191744087_activo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705211948391_tasaActiva.cs" />
+    <Compile Include="Migrations\201705211948391_tasaActiva.Designer.cs">
+      <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705191744087_activo.resx">
       <DependentUpon>201705191744087_activo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705211948391_tasaActiva.resx">
+      <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
