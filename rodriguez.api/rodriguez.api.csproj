@@ -276,6 +276,10 @@
     <Compile Include="Migrations\201705211948391_tasaActiva.Designer.cs">
       <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705241236178_paypalId.cs" />
+    <Compile Include="Migrations\201705241236178_paypalId.Designer.cs">
+      <DependentUpon>201705241236178_paypalId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -409,6 +413,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705211948391_tasaActiva.resx">
       <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705241236178_paypalId.resx">
+      <DependentUpon>201705241236178_paypalId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

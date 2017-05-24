@@ -25,6 +25,8 @@ namespace rodriguez.api.Models
 
         public int tasaId { get; set; }
 
+        public string paypalId { get; set; }
+
         [Required]
         [StringLength(50)]
         public string nombreDestino { get; set; }
