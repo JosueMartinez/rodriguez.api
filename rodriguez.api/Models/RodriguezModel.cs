@@ -4,8 +4,10 @@ namespace rodriguez.api.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class RodriguezModel : DbContext
+    //public partial class RodriguezModel : DbContext
+    public partial class RodriguezModel : IdentityDbContext<IdentityUser>
     {
         public RodriguezModel()
             : base("name=RodriguezModel")

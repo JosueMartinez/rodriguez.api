@@ -24,8 +24,13 @@ namespace rodriguez.api.Models
         public string nombreUsuario { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(20,MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string contrasena { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("contrasena", ErrorMessage = "Las contrasenas deben ser iguales")]
+        public string confirmarContrasena { get; set; }
 
         public bool activo { get; set; }
 

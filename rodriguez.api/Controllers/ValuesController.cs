@@ -12,6 +12,7 @@ using System.Web.Http.Cors;
 namespace rodriguez.api.Controllers
 {
     [EnableCors(origins:"*", headers:"*", methods:"*")]
+    [Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values

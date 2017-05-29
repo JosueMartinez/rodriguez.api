@@ -13,6 +13,7 @@ using rodriguez.api.Models;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class bonosController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
