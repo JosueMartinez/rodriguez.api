@@ -14,6 +14,7 @@ using rodriguez.api.Clases;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class productosController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
