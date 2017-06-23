@@ -318,6 +318,10 @@
     <Compile Include="Migrations\201705291533310_cambiosUsuarios.Designer.cs">
       <DependentUpon>201705291533310_cambiosUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705292057571_explicit.cs" />
+    <Compile Include="Migrations\201705292057571_explicit.Designer.cs">
+      <DependentUpon>201705292057571_explicit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -456,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705291533310_cambiosUsuarios.resx">
       <DependentUpon>201705291533310_cambiosUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705292057571_explicit.resx">
+      <DependentUpon>201705292057571_explicit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
