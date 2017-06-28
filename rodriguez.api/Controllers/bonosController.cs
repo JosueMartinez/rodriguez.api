@@ -21,7 +21,11 @@ namespace rodriguez.api.Controllers
         // GET: api/bonos
         public IQueryable<bono> Getbonos()
         {
-            return db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono).OrderByDescending(x => x.fechaCompra);
+            return db.bonos.Include(p => p.cliente)
+                        .Include(p => p.tasa)
+                        .Include("tasa.moneda")
+                        .Include(p => p.estadobono)
+                        .OrderByDescending(x => x.fechaCompra);
         }
 
         // GET: api/bonos/5
@@ -46,39 +50,46 @@ namespace rodriguez.api.Controllers
             return db.bonos.Where(x => x.clienteId == clienteId).Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono);
         }
 
-        // PUT: api/bonos/5
+        // PUT: api/bonos/5/pagar
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putbono(int id, bono bono)
+        [Route("api/bonos/{bonoId}/pagar")]
+        [HttpPut]
+        public async Task<IHttpActionResult> Putbono(int bonoId)
         {
-            if (!ModelState.IsValid)
+            bono bono = await db.bonos.FindAsync(bonoId);
+            int idCobrado = db.estadobonos.Where(x => x.descripcion.Equals("Cobrado")).FirstOrDefault().id;
+
+            if (bono == null)
             {
-                return BadRequest(ModelState);
+                return NotFound();
             }
 
-            if (id != bono.id)
-            {
-                return BadRequest();
-            }
+            //creacion movimiento historial
+            historialbono hist = new historialbono();
+            hist.bonoId = bono.id;
+            hist.estadoBonoId = idCobrado;
+            hist.fechaEntradaEstado = DateTime.Now;
 
-            db.Entry(bono).State = EntityState.Modified;
+            bono.estadoBonoId = idCobrado;
+            if(bono.estadoBonoId != 0)
+            {
+                db.Entry(bono).State = EntityState.Modified;
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!bonoExists(id))
+                try
                 {
-                    return NotFound();
+                    db.historialbonos.Add(hist);
+                    await db.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
+
+                return StatusCode(HttpStatusCode.NoContent);
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return BadRequest();
+            
         }
 
         // POST: api/bonos
