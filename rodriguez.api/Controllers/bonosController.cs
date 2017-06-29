@@ -25,6 +25,19 @@ namespace rodriguez.api.Controllers
                         .Include(p => p.tasa)
                         .Include("tasa.moneda")
                         .Include(p => p.estadobono)
+                        .Where(p => p.estadobono.descripcion.ToLower().Equals("comprado"))
+                        .OrderByDescending(x => x.fechaCompra);
+        }
+
+        [Route("api/bonosPagados")]
+        [HttpGet]
+        public IQueryable<bono> GetbonosPagados()
+        {
+            return db.bonos.Include(p => p.cliente)
+                        .Include(p => p.tasa)
+                        .Include("tasa.moneda")
+                        .Include(p => p.estadobono)
+                        .Where(p => p.estadobono.descripcion.ToLower().Equals("cobrado"))
                         .OrderByDescending(x => x.fechaCompra);
         }
 
