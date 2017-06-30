@@ -20,8 +20,9 @@ namespace rodriguez.api.Controllers
         // GET: api/tasa
         public IQueryable<tasamoneda> Gettasasmonedas()
         {
-            return db.tasasmonedas;
+            return db.tasasmonedas.Include("moneda").Where(x => x.activa);
         }
+
 
         // GET: api/tasa/5
         [ResponseType(typeof(tasamoneda))]
