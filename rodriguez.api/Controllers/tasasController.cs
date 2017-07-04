@@ -10,9 +10,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using rodriguez.api.Models;
+using System.Web.Http.Cors;
 
 namespace rodriguez.api.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [Authorize]
     public class tasasController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
@@ -23,8 +26,14 @@ namespace rodriguez.api.Controllers
             return db.tasasmonedas.Include("moneda").Where(x => x.activa);
         }
 
-
-        // GET: api/tasa/5
+        [ResponseType(typeof(tasamoneda))]
+        [Route("api/monedas/{monedaId:int}/historial")]
+        [HttpGet]
+        public IQueryable<tasamoneda> GetHistorial(int monedaId)
+        {
+            return db.tasasmonedas.Where(x => x.monedaId == monedaId).OrderByDescending(x => x.fecha).Take(10);
+        }
+        
         [ResponseType(typeof(tasamoneda))]
         [Route("api/monedas/{monedaId:int}/tasa")]
         [HttpGet]
