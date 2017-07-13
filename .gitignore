@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /rodriguez.api/Migrations
+/rodriguez.api
