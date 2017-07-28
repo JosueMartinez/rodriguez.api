@@ -17,6 +17,7 @@ namespace rodriguez.api.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
+        private RodriguezModel db = new RodriguezModel();
 
         public AccountController()
         {
@@ -28,22 +29,73 @@ namespace rodriguez.api.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(usuario userModel)
         {
+            //RodriguezModel db = new RodriguezModel();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+                try
+                {
+                    rol r = db.rols.Where(rx => rx.descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
+                    userModel.rol = r;
+                    userModel.rolId = r.id;
+                    userModel.activo = true;
+                    db.usuarios.Add(userModel);
+                    await db.SaveChangesAsync();
+                    IdentityResult result = await _repo.RegisterUser(userModel);
 
-            IHttpActionResult errorResult = GetErrorResult(result);
+                    IHttpActionResult errorResult = GetErrorResult(result);
 
-            if (errorResult != null)
+                    if (errorResult != null)
+                    {
+                        return errorResult;
+                    }
+
+                    return Ok();
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.ToString());
+                }
+            
+            
+        }
+
+        // POST api/Account/RegisterClient
+        [AllowAnonymous]
+        [Route("RegisterClient")]
+        public async Task<IHttpActionResult> RegisterClient(cliente cliente)
+        {
+            if (!ModelState.IsValid)
             {
-                return errorResult;
+                return BadRequest(ModelState);
             }
 
-            return Ok();
+            try
+            {
+
+                db.clientes.Add(cliente);
+                await db.SaveChangesAsync();
+                IdentityResult result = await _repo.RegisterClient(cliente);
+
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
+                {
+                    return errorResult;
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
         }
+
+
+
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
@@ -79,6 +131,7 @@ namespace rodriguez.api.Controllers
             if (disposing)
             {
                 _repo.Dispose();
+                db.Dispose();
             }
 
             base.Dispose(disposing);

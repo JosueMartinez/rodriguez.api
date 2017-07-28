@@ -322,6 +322,14 @@
     <Compile Include="Migrations\201705292057571_explicit.Designer.cs">
       <DependentUpon>201705292057571_explicit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707281345207_clienteUsuario.cs" />
+    <Compile Include="Migrations\201707281345207_clienteUsuario.Designer.cs">
+      <DependentUpon>201707281345207_clienteUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707282042323_uniqueUsuario.cs" />
+    <Compile Include="Migrations\201707282042323_uniqueUsuario.Designer.cs">
+      <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -463,6 +471,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705292057571_explicit.resx">
       <DependentUpon>201705292057571_explicit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707281345207_clienteUsuario.resx">
+      <DependentUpon>201707281345207_clienteUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707282042323_uniqueUsuario.resx">
+      <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

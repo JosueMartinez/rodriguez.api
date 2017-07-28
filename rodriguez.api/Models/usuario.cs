@@ -11,16 +11,21 @@ namespace rodriguez.api.Models
     {
         public int id { get; set; }
 
-        [Required]
-        [StringLength(40)]
-        public string nombres { get; set; }
+        //[required]
+        //[stringlength(40)]
+        //public string nombres { get; set; }
+
+        //[required]
+        //[stringlength(80)]
+        //public string apellidos { get; set; }
 
         [Required]
-        [StringLength(80)]
-        public string apellidos { get; set; }
+        [StringLength(200)]
+        public string nombreCompleto { get; set; }
 
         [Required]
         [StringLength(20)]
+        [Index(IsUnique = true)]
         public string nombreUsuario { get; set; }
 
         [Required]
@@ -28,6 +33,7 @@ namespace rodriguez.api.Models
         [DataType(DataType.Password)]
         public string contrasena { get; set; }
 
+        [NotMapped]
         [DataType(DataType.Password)]
         [Compare("contrasena", ErrorMessage = "Las contrasenas deben ser iguales")]
         public string confirmarContrasena { get; set; }

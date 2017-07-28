@@ -32,6 +32,20 @@ namespace rodriguez.api.Clases
             return result;
         }
 
+        public async Task<IdentityResult> RegisterClient(cliente cliente)
+        {
+            IdentityUser user = new IdentityUser
+            {
+                UserName = cliente.usuario
+            };
+
+            var result = await _userManager.CreateAsync(user, cliente.Password);
+
+            return result;
+        }
+
+
+
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
             IdentityUser user = await _userManager.FindAsync(userName, password);
@@ -45,5 +59,7 @@ namespace rodriguez.api.Clases
             _userManager.Dispose();
 
         }
+
+        
     }
 }

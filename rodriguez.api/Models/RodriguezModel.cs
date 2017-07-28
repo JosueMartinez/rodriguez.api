@@ -65,12 +65,15 @@ namespace rodriguez.api.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<cliente>()
-                .Property(e => e.nombres)
+                .Property(e => e.nombreCompleto)
                 .IsUnicode(false);
+            //modelBuilder.Entity<cliente>()
+            //    .Property(e => e.nombres)
+            //    .IsUnicode(false);
 
-            modelBuilder.Entity<cliente>()
-                .Property(e => e.apellidos)
-                .IsUnicode(false);
+            //modelBuilder.Entity<cliente>()
+            //    .Property(e => e.apellidos)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<cliente>()
                 .Property(e => e.cedula)
@@ -162,12 +165,16 @@ namespace rodriguez.api.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<usuario>()
-                .Property(e => e.nombres)
+                .Property(e => e.nombreCompleto)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<usuario>()
-                .Property(e => e.apellidos)
-                .IsUnicode(false);
+            //modelBuilder.Entity<usuario>()
+            //    .Property(e => e.nombres)
+            //    .IsUnicode(false);
+
+            //modelBuilder.Entity<usuario>()
+            //    .Property(e => e.apellidos)
+            //    .IsUnicode(false);
 
             modelBuilder.Entity<usuario>()
                 .Property(e => e.nombreUsuario)
