@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\clientes\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -251,12 +252,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\bonosController.cs" />
     <Compile Include="Controllers\categoriasController.cs" />
+    <Compile Include="Controllers\clientesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\listacompraController.cs" />
     <Compile Include="Controllers\medidasController.cs" />
     <Compile Include="Controllers\monedasController.cs" />
     <Compile Include="Controllers\productosController.cs" />
     <Compile Include="Controllers\tasasController.cs" />
+    <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Migrations\201702281936400_first.cs" />
     <Compile Include="Migrations\201702281936400_first.Designer.cs">
