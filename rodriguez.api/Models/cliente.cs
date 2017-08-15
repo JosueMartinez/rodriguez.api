@@ -57,6 +57,7 @@ namespace rodriguez.api.Models
         public string email { get; set; }
 
         [Required]
+        [NotMapped]
         [StringLength(20, MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Password { get; set; }

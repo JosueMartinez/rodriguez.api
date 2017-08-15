@@ -333,6 +333,10 @@
     <Compile Include="Migrations\201707282042323_uniqueUsuario.Designer.cs">
       <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708151434201_removePassword.cs" />
+    <Compile Include="Migrations\201708151434201_removePassword.Designer.cs">
+      <DependentUpon>201708151434201_removePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\bono.cs" />
     <Compile Include="Models\categoria.cs" />
@@ -480,6 +484,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707282042323_uniqueUsuario.resx">
       <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708151434201_removePassword.resx">
+      <DependentUpon>201708151434201_removePassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
