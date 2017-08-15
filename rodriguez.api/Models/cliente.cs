@@ -56,6 +56,7 @@ namespace rodriguez.api.Models
         public string celular { get; set; }
 
         [StringLength(50)]
+        [EmailAddress]
         public string email { get; set; }
 
         [Required]
