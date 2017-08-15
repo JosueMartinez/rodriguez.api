@@ -1,5 +1,6 @@
 namespace rodriguez.api.Models
 {
+    using DevelopersDo.DataAnnotations;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace rodriguez.api.Models
 
         [Required]
         [StringLength(11)]
+        [Cedula]
         public string cedula { get; set; }
 
         [StringLength(10)]
