@@ -20,20 +20,26 @@ namespace rodriguez.api.Controllers
         // GET: api/usuarios
         public IQueryable<usuario> Getusuarios()
         {
-            return db.usuarios;
+            return db.usuarios.Include(x => x.rol).Where(x => x.activo);
         }
 
         // GET: api/usuarios/5
         [ResponseType(typeof(usuario))]
         public async Task<IHttpActionResult> Getusuario(int id)
         {
-            usuario usuario = await db.usuarios.FindAsync(id);
+            var usuarios =  db.usuarios.Include(x => x.rol).Where(x => x.id == id);
+            var usuario = usuarios.Count() > 0 ? usuarios.First() : null;
+
             if (usuario == null)
             {
                 return NotFound();
             }
+            if (usuario.activo)
+            {
+                return Ok(usuario);
+            }
 
-            return Ok(usuario);
+            return NotFound();
         }
 
         // GET: api/clientes/5
@@ -42,7 +48,7 @@ namespace rodriguez.api.Controllers
         [HttpGet] //
         public async Task<IHttpActionResult> GetclienteNombre(string usuario)
         {
-            usuario u = await db.usuarios.Include(x => x.rol).Where(x => x.nombreUsuario.ToLower().Equals(usuario.ToLower())).FirstOrDefaultAsync();
+            usuario u = await db.usuarios.Include(x => x.rol).Where(x => x.nombreUsuario.ToLower().Equals(usuario.ToLower()) && x.activo).FirstOrDefaultAsync();
             if (u == null)
             {
                 return NotFound();
