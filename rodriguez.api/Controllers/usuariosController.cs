@@ -13,6 +13,7 @@ using rodriguez.api.Models;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class usuariosController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
@@ -28,7 +29,7 @@ namespace rodriguez.api.Controllers
         public async Task<IHttpActionResult> Getusuario(int id)
         {
             var usuarios =  db.usuarios.Include(x => x.rol).Where(x => x.id == id);
-            var usuario = usuarios.Count() > 0 ? usuarios.First() : null;
+            var usuario = usuarios.Count() > 0 ? await usuarios.FirstAsync() : null;
 
             if (usuario == null)
             {
