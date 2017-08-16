@@ -42,7 +42,7 @@ namespace rodriguez.api.Controllers
         [HttpGet] //
         public async Task<IHttpActionResult> GetclienteNombre(string usuario)
         {
-            usuario u = await db.usuarios.Where(x => x.nombreUsuario.ToLower().Equals(usuario.ToLower())).FirstOrDefaultAsync();
+            usuario u = await db.usuarios.Include(x => x.rol).Where(x => x.nombreUsuario.ToLower().Equals(usuario.ToLower())).FirstOrDefaultAsync();
             if (u == null)
             {
                 return NotFound();
