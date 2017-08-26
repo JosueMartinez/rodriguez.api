@@ -22,7 +22,7 @@ namespace rodriguez.api.Controllers
         // GET: api/categorias
         public IQueryable<categoria> Getcategorias()
         {
-            return db.categorias.OrderBy(c => c.descripcion);
+            return db.categorias.Include(c => c.productos).OrderBy(c => c.descripcion);
         }
 
         // GET: api/categorias/5
