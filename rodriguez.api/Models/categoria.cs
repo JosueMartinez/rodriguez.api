@@ -5,23 +5,22 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
-    [Table("smrodriguez.categoria")]
-    public partial class categoria
+    
+    public partial class Categoria
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public categoria()
+        public Categoria()
         {
-            productos = new HashSet<producto>();
+            Productos = new HashSet<Producto>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30)]
-        public string descripcion { get; set; }
+        public string Descripcion { get; set; }
         
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<producto> productos { get; set; }
+        public virtual ICollection<Producto> Productos { get; set; }
     }
 }

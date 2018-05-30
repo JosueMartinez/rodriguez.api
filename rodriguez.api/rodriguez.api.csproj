@@ -26,6 +26,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/f2f33434-be53-4556-bbd8-d2d319e2f3b4/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/rodriguez.api</ApplicationInsightsResourceId>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -267,97 +268,25 @@
     <Compile Include="Controllers\tasasController.cs" />
     <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Migrations\201702281936400_first.cs" />
-    <Compile Include="Migrations\201702281936400_first.Designer.cs">
-      <DependentUpon>201702281936400_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704042339268_TelefonoDestino.cs" />
-    <Compile Include="Migrations\201704042339268_TelefonoDestino.Designer.cs">
-      <DependentUpon>201704042339268_TelefonoDestino.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704062126230_revokingUnique.cs" />
-    <Compile Include="Migrations\201704062126230_revokingUnique.Designer.cs">
-      <DependentUpon>201704062126230_revokingUnique.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704062135231_pending.cs" />
-    <Compile Include="Migrations\201704062135231_pending.Designer.cs">
-      <DependentUpon>201704062135231_pending.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704070027034_unknown.cs" />
-    <Compile Include="Migrations\201704070027034_unknown.Designer.cs">
-      <DependentUpon>201704070027034_unknown.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704070042148_unknown1.cs" />
-    <Compile Include="Migrations\201704070042148_unknown1.Designer.cs">
-      <DependentUpon>201704070042148_unknown1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704070134367_pending1.cs" />
-    <Compile Include="Migrations\201704070134367_pending1.Designer.cs">
-      <DependentUpon>201704070134367_pending1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704070151377_moneda-bono.cs" />
-    <Compile Include="Migrations\201704070151377_moneda-bono.Designer.cs">
-      <DependentUpon>201704070151377_moneda-bono.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704070202523_no.cs" />
-    <Compile Include="Migrations\201704070202523_no.Designer.cs">
-      <DependentUpon>201704070202523_no.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704122012327_empty.cs" />
-    <Compile Include="Migrations\201704122012327_empty.Designer.cs">
-      <DependentUpon>201704122012327_empty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704131331019_productoLista.cs" />
-    <Compile Include="Migrations\201704131331019_productoLista.Designer.cs">
-      <DependentUpon>201704131331019_productoLista.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705191744087_activo.cs" />
-    <Compile Include="Migrations\201705191744087_activo.Designer.cs">
-      <DependentUpon>201705191744087_activo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705211948391_tasaActiva.cs" />
-    <Compile Include="Migrations\201705211948391_tasaActiva.Designer.cs">
-      <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705241236178_paypalId.cs" />
-    <Compile Include="Migrations\201705241236178_paypalId.Designer.cs">
-      <DependentUpon>201705241236178_paypalId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705291533310_cambiosUsuarios.cs" />
-    <Compile Include="Migrations\201705291533310_cambiosUsuarios.Designer.cs">
-      <DependentUpon>201705291533310_cambiosUsuarios.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705292057571_explicit.cs" />
-    <Compile Include="Migrations\201705292057571_explicit.Designer.cs">
-      <DependentUpon>201705292057571_explicit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707281345207_clienteUsuario.cs" />
-    <Compile Include="Migrations\201707281345207_clienteUsuario.Designer.cs">
-      <DependentUpon>201707281345207_clienteUsuario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707282042323_uniqueUsuario.cs" />
-    <Compile Include="Migrations\201707282042323_uniqueUsuario.Designer.cs">
-      <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708151434201_removePassword.cs" />
-    <Compile Include="Migrations\201708151434201_removePassword.Designer.cs">
-      <DependentUpon>201708151434201_removePassword.cs</DependentUpon>
+    <Compile Include="Migrations\201805301531458_init.cs" />
+    <Compile Include="Migrations\201805301531458_init.Designer.cs">
+      <DependentUpon>201805301531458_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\bono.cs" />
-    <Compile Include="Models\categoria.cs" />
-    <Compile Include="Models\cliente.cs" />
-    <Compile Include="Models\estadobono.cs" />
-    <Compile Include="Models\historialbono.cs" />
-    <Compile Include="Models\listacompra.cs" />
-    <Compile Include="Models\listacompraproducto.cs" />
-    <Compile Include="Models\medida.cs" />
-    <Compile Include="Models\moneda.cs" />
-    <Compile Include="Models\producto.cs" />
+    <Compile Include="Models\Bono.cs" />
+    <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\EstadoBono.cs" />
+    <Compile Include="Models\HistorialBono.cs" />
+    <Compile Include="Models\ListaCompra.cs" />
+    <Compile Include="Models\ListaProducto.cs" />
+    <Compile Include="Models\Medida.cs" />
+    <Compile Include="Models\Moneda.cs" />
+    <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\RodriguezModel.cs" />
-    <Compile Include="Models\rol.cs" />
-    <Compile Include="Models\tasamoneda.cs" />
-    <Compile Include="Models\usuario.cs" />
+    <Compile Include="Models\Rol.cs" />
+    <Compile Include="Models\Tasa.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -437,62 +366,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702281936400_first.resx">
-      <DependentUpon>201702281936400_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704042339268_TelefonoDestino.resx">
-      <DependentUpon>201704042339268_TelefonoDestino.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704062126230_revokingUnique.resx">
-      <DependentUpon>201704062126230_revokingUnique.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704062135231_pending.resx">
-      <DependentUpon>201704062135231_pending.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070027034_unknown.resx">
-      <DependentUpon>201704070027034_unknown.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070042148_unknown1.resx">
-      <DependentUpon>201704070042148_unknown1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070134367_pending1.resx">
-      <DependentUpon>201704070134367_pending1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070151377_moneda-bono.resx">
-      <DependentUpon>201704070151377_moneda-bono.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704070202523_no.resx">
-      <DependentUpon>201704070202523_no.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704122012327_empty.resx">
-      <DependentUpon>201704122012327_empty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704131331019_productoLista.resx">
-      <DependentUpon>201704131331019_productoLista.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705191744087_activo.resx">
-      <DependentUpon>201705191744087_activo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705211948391_tasaActiva.resx">
-      <DependentUpon>201705211948391_tasaActiva.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705241236178_paypalId.resx">
-      <DependentUpon>201705241236178_paypalId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705291533310_cambiosUsuarios.resx">
-      <DependentUpon>201705291533310_cambiosUsuarios.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705292057571_explicit.resx">
-      <DependentUpon>201705292057571_explicit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707281345207_clienteUsuario.resx">
-      <DependentUpon>201707281345207_clienteUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707282042323_uniqueUsuario.resx">
-      <DependentUpon>201707282042323_uniqueUsuario.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708151434201_removePassword.resx">
-      <DependentUpon>201708151434201_removePassword.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805301531458_init.resx">
+      <DependentUpon>201805301531458_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

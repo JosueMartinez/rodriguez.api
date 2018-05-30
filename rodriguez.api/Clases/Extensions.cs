@@ -10,10 +10,10 @@ namespace rodriguez.api.Clases
     {
         private static RodriguezModel db = new RodriguezModel();
 
-        public static bool containsProduct(this listacompra lista, int productoId)
+        public static bool containsProduct(this ListaCompra lista, int productoId)
         {
-            var productos = lista.productosLista;
-            var producto = db.productos.FindAsync(productoId);
+            var productos = lista.Productos;
+            var producto = db.Productos.FindAsync(productoId);
 
             if(producto == null || productos == null || productos.Count() == 0)
             {
@@ -22,7 +22,7 @@ namespace rodriguez.api.Clases
             
             foreach(var p in productos)
             {
-                if(p.productoId == productoId)
+                if(p.ProductoId == productoId)
                 {
                     return true;
                 }

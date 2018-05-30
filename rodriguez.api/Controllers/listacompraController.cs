@@ -19,24 +19,24 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/listacompra
-        public IQueryable<listacompra> Getlistacompras()
+        public IQueryable<ListaCompra> Getlistacompras()
         {
-            return db.listacompras.Include("productosLista.producto.categoria");
+            return db.Listas.Include("productosLista.producto.categoria");
         }
 
         // GET: api/listacompra/5
-        [ResponseType(typeof(listacompra))]
+        [ResponseType(typeof(ListaCompra))]
         public async Task<IHttpActionResult> Getlistacompra(int id)
         {
             //var listas = db.listacompras.Where(x => x.id == id).Include(y => y.productosLista);
-            var listas = db.listacompras.Where(x => x.id == id).Include("productosLista.producto.categoria");
+            var listas = db.Listas.Where(x => x.Id == id).Include("productosLista.producto.categoria");
 
             if (listas.Count() > 0)
             {
                 return NotFound();
             }
 
-            listacompra listacompra = await listas.FirstAsync();
+            ListaCompra listacompra = await listas.FirstAsync();
             if (listacompra == null)
             {
                 return NotFound();
@@ -49,19 +49,19 @@ namespace rodriguez.api.Controllers
         [Route("api/cliente/{idCliente}/listas")]
         public async Task<IHttpActionResult> listasCliente(int idCliente)
         {
-            cliente cliente = await db.clientes.FindAsync(idCliente);
+            Cliente cliente = await db.Clientes.FindAsync(idCliente);
             if (cliente == null)
             {
                 return NotFound();
             }
 
-            var listas = db.listacompras.Where(x => x.clienteId == idCliente).Include("productosLista.producto.categoria");//.Include("producto.categoria");
+            var listas = db.Listas.Where(x => x.ClienteId == idCliente).Include("productosLista.producto.categoria");//.Include("producto.categoria");
             return Ok(listas);
         }
 
         // PUT: api/listacompra/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putlistacompra(int id, listacompra listacompra)
+        public async Task<IHttpActionResult> Putlistacompra(int id, ListaCompra listacompra)
         { 
             
             if (!ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != listacompra.id)
+            if (id != listacompra.Id)
             {
                 return BadRequest();
             }
@@ -96,49 +96,49 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/listacompra
-        [ResponseType(typeof(listacompra))]
-        public async Task<IHttpActionResult> Postlistacompra(listacompra listacompra)
+        [ResponseType(typeof(ListaCompra))]
+        public async Task<IHttpActionResult> Postlistacompra(ListaCompra listacompra)
         {
-            listacompra.fechaCreacion = DateTime.Now;
-            listacompra.fechaUltimaModificacion = DateTime.Now;
+            listacompra.FechaCreacion = DateTime.Now;
+            listacompra.FechaUltimaModificacion = DateTime.Now;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            db.listacompras.Add(listacompra);
+            db.Listas.Add(listacompra);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = listacompra.id }, listacompra);
+            return CreatedAtRoute("DefaultApi", new { id = listacompra.Id }, listacompra);
         }
 
         [HttpPut]
         [Route("api/listacompra/{listaId}/productos")]
-        public async Task<IHttpActionResult> Putlistacompra(int listaId, ICollection<listacompraproducto> productosNuevos)
+        public async Task<IHttpActionResult> Putlistacompra(int listaId, ICollection<ListaProducto> productosNuevos)
         {
-            listacompra listaExistente = await db.listacompras.Where(x => x.id == listaId).Include(x => x.productosLista).FirstAsync();
+            ListaCompra listaExistente = await db.Listas.Where(x => x.Id == listaId).Include(x => x.Productos).FirstAsync();
             if(listaExistente != null)
             {
-                var productosListaExistente = listaExistente.productosLista.ToList();
+                var productosListaExistente = listaExistente.Productos.ToList();
                 productosNuevos.ToList().ForEach(x =>
                 {
                     //tomando en cuenta si es un producto ya en la lista o uno a agregar
-                    var producto = productosListaExistente.Where(y => y.productoId == x.productoId).Count() > 0?
-                                    productosListaExistente.Where(y => y.productoId == x.productoId).First():
+                    var producto = productosListaExistente.Where(y => y.ProductoId == x.Id).Count() > 0?
+                                    productosListaExistente.Where(y => y.ProductoId == x.Id).First():
                                     x;
 
-                    if (listaExistente.containsProduct(producto.productoId)) {
-                        producto.cantidad = x.cantidad;
+                    if (listaExistente.containsProduct(producto.ProductoId)) {
+                        producto.Cantidad = x.Cantidad;
                     }
                     else
                     {
-                        listaExistente.productosLista.Add(producto);
+                        listaExistente.Productos.Add(producto);
                     }
                 });
 
             }
-            listaExistente.fechaUltimaModificacion = DateTime.Now;
+            listaExistente.FechaUltimaModificacion = DateTime.Now;
             db.Entry(listaExistente).State = EntityState.Modified;
             try
             {
@@ -153,16 +153,16 @@ namespace rodriguez.api.Controllers
 
 
         // DELETE: api/listacompra/5
-        [ResponseType(typeof(listacompra))]
+        [ResponseType(typeof(ListaCompra))]
         public async Task<IHttpActionResult> Deletelistacompra(int id)
         {
-            listacompra listacompra = await db.listacompras.FindAsync(id);
+            ListaCompra listacompra = await db.Listas.FindAsync(id);
             if (listacompra == null)
             {
                 return NotFound();
             }
 
-            db.listacompras.Remove(listacompra);
+            db.Listas.Remove(listacompra);
             await db.SaveChangesAsync();
 
             return Ok(listacompra);
@@ -179,7 +179,7 @@ namespace rodriguez.api.Controllers
 
         private bool listacompraExists(int id)
         {
-            return db.listacompras.Count(e => e.id == id) > 0;
+            return db.Listas.Count(e => e.Id == id) > 0;
         }
 
 

@@ -30,174 +30,176 @@ namespace rodriguez.api.Migrations
             //
 
             #region rol
-            context.rols.AddOrUpdate(
-                   r => r.descripcion,
-                   new Models.rol { descripcion = "Developer" },
-                   new Models.rol { descripcion = "Admin" },
-                   new Models.rol { descripcion = "Power User" },
-                   new Models.rol { descripcion = "Empleado" }
+            context.Roles.AddOrUpdate(
+                   r => r.Descripcion,
+                   new Models.Rol { Descripcion = "Developer" },
+                   new Models.Rol { Descripcion = "Admin" },
+                   new Models.Rol { Descripcion = "Power User" },
+                   new Models.Rol { Descripcion = "Empleado" }
                 );
             #endregion
             #region medidas
-            context.medidas.AddOrUpdate(
-                    m => m.descripcion,
-                    new Models.medida { descripcion = "Libra", simbolo = "lb" },
-                    new Models.medida { descripcion = "Litro", simbolo = "lt" },
-                    new Models.medida { descripcion = "Galón", simbolo = "gl" },
-                    new Models.medida { descripcion = "Yarda", simbolo = "yd" },
-                    new Models.medida { descripcion = "Onza", simbolo = "oz" },
-                    new Models.medida { descripcion = "Unidad", simbolo = "ud" }
+            context.Medidas.AddOrUpdate(
+                    m => m.Descripcion,
+                    new Models.Medida { Descripcion = "Libra", Simbolo = "lb" },
+                    new Models.Medida { Descripcion = "Litro", Simbolo = "lt" },
+                    new Models.Medida { Descripcion = "Galón", Simbolo = "gl" },
+                    new Models.Medida { Descripcion = "Yarda", Simbolo = "yd" },
+                    new Models.Medida { Descripcion = "Onza", Simbolo = "oz" },
+                    new Models.Medida { Descripcion = "Unidad", Simbolo = "ud" }
                 );
             #endregion
 
             #region categorias
-            context.categorias.AddOrUpdate(
-                    c => c.descripcion,
-                    new Models.categoria { descripcion = "Ferreteria" },
-                    new Models.categoria { descripcion = "Carniceria" },
-                    new Models.categoria { descripcion = "Embutidos" },
-                    new Models.categoria { descripcion = "Frutas" },
-                    new Models.categoria { descripcion = "Verduras" },
-                    new Models.categoria { descripcion = "Vegetales" },
-                    new Models.categoria { descripcion = "Panaderia" },
-                    new Models.categoria { descripcion = "Dulces" },
-                    new Models.categoria { descripcion = "Huevos" },
-                    new Models.categoria { descripcion = "Lacteos" },
-                    new Models.categoria { descripcion = "Pastas" },
-                    new Models.categoria { descripcion = "Aceites" },
-                    new Models.categoria { descripcion = "Conservas" },
-                    new Models.categoria { descripcion = "Comida Preparada" },
-                    new Models.categoria { descripcion = "Zumos" },
-                    new Models.categoria { descripcion = "Bebidas" },
-                    new Models.categoria { descripcion = "Aperitivos" },
-                    new Models.categoria { descripcion = "Infantil" },
-                    new Models.categoria { descripcion = "Cosmeticos" },
-                    new Models.categoria { descripcion = "Cuidado Personal" },
-                    new Models.categoria { descripcion = "Hogar" },
-                    new Models.categoria { descripcion = "Limpieza" }
+            context.Categorias.AddOrUpdate(
+                    c => c.Descripcion,
+                    new Models.Categoria { Descripcion = "Ferreteria" },
+                    new Models.Categoria { Descripcion = "Carniceria" },
+                    new Models.Categoria { Descripcion = "Embutidos" },
+                    new Models.Categoria { Descripcion = "Frutas" },
+                    new Models.Categoria { Descripcion = "Verduras" },
+                    new Models.Categoria { Descripcion = "Vegetales" },
+                    new Models.Categoria { Descripcion = "Panaderia" },
+                    new Models.Categoria { Descripcion = "Dulces" },
+                    new Models.Categoria { Descripcion = "Huevos" },
+                    new Models.Categoria { Descripcion = "Lacteos" },
+                    new Models.Categoria { Descripcion = "Pastas" },
+                    new Models.Categoria { Descripcion = "Aceites" },
+                    new Models.Categoria { Descripcion = "Conservas" },
+                    new Models.Categoria { Descripcion = "Comida Preparada" },
+                    new Models.Categoria { Descripcion = "Zumos" },
+                    new Models.Categoria { Descripcion = "Bebidas" },
+                    new Models.Categoria { Descripcion = "Aperitivos" },
+                    new Models.Categoria { Descripcion = "Infantil" },
+                    new Models.Categoria { Descripcion = "Cosmeticos" },
+                    new Models.Categoria { Descripcion = "Cuidado Personal" },
+                    new Models.Categoria { Descripcion = "Hogar" },
+                    new Models.Categoria { Descripcion = "Limpieza" }
                 );
             #endregion
 
 
             #region productos
-            context.productos.AddOrUpdate(
-                p => p.nombre,
-                new Models.producto { nombre = "Cerdo",
-                                      categoriaId = context.categorias.Where(x => x.descripcion.Equals("Carniceria")).FirstOrDefault().id,
-                                      medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
-                                    },
-                new Models.producto
+            context.Productos.AddOrUpdate(
+                p => p.Nombre,
+                new Models.Producto
                 {
-                    nombre = "Res",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Carniceria")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Cerdo",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Carniceria")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Chuleta",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Carniceria")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Res",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Carniceria")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Salami",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Embutidos")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Chuleta",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Carniceria")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Jamon",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Embutidos")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Salami",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Embutidos")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Naranja",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Frutas")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("ud")).FirstOrDefault().id
+                    Nombre = "Jamon",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Embutidos")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Sandia",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Frutas")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Naranja",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Frutas")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("ud")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Lechuga",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Vegetales")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Sandia",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Frutas")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Tomate",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Vegetales")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Lechuga",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Vegetales")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Pan Sobao",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Panaderia")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("ud")).FirstOrDefault().id
+                    Nombre = "Tomate",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Vegetales")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Leche",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Lacteos")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Pan Sobao",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Panaderia")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("ud")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Ron",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Bebidas")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lt")).FirstOrDefault().id
+                    Nombre = "Leche",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Lacteos")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Cerveza",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Bebidas")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("lb")).FirstOrDefault().id
+                    Nombre = "Ron",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Bebidas")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lt")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Jabon",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Limpieza")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("ud")).FirstOrDefault().id
+                    Nombre = "Cerveza",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Bebidas")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("lb")).FirstOrDefault().Id
                 },
-                new Models.producto
+                new Models.Producto
                 {
-                    nombre = "Papel Toalla",
-                    categoriaId = context.categorias.Where(x => x.descripcion.Equals("Limpieza")).FirstOrDefault().id,
-                    medidaId = context.medidas.Where(x => x.simbolo.Equals("ud")).FirstOrDefault().id
+                    Nombre = "Jabon",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Limpieza")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("ud")).FirstOrDefault().Id
+                },
+                new Models.Producto
+                {
+                    Nombre = "Papel Toalla",
+                    CategoriaId = context.Categorias.Where(x => x.Descripcion.Equals("Limpieza")).FirstOrDefault().Id,
+                    MedidaId = context.Medidas.Where(x => x.Simbolo.Equals("ud")).FirstOrDefault().Id
                 }
             );
             #endregion  
 
             #region monedas
-            context.monedas.AddOrUpdate(
-                   m => m.descripcion,
-                   new Models.moneda { descripcion = "Peso Dominicano", simbolo = "RD" },
-                   new Models.moneda { descripcion = "Dolar Estadounidense", simbolo = "USD" },
-                   new Models.moneda { descripcion = "Euro", simbolo = "EUR" }
+            context.Monedas.AddOrUpdate(
+                   m => m.Descripcion,
+                   new Models.Moneda { Descripcion = "Peso Dominicano", Simbolo = "RD" },
+                   new Models.Moneda { Descripcion = "Dolar Estadounidense", Simbolo = "USD" },
+                   new Models.Moneda { Descripcion = "Euro", Simbolo = "EUR" }
 
                 );
             #endregion
 
             #region estados
-            context.estadobonos.AddOrUpdate(
-                    m => m.descripcion,
-                    new Models.estadobono { descripcion = "Comprado" },
-                    new Models.estadobono { descripcion = "Cobrado" },
-                    new Models.estadobono { descripcion = "Cancelado" }
+            context.Estados.AddOrUpdate(
+                    m => m.Descripcion,
+                    new Models.EstadoBono { Descripcion = "Comprado" },
+                    new Models.EstadoBono { Descripcion = "Cobrado" },
+                    new Models.EstadoBono { Descripcion = "Cancelado" }
                 );
             #endregion
 
             #region monedas
-            context.monedas.AddOrUpdate(
-                m => m.descripcion,
-                new Models.moneda { descripcion = "PESO DOMINICANO", simbolo = "RD" },
-                new Models.moneda { descripcion = "DOLAR ESTADOUNIDENSE", simbolo = "USD" },
-                new Models.moneda { descripcion = "EURO", simbolo = "EU" }
+            context.Monedas.AddOrUpdate(
+                m => m.Descripcion,
+                new Models.Moneda { Descripcion = "PESO DOMINICANO", Simbolo = "RD" },
+                new Models.Moneda { Descripcion = "DOLAR ESTADOUNIDENSE", Simbolo = "USD" },
+                new Models.Moneda { Descripcion = "EURO", Simbolo = "EU" }
                 );
             #endregion
 

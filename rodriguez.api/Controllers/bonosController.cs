@@ -19,33 +19,33 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/bonos
-        public IQueryable<bono> Getbonos()
+        public IQueryable<Bono> Getbonos()
         {
-            return db.bonos.Include(p => p.cliente)
-                        .Include(p => p.tasa)
-                        .Include("tasa.moneda")
-                        .Include(p => p.estadobono)
-                        .Where(p => p.estadobono.descripcion.ToLower().Equals("comprado"))
-                        .OrderByDescending(x => x.fechaCompra);
+            return db.Bonos.Include(p => p.Cliente)
+                        .Include(p => p.Tasa)
+                        .Include("tasa.Moneda")
+                        .Include(p => p.Estado)
+                        .Where(p => p.Estado.Descripcion.ToLower().Equals("comprado"))
+                        .OrderByDescending(x => x.FechaCompra);
         }
 
         [Route("api/bonosPagados")]
         [HttpGet]
-        public IQueryable<bono> GetbonosPagados()
+        public IQueryable<Bono> GetbonosPagados()
         {
-            return db.bonos.Include(p => p.cliente)
-                        .Include(p => p.tasa)
-                        .Include("tasa.moneda")
-                        .Include(p => p.estadobono)
-                        .Where(p => p.estadobono.descripcion.ToLower().Equals("cobrado"))
-                        .OrderByDescending(x => x.fechaCompra);
+            return db.Bonos.Include(p => p.Cliente)
+                        .Include(p => p.Tasa)
+                        .Include("Tasa.Moneda")
+                        .Include(p => p.Estado)
+                        .Where(p => p.Estado.Descripcion.ToLower().Equals("cobrado"))
+                        .OrderByDescending(x => x.FechaCompra);
         }
 
         // GET: api/bonos/5
-        [ResponseType(typeof(bono))]
+        [ResponseType(typeof(Bono))]
         public async Task<IHttpActionResult> Getbono(int id)
         {
-            bono bono = await db.bonos.Include(p => p.cliente).Include(p => p.tasa).Include("tasa.moneda").Include(p => p.estadobono).SingleOrDefaultAsync(i => i.id == id);
+            Bono bono = await db.Bonos.Include(p => p.Cliente).Include(p => p.Tasa).Include("Tasa.Moneda").Include(p => p.Estado).SingleOrDefaultAsync(i => i.Id == id);
             if (bono == null)
             {
                 return NotFound();
@@ -55,16 +55,16 @@ namespace rodriguez.api.Controllers
         }
 
         // GET: api/cliente/1/bonos
-        [ResponseType(typeof(bono))]
+        [ResponseType(typeof(Bono))]
         [Route("api/cliente/{clienteId}/bonos")]
         [HttpGet]
-        public IQueryable<bono> GetBonoCliente(int clienteId)
+        public IQueryable<Bono> GetBonoCliente(int clienteId)
         {
-            return db.bonos.Where(x => x.clienteId == clienteId)
-                .Include(p => p.cliente).Include(p => p.tasa)
-                .Include("tasa.moneda")
-                .Include(p => p.estadobono)
-                .OrderByDescending(x => x.fechaCompra); ;
+            return db.Bonos.Where(x => x.ClienteId == clienteId)
+                .Include(p => p.Cliente).Include(p => p.Tasa)
+                .Include("Tasa.Moneda")
+                .Include(p => p.Estado)
+                .OrderByDescending(x => x.FechaCompra); ;
         }
 
         // PUT: api/bonos/5/pagar
@@ -73,8 +73,8 @@ namespace rodriguez.api.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> Putbono(int bonoId)
         {
-            bono bono = await db.bonos.FindAsync(bonoId);
-            int idCobrado = db.estadobonos.Where(x => x.descripcion.Equals("Cobrado")).FirstOrDefault().id;
+            Bono bono = await db.Bonos.FindAsync(bonoId);
+            int idCobrado = db.Estados.Where(x => x.Descripcion.Equals("Cobrado")).FirstOrDefault().Id;
 
             if (bono == null)
             {
@@ -82,19 +82,19 @@ namespace rodriguez.api.Controllers
             }
 
             //creacion movimiento historial
-            historialbono hist = new historialbono();
-            hist.bonoId = bono.id;
-            hist.estadoBonoId = idCobrado;
-            hist.fechaEntradaEstado = DateTime.Now;
+            HistorialBono hist = new HistorialBono();
+            hist.BonoId = bono.Id;
+            hist.EstadoBonoId = idCobrado;
+            hist.FechaEntradaEstado = DateTime.Now;
 
-            bono.estadoBonoId = idCobrado;
-            if(bono.estadoBonoId != 0)
+            bono.EstadoBonoId = idCobrado;
+            if(bono.EstadoBonoId != 0)
             {
                 db.Entry(bono).State = EntityState.Modified;
 
                 try
                 {
-                    db.historialbonos.Add(hist);
+                    db.Historial.Add(hist);
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -110,22 +110,22 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/bonos
-        [ResponseType(typeof(bono))]
-        public async Task<IHttpActionResult> Postbono(bono bono)
+        [ResponseType(typeof(Bono))]
+        public async Task<IHttpActionResult> Postbono(Bono bono)
         {
             try
             {
                 //ESTADO BONO SIEMPRE COMPRADO
-                bono.estadoBonoId =  db.estadobonos.Where(x => x.descripcion.Equals("comprado")).FirstOrDefault().id;
+                bono.EstadoBonoId =  db.Estados.Where(x => x.Descripcion.Equals("comprado")).FirstOrDefault().Id;
                 //FECHA COMPRA NOW
-                bono.fechaCompra = DateTime.Now;
+                bono.FechaCompra = DateTime.Now;
 
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
                 
-                db.bonos.Add(bono);
+                db.Bonos.Add(bono);
                 await db.SaveChangesAsync();
                 return Ok(bono);
                 //return CreatedAtRoute("DefaultApi", new { id = bono.id }, bono);
@@ -137,16 +137,16 @@ namespace rodriguez.api.Controllers
         }
 
         // DELETE: api/bonos/5
-        [ResponseType(typeof(bono))]
+        [ResponseType(typeof(Bono))]
         public async Task<IHttpActionResult> Deletebono(int id)
         {
-            bono bono = await db.bonos.FindAsync(id);
+            Bono bono = await db.Bonos.FindAsync(id);
             if (bono == null)
             {
                 return NotFound();
             }
 
-            db.bonos.Remove(bono);
+            db.Bonos.Remove(bono);
             await db.SaveChangesAsync();
 
             return Ok(bono);
@@ -163,7 +163,7 @@ namespace rodriguez.api.Controllers
 
         private bool bonoExists(int id)
         {
-            return db.bonos.Count(e => e.id == id) > 0;
+            return db.Bonos.Count(e => e.Id == id) > 0;
         }
     }
 }

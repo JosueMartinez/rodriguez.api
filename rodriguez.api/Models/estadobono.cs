@@ -5,27 +5,26 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
-    [Table("smrodriguez.estadobono")]
-    public partial class estadobono
+    
+    public partial class EstadoBono
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public estadobono()
+        public EstadoBono()
         {
-            bonoes = new HashSet<bono>();
-            historialbonoes = new HashSet<historialbono>();
+            Bonos = new HashSet<Bono>();
+            Historial = new HashSet<HistorialBono>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string descripcion { get; set; }
+        public string Descripcion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bono> bonoes { get; set; }
+        public virtual ICollection<Bono> Bonos { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<historialbono> historialbonoes { get; set; }
+        public virtual ICollection<HistorialBono> Historial { get; set; }
     }
 }

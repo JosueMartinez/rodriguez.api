@@ -6,22 +6,21 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using System.Runtime.Serialization;
-
-    [Table("smrodriguez.producto")]
-    public partial class producto
+    
+    public partial class Producto
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(30)]
-        public string nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public int medidaId { get; set; }
+        public int MedidaId { get; set; }
 
-        public int categoriaId { get; set; }
+        public int CategoriaId { get; set; }
         
-        public virtual categoria categoria { get; set; }
+        public virtual Categoria Categoria { get; set; }
         
-        public virtual medida medida { get; set; }
+        public virtual Medida Medida { get; set; }
     }
 }

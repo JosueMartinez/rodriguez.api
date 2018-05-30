@@ -14,16 +14,16 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/medidas
-        public IQueryable<medida> Getmedidas()
+        public IQueryable<Medida> Getmedidas()
         {
-            return db.medidas;
+            return db.Medidas;
         }
 
         // GET: api/medidas/5
-        [ResponseType(typeof(medida))]
+        [ResponseType(typeof(Medida))]
         public async Task<IHttpActionResult> Getmedida(int id)
         {
-            medida medida = await db.medidas.FindAsync(id);
+            Medida medida = await db.Medidas.FindAsync(id);
             if (medida == null)
             {
                 return NotFound();
@@ -34,14 +34,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/medidas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putmedida(int id, medida medida)
+        public async Task<IHttpActionResult> Putmedida(int id, Medida medida)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != medida.id)
+            if (id != medida.Id)
             {
                 return BadRequest();
             }
@@ -68,31 +68,31 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/medidas
-        [ResponseType(typeof(medida))]
-        public async Task<IHttpActionResult> Postmedida(medida medida)
+        [ResponseType(typeof(Medida))]
+        public async Task<IHttpActionResult> Postmedida(Medida medida)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.medidas.Add(medida);
+            db.Medidas.Add(medida);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = medida.id }, medida);
+            return CreatedAtRoute("DefaultApi", new { id = medida.Id }, medida);
         }
 
         // DELETE: api/medidas/5
-        [ResponseType(typeof(medida))]
+        [ResponseType(typeof(Medida))]
         public async Task<IHttpActionResult> Deletemedida(int id)
         {
-            medida medida = await db.medidas.FindAsync(id);
+            Medida medida = await db.Medidas.FindAsync(id);
             if (medida == null)
             {
                 return NotFound();
             }
 
-            db.medidas.Remove(medida);
+            db.Medidas.Remove(medida);
             await db.SaveChangesAsync();
 
             return Ok(medida);
@@ -109,7 +109,7 @@ namespace rodriguez.api.Controllers
 
         public bool medidaExists(int id)
         {
-            return db.medidas.Count(e => e.id == id) > 0;
+            return db.Medidas.Count(e => e.Id == id) > 0;
         }
     }
 }

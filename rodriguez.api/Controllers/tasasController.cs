@@ -21,34 +21,34 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/tasa
-        public IQueryable<tasamoneda> Gettasasmonedas()
+        public IQueryable<Tasa> Gettasasmonedas()
         {
-            return db.tasasmonedas.Include("moneda").Where(x => x.activa);
+            return db.Tasas.Include("moneda").Where(x => x.Activa);
         }
 
-        [ResponseType(typeof(tasamoneda))]
+        [ResponseType(typeof(Tasa))]
         [Route("api/monedas/{monedaId:int}/historial")]
         [HttpGet]
-        public IQueryable<tasamoneda> GetHistorial(int monedaId)
+        public IQueryable<Tasa> GetHistorial(int monedaId)
         {
-            return db.tasasmonedas.Where(x => x.monedaId == monedaId).OrderByDescending(x => x.fecha).Take(10);
+            return db.Tasas.Where(x => x.MonedaId == monedaId).OrderByDescending(x => x.Fecha).Take(10);
         }
         
-        [ResponseType(typeof(tasamoneda))]
+        [ResponseType(typeof(Tasa))]
         [Route("api/monedas/{monedaId:int}/tasa")]
         [HttpGet]
         public async Task<IHttpActionResult> Gettasamoneda(int monedaId)
         {
             using(RodriguezModel db = new RodriguezModel())
             {
-                var moneda = await db.monedas.FindAsync(monedaId);
+                var moneda = await db.Monedas.FindAsync(monedaId);
                 if (moneda == null)
                 {
                     return NotFound();
                 }
                                 
-                var tasasFecha = db.tasasmonedas.Where(x => x.moneda.id == monedaId).OrderByDescending(x => x.fecha);
-                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.moneda).FirstAsync() : null;
+                var tasasFecha = db.Tasas.Where(x => x.Moneda.Id == monedaId).OrderByDescending(x => x.Fecha);
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.Moneda).FirstAsync() : null;
                 
                 if (tasa == null)
                 {
@@ -61,20 +61,20 @@ namespace rodriguez.api.Controllers
         }
 
         //changing
-        [ResponseType(typeof(tasamoneda))]
+        [ResponseType(typeof(Tasa))]
         [Route("api/monedas/{simbolo}/tasa")]
         [HttpGet]
         public async Task<IHttpActionResult> Gettasamoneda(string simbolo)
         {
             try
             {
-                if (db.monedas.Count(x => x.simbolo.Equals(simbolo)) == 0)
+                if (db.Monedas.Count(x => x.Simbolo.Equals(simbolo)) == 0)
                 {
                     return NotFound();
                 }
 
-                var tasasFecha = db.tasasmonedas.Where(x => x.moneda.simbolo.Equals(simbolo)).OrderByDescending(x => x.fecha);
-                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.moneda).FirstAsync(): null;
+                var tasasFecha = db.Tasas.Where(x => x.Moneda.Simbolo.Equals(simbolo)).OrderByDescending(x => x.Fecha);
+                var tasa = tasasFecha.Count() > 0 ? await tasasFecha.Include(m => m.Moneda).FirstAsync(): null;
                 if (tasa == null)
                 {
                     return NotFound();
@@ -91,14 +91,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/tasa/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Puttasamoneda(int id, tasamoneda tasamoneda)
+        public async Task<IHttpActionResult> Puttasamoneda(int id, Tasa tasamoneda)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != tasamoneda.id)
+            if (id != tasamoneda.Id)
             {
                 return BadRequest();
             }
@@ -125,24 +125,24 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/tasa
-        [ResponseType(typeof(tasamoneda))]
-        public async Task<IHttpActionResult> Posttasamoneda(tasamoneda tasa)
+        [ResponseType(typeof(Tasa))]
+        public async Task<IHttpActionResult> Posttasamoneda(Tasa tasa)
         {
             //agregar fecha y activar
             try
             {
-                tasa.fecha = DateTime.Now;
-                tasa.activa = true;
-                var monedas = db.monedas.Where(x => x.id == tasa.monedaId);
+                tasa.Fecha = DateTime.Now;
+                tasa.Activa = true;
+                var monedas = db.Monedas.Where(x => x.Id == tasa.MonedaId);
 
-                if(tasa.valor <= 0 && monedas.Count() == 0)
+                if(tasa.Valor <= 0 && monedas.Count() == 0)
                 {
                     return BadRequest();
                 }
 
-                tasa.moneda = monedas.First();
-                disableTasas(tasa.moneda.id);    //desactivando todas demas tasas
-                db.tasasmonedas.Add(tasa);
+                tasa.Moneda = monedas.First();
+                disableTasas(tasa.Moneda.Id);    //desactivando todas demas tasas
+                db.Tasas.Add(tasa);
                 await db.SaveChangesAsync();
 
                 return Ok(tasa);
@@ -154,16 +154,16 @@ namespace rodriguez.api.Controllers
         }
 
         // DELETE: api/tasa/5
-        [ResponseType(typeof(tasamoneda))]
+        [ResponseType(typeof(Tasa))]
         public async Task<IHttpActionResult> Deletetasamoneda(int id)
         {
-            tasamoneda tasamoneda = await db.tasasmonedas.FindAsync(id);
+            Tasa tasamoneda = await db.Tasas.FindAsync(id);
             if (tasamoneda == null)
             {
                 return NotFound();
             }
 
-            db.tasasmonedas.Remove(tasamoneda);
+            db.Tasas.Remove(tasamoneda);
             await db.SaveChangesAsync();
 
             return Ok(tasamoneda);
@@ -180,14 +180,14 @@ namespace rodriguez.api.Controllers
 
         private bool tasamonedaExists(int id)
         {
-            return db.tasasmonedas.Count(e => e.id == id) > 0;
+            return db.Tasas.Count(e => e.Id == id) > 0;
         }
 
         private void disableTasas(int monedaId)
         {
-            var tasas = db.tasasmonedas.Where(x => x.moneda.id ==(monedaId));
-            tasas.ForEachAsync((tasamoneda t) => {
-                t.activa = false;
+            var tasas = db.Tasas.Where(x => x.Moneda.Id ==(monedaId));
+            tasas.ForEachAsync((Tasa t) => {
+                t.Activa = false;
                 db.Entry(t).State = EntityState.Modified;
             });
 

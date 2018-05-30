@@ -3,7 +3,7 @@ namespace rodriguez.api.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -35,14 +35,14 @@ namespace rodriguez.api.Migrations
                 "dbo.Cliente",
                 c => new
                     {
-                        id = c.Int(nullable: false, identity: true),
+                        ClienteId = c.Int(nullable: false, identity: true),
                         Usuario = c.String(nullable: false, maxLength: 20, storeType: "nvarchar"),
                         NombreCompleto = c.String(nullable: false, maxLength: 200, unicode: false),
                         Cedula = c.String(nullable: false, maxLength: 11, unicode: false),
                         Celular = c.String(maxLength: 10, unicode: false),
                         Email = c.String(maxLength: 50, unicode: false),
                     })
-                .PrimaryKey(t => t.id)
+                .PrimaryKey(t => t.ClienteId)
                 .Index(t => t.Usuario, unique: true);
             
             CreateTable(
@@ -60,7 +60,7 @@ namespace rodriguez.api.Migrations
                 .Index(t => t.ClienteId);
             
             CreateTable(
-                "dbo.ListaCompraProducto",
+                "dbo.ListaProducto",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -118,7 +118,7 @@ namespace rodriguez.api.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Historial",
+                "dbo.HistorialBono",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -158,29 +158,6 @@ namespace rodriguez.api.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.AspNetRoles",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
-                        Name = c.String(nullable: false, maxLength: 256, storeType: "nvarchar"),
-                    })
-                .PrimaryKey(t => t.Id)
-                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
-            CreateTable(
-                "dbo.AspNetUserRoles",
-                c => new
-                    {
-                        UserId = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
-                        RoleId = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
-                    })
-                .PrimaryKey(t => new { t.UserId, t.RoleId })
-                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
-                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId)
-                .Index(t => t.RoleId);
-            
-            CreateTable(
                 "dbo.Rol",
                 c => new
                     {
@@ -204,6 +181,29 @@ namespace rodriguez.api.Migrations
                 .ForeignKey("dbo.Rol", t => t.RolId)
                 .Index(t => t.NombreUsuario, unique: true)
                 .Index(t => t.RolId);
+            
+            CreateTable(
+                "dbo.AspNetRoles",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
+                        Name = c.String(nullable: false, maxLength: 256, storeType: "nvarchar"),
+                    })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Name, unique: true, name: "RoleNameIndex");
+            
+            CreateTable(
+                "dbo.AspNetUserRoles",
+                c => new
+                    {
+                        UserId = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
+                        RoleId = c.String(nullable: false, maxLength: 128, storeType: "nvarchar"),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -257,34 +257,34 @@ namespace rodriguez.api.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Usuario", "RolId", "dbo.Rol");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Usuario", "RolId", "dbo.Rol");
             DropForeignKey("dbo.Bono", "TasaId", "dbo.Tasa");
             DropForeignKey("dbo.Tasa", "MonedaId", "dbo.Moneda");
-            DropForeignKey("dbo.Historial", "BonoId", "dbo.Bono");
-            DropForeignKey("dbo.Historial", "EstadoBonoId", "dbo.EstadoBono");
+            DropForeignKey("dbo.HistorialBono", "BonoId", "dbo.Bono");
+            DropForeignKey("dbo.HistorialBono", "EstadoBonoId", "dbo.EstadoBono");
             DropForeignKey("dbo.Bono", "EstadoBonoId", "dbo.EstadoBono");
             DropForeignKey("dbo.ListaCompra", "ClienteId", "dbo.Cliente");
-            DropForeignKey("dbo.ListaCompraProducto", "ListaCompraId", "dbo.ListaCompra");
-            DropForeignKey("dbo.ListaCompraProducto", "ProductoId", "dbo.Producto");
+            DropForeignKey("dbo.ListaProducto", "ListaCompraId", "dbo.ListaCompra");
+            DropForeignKey("dbo.ListaProducto", "ProductoId", "dbo.Producto");
             DropForeignKey("dbo.Producto", "MedidaId", "dbo.Medida");
             DropForeignKey("dbo.Producto", "CategoriaId", "dbo.Categoria");
             DropForeignKey("dbo.Bono", "ClienteId", "dbo.Cliente");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Usuario", new[] { "RolId" });
-            DropIndex("dbo.Usuario", new[] { "NombreUsuario" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Usuario", new[] { "RolId" });
+            DropIndex("dbo.Usuario", new[] { "NombreUsuario" });
             DropIndex("dbo.Tasa", new[] { "MonedaId" });
-            DropIndex("dbo.Historial", new[] { "EstadoBonoId" });
-            DropIndex("dbo.Historial", new[] { "BonoId" });
+            DropIndex("dbo.HistorialBono", new[] { "EstadoBonoId" });
+            DropIndex("dbo.HistorialBono", new[] { "BonoId" });
             DropIndex("dbo.Producto", new[] { "CategoriaId" });
             DropIndex("dbo.Producto", new[] { "MedidaId" });
-            DropIndex("dbo.ListaCompraProducto", new[] { "ProductoId" });
-            DropIndex("dbo.ListaCompraProducto", new[] { "ListaCompraId" });
+            DropIndex("dbo.ListaProducto", new[] { "ProductoId" });
+            DropIndex("dbo.ListaProducto", new[] { "ListaCompraId" });
             DropIndex("dbo.ListaCompra", new[] { "ClienteId" });
             DropIndex("dbo.Cliente", new[] { "Usuario" });
             DropIndex("dbo.Bono", new[] { "EstadoBonoId" });
@@ -293,18 +293,18 @@ namespace rodriguez.api.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Usuario");
-            DropTable("dbo.Rol");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Usuario");
+            DropTable("dbo.Rol");
             DropTable("dbo.Moneda");
             DropTable("dbo.Tasa");
-            DropTable("dbo.Historial");
+            DropTable("dbo.HistorialBono");
             DropTable("dbo.EstadoBono");
             DropTable("dbo.Medida");
             DropTable("dbo.Categoria");
             DropTable("dbo.Producto");
-            DropTable("dbo.ListaCompraProducto");
+            DropTable("dbo.ListaProducto");
             DropTable("dbo.ListaCompra");
             DropTable("dbo.Cliente");
             DropTable("dbo.Bono");

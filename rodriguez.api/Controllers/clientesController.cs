@@ -18,16 +18,16 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/clientes
-        public IQueryable<cliente> Getclientes()
+        public IQueryable<Cliente> Getclientes()
         {
-            return db.clientes;
+            return db.Clientes;
         }
 
         // GET: api/clientes/5
-        [ResponseType(typeof(cliente))]
+        [ResponseType(typeof(Cliente))]
         public async Task<IHttpActionResult> Getcliente(int id)
         {
-            cliente cliente = await db.clientes.FindAsync(id);
+            Cliente cliente = await db.Clientes.FindAsync(id);
             if (cliente == null)
             {
                 return NotFound();
@@ -37,12 +37,12 @@ namespace rodriguez.api.Controllers
         }
 
         // GET: api/clientes/5
-        [ResponseType(typeof(bono))]
+        [ResponseType(typeof(Bono))]
         [Route("api/clienteU/{usuario}")]
         [HttpGet]
         public async Task<IHttpActionResult> GetclienteNombre(string usuario)
         {
-            cliente cliente = await db.clientes.Where(x => x.usuario.Equals(usuario)).FirstOrDefaultAsync();
+            Cliente cliente = await db.Clientes.Where(x => x.Usuario.Equals(usuario)).FirstOrDefaultAsync();
             if (cliente == null)
             {
                 return NotFound();
@@ -53,14 +53,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/clientes/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcliente(int id, cliente cliente)
+        public async Task<IHttpActionResult> Putcliente(int id, Cliente cliente)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cliente.id)
+            if (!id.Equals(cliente.Id))
             {
                 return BadRequest();
             }
@@ -87,31 +87,31 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/clientes
-        [ResponseType(typeof(cliente))]
-        public async Task<IHttpActionResult> Postcliente(cliente cliente)
+        [ResponseType(typeof(Cliente))]
+        public async Task<IHttpActionResult> Postcliente(Cliente cliente)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.clientes.Add(cliente);
+            db.Clientes.Add(cliente);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = cliente.id }, cliente);
+            return CreatedAtRoute("DefaultApi", new { id = cliente.Id }, cliente);
         }
 
         // DELETE: api/clientes/5
-        [ResponseType(typeof(cliente))]
+        [ResponseType(typeof(Cliente))]
         public async Task<IHttpActionResult> Deletecliente(int id)
         {
-            cliente cliente = await db.clientes.FindAsync(id);
+            Cliente cliente = await db.Clientes.FindAsync(id);
             if (cliente == null)
             {
                 return NotFound();
             }
 
-            db.clientes.Remove(cliente);
+            db.Clientes.Remove(cliente);
             await db.SaveChangesAsync();
 
             return Ok(cliente);
@@ -128,7 +128,7 @@ namespace rodriguez.api.Controllers
 
         private bool clienteExists(int id)
         {
-            return db.clientes.Count(e => e.id == id) > 0;
+            return db.Clientes.Count(e => e.Id.Equals(id)) > 0;
         }
     }
 }

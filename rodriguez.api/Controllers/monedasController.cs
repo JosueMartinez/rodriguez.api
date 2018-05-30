@@ -18,13 +18,13 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/monedas
-        public IQueryable<moneda> Getmonedas()
+        public IQueryable<Moneda> Getmonedas()
         {
-            var query = from m in db.monedas
+            var query = from m in db.Monedas
                         select new
                         {
                              moneda = m,
-                             tasas = m.tasas.Where(t => t.activa == true)
+                             tasas = m.Tasas.Where(t => t.Activa == true)
                         };
 
             var monedas = query.ToArray().Select(m => m.moneda);
@@ -32,10 +32,10 @@ namespace rodriguez.api.Controllers
         }
 
         // GET: api/monedas/5
-        [ResponseType(typeof(moneda))]
+        [ResponseType(typeof(Moneda))]
         public async Task<IHttpActionResult> Getmoneda(int id)
         {
-            moneda moneda = await db.monedas.FindAsync(id);
+            Moneda moneda = await db.Monedas.FindAsync(id);
             if (moneda == null)
             {
                 return NotFound();
@@ -46,14 +46,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/monedas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putmoneda(int id, moneda moneda)
+        public async Task<IHttpActionResult> Putmoneda(int id, Moneda moneda)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != moneda.id)
+            if (id != moneda.Id)
             {
                 return BadRequest();
             }
@@ -80,31 +80,31 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/monedas
-        [ResponseType(typeof(moneda))]
-        public async Task<IHttpActionResult> Postmoneda(moneda moneda)
+        [ResponseType(typeof(Moneda))]
+        public async Task<IHttpActionResult> Postmoneda(Moneda moneda)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.monedas.Add(moneda);
+            db.Monedas.Add(moneda);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = moneda.id }, moneda);
+            return CreatedAtRoute("DefaultApi", new { id = moneda.Id }, moneda);
         }
 
         // DELETE: api/monedas/5
-        [ResponseType(typeof(moneda))]
+        [ResponseType(typeof(Moneda))]
         public async Task<IHttpActionResult> Deletemoneda(int id)
         {
-            moneda moneda = await db.monedas.FindAsync(id);
+            Moneda moneda = await db.Monedas.FindAsync(id);
             if (moneda == null)
             {
                 return NotFound();
             }
 
-            db.monedas.Remove(moneda);
+            db.Monedas.Remove(moneda);
             await db.SaveChangesAsync();
 
             return Ok(moneda);
@@ -121,7 +121,7 @@ namespace rodriguez.api.Controllers
 
         private bool monedaExists(int id)
         {
-            return db.monedas.Count(e => e.id == id) > 0;
+            return db.Monedas.Count(e => e.Id == id) > 0;
         }
     }
 }
