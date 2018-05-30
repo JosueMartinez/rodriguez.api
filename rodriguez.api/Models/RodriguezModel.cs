@@ -13,7 +13,7 @@ namespace rodriguez.api.Models
         public RodriguezModel()
             : base("name=RodriguezModel")
         {
-            //this.Configuration.ProxyCreationEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
 
 
