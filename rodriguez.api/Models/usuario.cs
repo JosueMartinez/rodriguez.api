@@ -5,11 +5,10 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-
-    [Table("smrodriguez.usuario")]
-    public partial class usuario
+    
+    public partial class Usuario
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         //[required]
         //[stringlength(40)]
@@ -21,27 +20,27 @@ namespace rodriguez.api.Models
 
         [Required]
         [StringLength(200)]
-        public string nombreCompleto { get; set; }
+        public string NombreCompleto { get; set; }
 
         [Required]
         [StringLength(20)]
         [Index(IsUnique = true)]
-        public string nombreUsuario { get; set; }
+        public string NombreUsuario { get; set; }
 
         [Required]
         [StringLength(20,MinimumLength = 6)]
         [DataType(DataType.Password)]
-        public string contrasena { get; set; }
+        public string Contrasena { get; set; }
 
         [NotMapped]
         [DataType(DataType.Password)]
         [Compare("contrasena", ErrorMessage = "Las contrasenas deben ser iguales")]
-        public string confirmarContrasena { get; set; }
+        public string ConfirmarContrasena { get; set; }
 
-        public bool activo { get; set; }
+        public bool Activo { get; set; }
 
-        public int rolId { get; set; }
+        public int RolId { get; set; }
 
-        public virtual rol rol { get; set; }
+        public virtual Rol Rol { get; set; }
     }
 }

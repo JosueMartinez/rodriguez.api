@@ -19,23 +19,23 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/usuarios
-        public IQueryable<usuario> Getusuarios()
+        public IQueryable<Usuario> Getusuarios()
         {
-            return db.usuarios.Include(x => x.rol).Where(x => x.activo);
+            return db.Usuarios.Include(x => x.Rol).Where(x => x.Activo);
         }
 
         // GET: api/usuarios/5
-        [ResponseType(typeof(usuario))]
+        [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> Getusuario(int id)
         {
-            var usuarios =  db.usuarios.Include(x => x.rol).Where(x => x.id == id);
+            var usuarios =  db.Usuarios.Include(x => x.Rol).Where(x => x.Id == id);
             var usuario = usuarios.Count() > 0 ? await usuarios.FirstAsync() : null;
 
             if (usuario == null)
             {
                 return NotFound();
             }
-            if (usuario.activo)
+            if (usuario.Activo)
             {
                 return Ok(usuario);
             }
@@ -44,12 +44,12 @@ namespace rodriguez.api.Controllers
         }
 
         // GET: api/clientes/5
-        [ResponseType(typeof(bono))]
+        [ResponseType(typeof(Bono))]
         [Route("api/usuarioU/{usuario}")]
         [HttpGet] //
         public async Task<IHttpActionResult> GetclienteNombre(string usuario)
         {
-            usuario u = await db.usuarios.Include(x => x.rol).Where(x => x.nombreUsuario.ToLower().Equals(usuario.ToLower()) && x.activo).FirstOrDefaultAsync();
+            Usuario u = await db.Usuarios.Include(x => x.Rol).Where(x => x.NombreUsuario.ToLower().Equals(usuario.ToLower()) && x.Activo).FirstOrDefaultAsync();
             if (u == null)
             {
                 return NotFound();
@@ -60,14 +60,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/usuarios/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putusuario(int id, usuario usuario)
+        public async Task<IHttpActionResult> Putusuario(int id, Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != usuario.id)
+            if (id != usuario.Id)
             {
                 return BadRequest();
             }
@@ -94,31 +94,31 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/usuarios
-        [ResponseType(typeof(usuario))]
-        public async Task<IHttpActionResult> Postusuario(usuario usuario)
+        [ResponseType(typeof(Usuario))]
+        public async Task<IHttpActionResult> Postusuario(Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.usuarios.Add(usuario);
+            db.Usuarios.Add(usuario);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = usuario.id }, usuario);
+            return CreatedAtRoute("DefaultApi", new { id = usuario.Id }, usuario);
         }
 
         // DELETE: api/usuarios/5
-        [ResponseType(typeof(usuario))]
+        [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> Deleteusuario(int id)
         {
-            usuario usuario = await db.usuarios.FindAsync(id);
+            Usuario usuario = await db.Usuarios.FindAsync(id);
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            db.usuarios.Remove(usuario);
+            db.Usuarios.Remove(usuario);
             await db.SaveChangesAsync();
 
             return Ok(usuario);
@@ -135,7 +135,7 @@ namespace rodriguez.api.Controllers
 
         private bool usuarioExists(int id)
         {
-            return db.usuarios.Count(e => e.id == id) > 0;
+            return db.Usuarios.Count(e => e.Id == id) > 0;
         }
     }
 }

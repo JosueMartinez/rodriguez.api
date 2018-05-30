@@ -8,14 +8,13 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Runtime.Serialization;
 
-    [Table("smrodriguez.cliente")]
-    public partial class cliente : IUser
+    public partial class Cliente : IUser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public cliente()
+        public Cliente()
         {
-            bonoes = new HashSet<bono>();
-            listacompras = new HashSet<listacompra>();
+            Bonos = new HashSet<Bono>();
+            Listas = new HashSet<ListaCompra>();
             this.Id = Guid.NewGuid().ToString();
         }
         
@@ -24,20 +23,20 @@ namespace rodriguez.api.Models
         [NotMapped]
         public string UserName
         {
-            get { return usuario; }
-            set { usuario = value; }
+            get { return Usuario; }
+            set { Usuario = value; }
         }
 
-        public int id { get; set; }
+        public int ClienteId { get; set; }
 
         [Required]
         [Index(IsUnique = true)]
         [StringLength(20)]
-        public string usuario { get; set; }
+        public string Usuario { get; set; }
 
         [Required]
         [StringLength(200)]
-        public string nombreCompleto { get; set; }
+        public string NombreCompleto { get; set; }
 
         //[Required]
         //[StringLength(50)]
@@ -50,14 +49,14 @@ namespace rodriguez.api.Models
         [Required]
         [StringLength(11)]
         [Cedula]
-        public string cedula { get; set; }
+        public string Cedula { get; set; }
 
         [StringLength(10)]
-        public string celular { get; set; }
+        public string Celular { get; set; }
 
         [StringLength(50)]
         [EmailAddress]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [NotMapped]
@@ -70,9 +69,9 @@ namespace rodriguez.api.Models
         public string ConfirmPassword { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<bono> bonoes { get; set; }
+        public virtual ICollection<Bono> Bonos { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<listacompra> listacompras { get; set; }
+        public virtual ICollection<ListaCompra> Listas { get; set; }
     }
 }

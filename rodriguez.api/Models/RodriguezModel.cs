@@ -5,6 +5,7 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     //public partial class RodriguezModel : DbContext
     public partial class RodriguezModel : IdentityDbContext<IdentityUser>
@@ -12,60 +13,62 @@ namespace rodriguez.api.Models
         public RodriguezModel()
             : base("name=RodriguezModel")
         {
-            this.Configuration.ProxyCreationEnabled = false;
+            //this.Configuration.ProxyCreationEnabled = false;
         }
+
 
         //static RodriguezModel()
         //{
         //    DbConfiguration.SetConfiguration(new MySql.Data.Entity.MySqlEFConfiguration());
         //}
-        
-        
-        public virtual DbSet<bono> bonos { get; set; }
-        public virtual DbSet<categoria> categorias { get; set; }
-        public virtual DbSet<cliente> clientes { get; set; }
-        public virtual DbSet<estadobono> estadobonos { get; set; }
-        public virtual DbSet<historialbono> historialbonos { get; set; }
-        public virtual DbSet<listacompra> listacompras { get; set; }
-        public virtual DbSet<listacompraproducto> listacompraproductos { get; set; }
-        public virtual DbSet<medida> medidas { get; set; }
-        public virtual DbSet<moneda> monedas { get; set; }
-        public virtual DbSet<producto> productos { get; set; }
-        public virtual DbSet<rol> rols { get; set; }
-        public virtual DbSet<usuario> usuarios { get; set; }
-        public virtual DbSet<tasamoneda> tasasmonedas { get; set; }
+
+
+        public virtual DbSet<Bono> Bonos { get; set; }
+        public virtual DbSet<Categoria> Categorias { get; set; }
+        public virtual DbSet<Cliente> Clientes { get; set; }
+        public virtual DbSet<EstadoBono> Estados { get; set; }
+        public virtual DbSet<HistorialBono> Historial { get; set; }
+        public virtual DbSet<ListaCompra> Listas { get; set; }
+        public virtual DbSet<ListaProducto> ListasProductos { get; set; }
+        public virtual DbSet<Medida> Medidas { get; set; }
+        public virtual DbSet<Moneda> Monedas { get; set; }
+        public virtual DbSet<Producto> Productos { get; set; }
+        public virtual DbSet<Rol> Roles { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Tasa> Tasas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<bono>()
-                .Property(e => e.nombreDestino)
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Bono>()
+                .Property(e => e.NombreDestino)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<bono>()
-                .Property(e => e.apellidoDestino)
+            modelBuilder.Entity<Bono>()
+                .Property(e => e.ApellidoDestino)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<bono>()
-                .Property(e => e.cedulaDestino)
+            modelBuilder.Entity<Bono>()
+                .Property(e => e.CedulaDestino)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<bono>()
-                .HasMany(e => e.historialbonoes)
-                .WithRequired(e => e.bono)
+            modelBuilder.Entity<Bono>()
+                .HasMany(e => e.Historial)
+                .WithRequired(e => e.Bono)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<categoria>()
-                .Property(e => e.descripcion)
+            modelBuilder.Entity<Categoria>()
+                .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<categoria>()
-                .HasMany(e => e.productos)
-                .WithRequired(e => e.categoria)
+            modelBuilder.Entity<Categoria>()
+                .HasMany(e => e.Productos)
+                .WithRequired(e => e.Categoria)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<cliente>()
-                .Property(e => e.nombreCompleto)
+            modelBuilder.Entity<Cliente>()
+                .Property(e => e.NombreCompleto)
                 .IsUnicode(false);
             //modelBuilder.Entity<cliente>()
             //    .Property(e => e.nombres)
@@ -75,70 +78,70 @@ namespace rodriguez.api.Models
             //    .Property(e => e.apellidos)
             //    .IsUnicode(false);
 
-            modelBuilder.Entity<cliente>()
-                .Property(e => e.cedula)
+            modelBuilder.Entity<Cliente>()
+                .Property(e => e.Cedula)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cliente>()
-                .Property(e => e.celular)
+            modelBuilder.Entity<Cliente>()
+                .Property(e => e.Celular)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cliente>()
-                .Property(e => e.email)
+            modelBuilder.Entity<Cliente>()
+                .Property(e => e.Email)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<cliente>()
-                .HasMany(e => e.bonoes)
-                .WithRequired(e => e.cliente)
+            modelBuilder.Entity<Cliente>()
+                .HasMany(e => e.Bonos)
+                .WithRequired(e => e.Cliente)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<cliente>()
-                .HasMany(e => e.listacompras)
-                .WithRequired(e => e.cliente)
+            modelBuilder.Entity<Cliente>()
+                .HasMany(e => e.Listas)
+                .WithRequired(e => e.Cliente)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<estadobono>()
-                .Property(e => e.descripcion)
+            modelBuilder.Entity<EstadoBono>()
+                .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<estadobono>()
-                .HasMany(e => e.bonoes)
-                .WithRequired(e => e.estadobono)
+            modelBuilder.Entity<EstadoBono>()
+                .HasMany(e => e.Bonos)
+                .WithRequired(e => e.Estado)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<estadobono>()
-                .HasMany(e => e.historialbonoes)
-                .WithRequired(e => e.estadobono)
+            modelBuilder.Entity<EstadoBono>()
+                .HasMany(e => e.Historial)
+                .WithRequired(e => e.Estadobono)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<listacompra>()
-                .Property(e => e.nombre)
+            modelBuilder.Entity<ListaCompra>()
+                .Property(e => e.Nombre)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<listacompra>()
-                .HasMany(e => e.productosLista)
-                .WithRequired(e => e.listacompra)
+            modelBuilder.Entity<ListaCompra>()
+                .HasMany(e => e.Productos)
+                .WithRequired(e => e.Lista)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<medida>()
-                .Property(e => e.descripcion)
+            modelBuilder.Entity<Medida>()
+                .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<medida>()
-                .Property(e => e.simbolo)
+            modelBuilder.Entity<Medida>()
+                .Property(e => e.Simbolo)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<medida>()
-                .HasMany(e => e.productos)
-                .WithRequired(e => e.medida)
+            modelBuilder.Entity<Medida>()
+                .HasMany(e => e.Productos)
+                .WithRequired(e => e.Medida)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<moneda>()
-                .Property(e => e.descripcion)
+            modelBuilder.Entity<Moneda>()
+                .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<moneda>()
-                .Property(e => e.simbolo)
+            modelBuilder.Entity<Moneda>()
+                .Property(e => e.Simbolo)
                 .IsUnicode(false);
 
             //modelBuilder.Entity<moneda>()
@@ -146,26 +149,26 @@ namespace rodriguez.api.Models
             //    .WithRequired(e => e.moneda)
             //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<moneda>()
-                .HasMany(e => e.tasas)
-                .WithRequired(e => e.moneda)
+            modelBuilder.Entity<Moneda>()
+                .HasMany(e => e.Tasas)
+                .WithRequired(e => e.Moneda)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<producto>()
-                .Property(e => e.nombre)
+            modelBuilder.Entity<Producto>()
+                .Property(e => e.Nombre)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<rol>()
-                .Property(e => e.descripcion)
+            modelBuilder.Entity<Rol>()
+                .Property(e => e.Descripcion)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<rol>()
-                .HasMany(e => e.usuarios)
-                .WithRequired(e => e.rol)
+            modelBuilder.Entity<Rol>()
+                .HasMany(e => e.Usuarios)
+                .WithRequired(e => e.Rol)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<usuario>()
-                .Property(e => e.nombreCompleto)
+            modelBuilder.Entity<Usuario>()
+                .Property(e => e.NombreCompleto)
                 .IsUnicode(false);
 
             //modelBuilder.Entity<usuario>()
@@ -176,12 +179,12 @@ namespace rodriguez.api.Models
             //    .Property(e => e.apellidos)
             //    .IsUnicode(false);
 
-            modelBuilder.Entity<usuario>()
-                .Property(e => e.nombreUsuario)
+            modelBuilder.Entity<Usuario>()
+                .Property(e => e.NombreUsuario)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<usuario>()
-                .Property(e => e.contrasena)
+            modelBuilder.Entity<Usuario>()
+                .Property(e => e.Contrasena)
                 .IsUnicode(false);
 
 

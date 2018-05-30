@@ -20,16 +20,16 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/categorias
-        public IQueryable<categoria> Getcategorias()
+        public IQueryable<Categoria> Getcategorias()
         {
-            return db.categorias.Include(c => c.productos).OrderBy(c => c.descripcion);
+            return db.Categorias.Include(c => c.Productos).OrderBy(c => c.Descripcion);
         }
 
         // GET: api/categorias/5
-        [ResponseType(typeof(categoria))]
+        [ResponseType(typeof(Categoria))]
         public async Task<IHttpActionResult> Getcategoria(int id)
         {
-            categoria categoria = await db.categorias.FindAsync(id);
+            Categoria categoria = await db.Categorias.FindAsync(id);
             if (categoria == null)
             {
                 return NotFound();
@@ -40,14 +40,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/categorias/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcategoria(int id, categoria categoria)
+        public async Task<IHttpActionResult> Putcategoria(int id, Categoria categoria)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != categoria.id)
+            if (id != categoria.Id)
             {
                 return BadRequest();
             }
@@ -74,8 +74,8 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/categorias
-        [ResponseType(typeof(categoria))]
-        public async Task<IHttpActionResult> Postcategoria(categoria categoria)
+        [ResponseType(typeof(Categoria))]
+        public async Task<IHttpActionResult> Postcategoria(Categoria categoria)
         {
             if (categoria == null)  //el request no contiene categoria
             {
@@ -83,20 +83,20 @@ namespace rodriguez.api.Controllers
             }
 
             //si la descripcion de la categoria esta en blanco
-            if (String.IsNullOrEmpty(categoria.descripcion) || String.IsNullOrWhiteSpace(categoria.descripcion))
+            if (String.IsNullOrEmpty(categoria.Descripcion) || String.IsNullOrWhiteSpace(categoria.Descripcion))
             {
                 return BadRequest("La categoría debe tener una descripción.");
             }
 
             try
             {
-                categoria.descripcion = Utilidades.capitalize(categoria.descripcion);
+                categoria.Descripcion = Utilidades.capitalize(categoria.Descripcion);
                 //verificar si no existe una categoria con el mismo nombre
-                if (categoriaExists(categoria.descripcion))
+                if (categoriaExists(categoria.Descripcion))
                 {
-                    db.categorias.Add(categoria);
+                    db.Categorias.Add(categoria);
                     await db.SaveChangesAsync();
-                    return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
+                    return CreatedAtRoute("DefaultApi", new { id = categoria.Id }, categoria);
                 }
                 return BadRequest("Esta categoría ya existe");
             }
@@ -107,16 +107,16 @@ namespace rodriguez.api.Controllers
         }
 
         // DELETE: api/categorias/5
-        [ResponseType(typeof(categoria))]
+        [ResponseType(typeof(Categoria))]
         public async Task<IHttpActionResult> Deletecategoria(int id)
         {
-            categoria categoria = await db.categorias.FindAsync(id);
+            Categoria categoria = await db.Categorias.FindAsync(id);
             if (categoria == null)
             {
                 return NotFound();
             }
 
-            db.categorias.Remove(categoria);
+            db.Categorias.Remove(categoria);
             await db.SaveChangesAsync();
 
             return Ok(categoria);
@@ -133,12 +133,12 @@ namespace rodriguez.api.Controllers
 
         public bool categoriaExists(int id)
         {
-            return db.categorias.Count(e => e.id == id) > 0;
+            return db.Categorias.Count(e => e.Id == id) > 0;
         }
 
         private bool categoriaExists(String descripcion)
         {
-            return db.categorias.Where(x => x.descripcion.Equals(descripcion)).Count() == 0;
+            return db.Categorias.Where(x => x.Descripcion.Equals(descripcion)).Count() == 0;
         }
     }
 }

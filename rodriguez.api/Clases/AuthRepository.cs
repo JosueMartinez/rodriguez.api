@@ -20,23 +20,23 @@ namespace rodriguez.api.Clases
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
         }
 
-        public async Task<IdentityResult> RegisterUser(usuario userModel)
+        public async Task<IdentityResult> RegisterUser(Usuario userModel)
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = userModel.nombreUsuario
+                UserName = userModel.NombreUsuario
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.contrasena);
+            var result = await _userManager.CreateAsync(user, userModel.Contrasena);
 
             return result;
         }
 
-        public async Task<IdentityResult> RegisterClient(cliente cliente)
+        public async Task<IdentityResult> RegisterClient(Cliente cliente)
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = cliente.usuario
+                UserName = cliente.Usuario
             };
 
             var result = await _userManager.CreateAsync(user, cliente.Password);

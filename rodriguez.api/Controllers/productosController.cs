@@ -20,16 +20,16 @@ namespace rodriguez.api.Controllers
         private RodriguezModel db = new RodriguezModel();
 
         // GET: api/productos
-        public IQueryable<producto> Getproductos()
+        public IQueryable<Producto> Getproductos()
         {   
-            return db.productos.Include("categoria").Include("medida");
+            return db.Productos.Include("categoria").Include("medida");
         }
 
         // GET: api/productos/5
-        [ResponseType(typeof(producto))]
+        [ResponseType(typeof(Producto))]
         public async Task<IHttpActionResult> Getproducto(int id)
         {
-            producto producto = await db.productos.Where(x => x.id == id).Include("categoria").Include("medida").FirstOrDefaultAsync();//.FindAsync(id);
+            Producto producto = await db.Productos.Where(x => x.Id == id).Include("categoria").Include("medida").FirstOrDefaultAsync();//.FindAsync(id);
             if (producto == null)
             {
                 return NotFound();
@@ -40,14 +40,14 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/productos/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putproducto(int id, producto producto)
+        public async Task<IHttpActionResult> Putproducto(int id, Producto producto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != producto.id)
+            if (id != producto.Id)
             {
                 return BadRequest();
             }
@@ -74,8 +74,8 @@ namespace rodriguez.api.Controllers
         }
 
         // POST: api/productosLista
-        [ResponseType(typeof(producto))]
-        public async Task<IHttpActionResult> Postproducto(producto producto)
+        [ResponseType(typeof(Producto))]
+        public async Task<IHttpActionResult> Postproducto(Producto producto)
         {
             if (producto == null)  //el request no contiene producto
             {
@@ -83,38 +83,38 @@ namespace rodriguez.api.Controllers
             }
 
             //si el nombre del producto esta en blanco
-            if (String.IsNullOrEmpty(producto.nombre) || String.IsNullOrWhiteSpace(producto.nombre))
+            if (String.IsNullOrEmpty(producto.Nombre) || String.IsNullOrWhiteSpace(producto.Nombre))
             {
                 return BadRequest("El producto debe tener un nombre.");
             }
 
-            producto.nombre = Utilidades.capitalize(producto.nombre);
-            if (productoExists(producto.nombre))
+            producto.Nombre = Utilidades.capitalize(producto.Nombre);
+            if (productoExists(producto.Nombre))
             {
                 #region obtener categoria
                 categoriasController c = new categoriasController();
-                if (!c.categoriaExists(producto.categoriaId))
+                if (!c.categoriaExists(producto.CategoriaId))
                 {
                     return BadRequest("Debe pertenecer a una categoría válida");
                 }
-                producto.categoria = db.categorias.Find(producto.categoriaId);
+                producto.Categoria = db.Categorias.Find(producto.CategoriaId);
 
                 #endregion
 
                 #region obtener medida
                 medidasController m = new medidasController();
-                if (!m.medidaExists(producto.medidaId))
+                if (!m.medidaExists(producto.MedidaId))
                 {
                     return BadRequest("Debe pertenecer a una categoría válida");
                 }
-                producto.medida = db.medidas.Find(producto.categoriaId);
+                producto.Medida = db.Medidas.Find(producto.CategoriaId);
                 #endregion
 
                 try
                 {
-                    db.productos.Add(producto);
+                    db.Productos.Add(producto);
                     await db.SaveChangesAsync();
-                    return CreatedAtRoute("DefaultApi", new { id = producto.id }, producto);
+                    return CreatedAtRoute("DefaultApi", new { id = producto.Id }, producto);
                 }
                 catch (Exception e)
                 {
@@ -126,16 +126,16 @@ namespace rodriguez.api.Controllers
         }
 
         // DELETE: api/productosLista/5
-        [ResponseType(typeof(producto))]
+        [ResponseType(typeof(Producto))]
         public async Task<IHttpActionResult> Deleteproducto(int id)
         {
-            producto producto = await db.productos.FindAsync(id);
+            Producto producto = await db.Productos.FindAsync(id);
             if (producto == null)
             {
                 return NotFound();
             }
 
-            db.productos.Remove(producto);
+            db.Productos.Remove(producto);
             await db.SaveChangesAsync();
 
             return Ok(producto);
@@ -152,12 +152,12 @@ namespace rodriguez.api.Controllers
 
         private bool productoExists(int id)
         {
-            return db.productos.Count(e => e.id == id) > 0;
+            return db.Productos.Count(e => e.Id == id) > 0;
         }
 
         private bool productoExists(String nombre)
         {
-            return db.productos.Where(x => x.nombre.Equals(nombre)).Count() == 0;
+            return db.Productos.Where(x => x.Nombre.Equals(nombre)).Count() == 0;
         }
     }
 }

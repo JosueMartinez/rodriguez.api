@@ -6,54 +6,53 @@ namespace rodriguez.api.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("smrodriguez.bono")]
-    public partial class bono
+    public partial class Bono
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public bono()
+        public Bono()
         {
-            historialbonoes = new HashSet<historialbono>();
+            Historial = new HashSet<HistorialBono>();
         }
 
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public double monto { get; set; }
+        public double Monto { get; set; }
 
         //public int monedaId { get; set; }
 
-        public int clienteId { get; set; }
+        public int ClienteId { get; set; }
 
-        public int tasaId { get; set; }
+        public int TasaId { get; set; }
 
-        public string paypalId { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string nombreDestino { get; set; }
+        public string PaypalId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string apellidoDestino { get; set; }
+        public string NombreDestino { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string ApellidoDestino { get; set; }
 
         [Required]
         [StringLength(11)]
-        public string cedulaDestino { get; set; }
+        public string CedulaDestino { get; set; }
 
         [Required]
         [StringLength(10)]
-        public string telefonoDestino { get; set; }
+        public string TelefonoDestino { get; set; }
 
-        public int estadoBonoId { get; set; }
+        public int EstadoBonoId { get; set; }
 
-        public DateTime fechaCompra { get; set; }
+        public DateTime FechaCompra { get; set; }
 
-        public virtual cliente cliente { get; set; }
+        public virtual Cliente Cliente { get; set; }
 
-        public virtual estadobono estadobono { get; set; }
+        public virtual EstadoBono Estado { get; set; }
 
-        public virtual tasamoneda tasa { get; set; }
+        public virtual Tasa Tasa { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<historialbono> historialbonoes { get; set; }
+        public virtual ICollection<HistorialBono> Historial { get; set; }
     }
 }
