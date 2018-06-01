@@ -34,7 +34,7 @@ namespace rodriguez.api.Models
 
         [NotMapped]
         [DataType(DataType.Password)]
-        [Compare("contrasena", ErrorMessage = "Las contrasenas deben ser iguales")]
+        [Compare("Contrasena", ErrorMessage = "Las contrasenas deben ser iguales")]
         public string ConfirmarContrasena { get; set; }
 
         public bool Activo { get; set; }

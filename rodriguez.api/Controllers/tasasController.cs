@@ -133,7 +133,7 @@ namespace rodriguez.api.Controllers
             {
                 tasa.Fecha = DateTime.Now;
                 tasa.Activa = true;
-                var monedas = db.Monedas.Where(x => x.Id == tasa.MonedaId);
+                var monedas = db.Monedas.Where(x => x.Id == tasa.Moneda.Id);
 
                 if(tasa.Valor <= 0 && monedas.Count() == 0)
                 {

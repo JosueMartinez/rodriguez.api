@@ -194,15 +194,6 @@ namespace rodriguez.api.Migrations
                 );
             #endregion
 
-            #region monedas
-            context.Monedas.AddOrUpdate(
-                m => m.Descripcion,
-                new Models.Moneda { Descripcion = "PESO DOMINICANO", Simbolo = "RD" },
-                new Models.Moneda { Descripcion = "DOLAR ESTADOUNIDENSE", Simbolo = "USD" },
-                new Models.Moneda { Descripcion = "EURO", Simbolo = "EU" }
-                );
-            #endregion
-
 
         }
     }
