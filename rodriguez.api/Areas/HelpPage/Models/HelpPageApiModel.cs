@@ -23,12 +23,12 @@ namespace rodriguez.api.Areas.HelpPage.Models
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ApiDescription"/> that describes the API.
+        /// Gets or sets the <see cref="ApiDescription"/> that Describes the API.
         /// </summary>
         public ApiDescription ApiDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ParameterDescription"/> collection that describes the URI parameters for the API.
+        /// Gets or sets the <see cref="ParameterDescription"/> collection that Describes the URI parameters for the API.
         /// </summary>
         public Collection<ParameterDescription> UriParameters { get; private set; }
 
@@ -38,12 +38,12 @@ namespace rodriguez.api.Areas.HelpPage.Models
         public string RequestDocumentation { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ModelDescription"/> that describes the request body.
+        /// Gets or sets the <see cref="ModelDescription"/> that Describes the request body.
         /// </summary>
         public ModelDescription RequestModelDescription { get; set; }
 
         /// <summary>
-        /// Gets the request body parameter descriptions.
+        /// Gets the request body parameter Descriptions.
         /// </summary>
         public IList<ParameterDescription> RequestBodyParameters
         {
@@ -54,12 +54,12 @@ namespace rodriguez.api.Areas.HelpPage.Models
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ModelDescription"/> that describes the resource.
+        /// Gets or sets the <see cref="ModelDescription"/> that Describes the resource.
         /// </summary>
         public ModelDescription ResourceDescription { get; set; }
 
         /// <summary>
-        /// Gets the resource property descriptions.
+        /// Gets the resource property Descriptions.
         /// </summary>
         public IList<ParameterDescription> ResourceProperties
         {

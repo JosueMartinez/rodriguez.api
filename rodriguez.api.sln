@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rodriguez.api", "rodriguez.api\rodriguez.api.csproj", "{063E4147-6CA5-4E76-9B27-D6A8BA0E4CC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Data", "Rodriguez.Data\Rodriguez.Data.csproj", "{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{063E4147-6CA5-4E76-9B27-D6A8BA0E4CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{063E4147-6CA5-4E76-9B27-D6A8BA0E4CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{063E4147-6CA5-4E76-9B27-D6A8BA0E4CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C3BF741-B489-430F-BAF8-726F172E5574}
 	EndGlobalSection
 EndGlobal

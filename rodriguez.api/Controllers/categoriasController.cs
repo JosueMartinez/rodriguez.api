@@ -9,50 +9,50 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using rodriguez.api.Models;
 using rodriguez.api.Clases;
+using Rodriguez.Data.Models;
 
 namespace rodriguez.api.Controllers
 {
     [Authorize]
-    public class categoriasController : ApiController
+    public class CategoriasController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/categorias
-        public IQueryable<categoria> Getcategorias()
+        // GET: api/Categorias
+        public IQueryable<Categoria> GetCategorias()
         {
-            return db.categorias.Include(c => c.productos).OrderBy(c => c.descripcion);
+            return db.Categorias.Include(c => c.Productos).OrderBy(c => c.Descripcion);
         }
 
-        // GET: api/categorias/5
-        [ResponseType(typeof(categoria))]
-        public async Task<IHttpActionResult> Getcategoria(int id)
+        // GET: api/Categorias/5
+        [ResponseType(typeof(Categoria))]
+        public async Task<IHttpActionResult> GetCategoria(int id)
         {
-            categoria categoria = await db.categorias.FindAsync(id);
-            if (categoria == null)
+            Categoria Categoria = await db.Categorias.FindAsync(id);
+            if (Categoria == null)
             {
                 return NotFound();
             }
 
-            return Ok(categoria);
+            return Ok(Categoria);
         }
 
-        // PUT: api/categorias/5
+        // PUT: api/Categorias/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcategoria(int id, categoria categoria)
+        public async Task<IHttpActionResult> PutCategoria(int id, Categoria Categoria)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != categoria.id)
+            if (id != Categoria.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(categoria).State = EntityState.Modified;
+            db.Entry(Categoria).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace rodriguez.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!categoriaExists(id))
+                if (!CategoriaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,30 +73,30 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/categorias
-        [ResponseType(typeof(categoria))]
-        public async Task<IHttpActionResult> Postcategoria(categoria categoria)
+        // POST: api/Categorias
+        [ResponseType(typeof(Categoria))]
+        public async Task<IHttpActionResult> PostCategoria(Categoria Categoria)
         {
-            if (categoria == null)  //el request no contiene categoria
+            if (Categoria == null)  //el request no contiene Categoria
             {
                 return BadRequest(ModelState);
             }
 
-            //si la descripcion de la categoria esta en blanco
-            if (String.IsNullOrEmpty(categoria.descripcion) || String.IsNullOrWhiteSpace(categoria.descripcion))
+            //si la Descripcion de la Categoria esta en blanco
+            if (String.IsNullOrEmpty(Categoria.Descripcion) || String.IsNullOrWhiteSpace(Categoria.Descripcion))
             {
                 return BadRequest("La categoría debe tener una descripción.");
             }
 
             try
             {
-                categoria.descripcion = Utilidades.capitalize(categoria.descripcion);
-                //verificar si no existe una categoria con el mismo nombre
-                if (categoriaExists(categoria.descripcion))
+                Categoria.Descripcion = Utilidades.capitalize(Categoria.Descripcion);
+                //verificar si no existe una Categoria con el mismo Nombre
+                if (CategoriaExists(Categoria.Descripcion))
                 {
-                    db.categorias.Add(categoria);
+                    db.Categorias.Add(Categoria);
                     await db.SaveChangesAsync();
-                    return CreatedAtRoute("DefaultApi", new { id = categoria.id }, categoria);
+                    return CreatedAtRoute("DefaultApi", new { id = Categoria.Id }, Categoria);
                 }
                 return BadRequest("Esta categoría ya existe");
             }
@@ -106,20 +106,20 @@ namespace rodriguez.api.Controllers
             }
         }
 
-        // DELETE: api/categorias/5
-        [ResponseType(typeof(categoria))]
-        public async Task<IHttpActionResult> Deletecategoria(int id)
+        // DELETE: api/Categorias/5
+        [ResponseType(typeof(Categoria))]
+        public async Task<IHttpActionResult> DeleteCategoria(int id)
         {
-            categoria categoria = await db.categorias.FindAsync(id);
-            if (categoria == null)
+            Categoria Categoria = await db.Categorias.FindAsync(id);
+            if (Categoria == null)
             {
                 return NotFound();
             }
 
-            db.categorias.Remove(categoria);
+            db.Categorias.Remove(Categoria);
             await db.SaveChangesAsync();
 
-            return Ok(categoria);
+            return Ok(Categoria);
         }
 
         protected override void Dispose(bool disposing)
@@ -131,14 +131,14 @@ namespace rodriguez.api.Controllers
             base.Dispose(disposing);
         }
 
-        public bool categoriaExists(int id)
+        public bool CategoriaExists(int id)
         {
-            return db.categorias.Count(e => e.id == id) > 0;
+            return db.Categorias.Count(e => e.Id == id) > 0;
         }
 
-        private bool categoriaExists(String descripcion)
+        private bool CategoriaExists(String Descripcion)
         {
-            return db.categorias.Where(x => x.descripcion.Equals(descripcion)).Count() == 0;
+            return db.Categorias.Where(x => x.Descripcion.Equals(Descripcion)).Count() == 0;
         }
     }
 }

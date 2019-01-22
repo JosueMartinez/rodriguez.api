@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rodriguez.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,63 +10,62 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using rodriguez.api.Models;
 
 namespace rodriguez.api.Controllers
 {
-    public class clientesController : ApiController
+    public class ClientesController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/clientes
-        public IQueryable<cliente> Getclientes()
+        // GET: api/Clientes
+        public IQueryable<Cliente> GetClientes()
         {
-            return db.clientes;
+            return db.Clientes;
         }
 
-        // GET: api/clientes/5
-        [ResponseType(typeof(cliente))]
-        public async Task<IHttpActionResult> Getcliente(int id)
+        // GET: api/Clientes/5
+        [ResponseType(typeof(Cliente))]
+        public async Task<IHttpActionResult> GetCliente(int id)
         {
-            cliente cliente = await db.clientes.FindAsync(id);
-            if (cliente == null)
+            Cliente Cliente = await db.Clientes.FindAsync(id);
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(Cliente);
         }
 
-        // GET: api/clientes/5
-        [ResponseType(typeof(bono))]
-        [Route("api/clienteU/{usuario}")]
+        // GET: api/Clientes/5
+        [ResponseType(typeof(Bono))]
+        [Route("api/ClienteU/{Usuario}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetclienteNombre(string usuario)
+        public async Task<IHttpActionResult> GetClienteNombre(string Usuario)
         {
-            cliente cliente = await db.clientes.Where(x => x.usuario.Equals(usuario)).FirstOrDefaultAsync();
-            if (cliente == null)
+            Cliente Cliente = await db.Clientes.Where(x => x.Usuario.Equals(Usuario)).FirstOrDefaultAsync();
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            return Ok(cliente);
+            return Ok(Cliente);
         }
 
-        // PUT: api/clientes/5
+        // PUT: api/Clientes/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putcliente(int id, cliente cliente)
+        public async Task<IHttpActionResult> PutCliente(int id, Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != cliente.id)
+            if (id != Cliente.ClienteId)
             {
                 return BadRequest();
             }
 
-            db.Entry(cliente).State = EntityState.Modified;
+            db.Entry(Cliente).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +73,7 @@ namespace rodriguez.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!clienteExists(id))
+                if (!ClienteExists(id))
                 {
                     return NotFound();
                 }
@@ -86,35 +86,35 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/clientes
-        [ResponseType(typeof(cliente))]
-        public async Task<IHttpActionResult> Postcliente(cliente cliente)
+        // POST: api/Clientes
+        [ResponseType(typeof(Cliente))]
+        public async Task<IHttpActionResult> PostCliente(Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.clientes.Add(cliente);
+            db.Clientes.Add(Cliente);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = cliente.id }, cliente);
+            return CreatedAtRoute("DefaultApi", new { id = Cliente.Id }, Cliente);
         }
 
-        // DELETE: api/clientes/5
-        [ResponseType(typeof(cliente))]
-        public async Task<IHttpActionResult> Deletecliente(int id)
+        // DELETE: api/Clientes/5
+        [ResponseType(typeof(Cliente))]
+        public async Task<IHttpActionResult> DeleteCliente(int id)
         {
-            cliente cliente = await db.clientes.FindAsync(id);
-            if (cliente == null)
+            Cliente Cliente = await db.Clientes.FindAsync(id);
+            if (Cliente == null)
             {
                 return NotFound();
             }
 
-            db.clientes.Remove(cliente);
+            db.Clientes.Remove(Cliente);
             await db.SaveChangesAsync();
 
-            return Ok(cliente);
+            return Ok(Cliente);
         }
 
         protected override void Dispose(bool disposing)
@@ -126,9 +126,9 @@ namespace rodriguez.api.Controllers
             base.Dispose(disposing);
         }
 
-        private bool clienteExists(int id)
+        private bool ClienteExists(int id)
         {
-            return db.clientes.Count(e => e.id == id) > 0;
+            return db.Clientes.Count(e => e.ClienteId == id) > 0;
         }
     }
 }

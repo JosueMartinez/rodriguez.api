@@ -5,11 +5,11 @@
 @model HelpPageApiModel
 
 @{
-    ApiDescription description = Model.ApiDescription;
+    ApiDescription Description = Model.ApiDescription;
 }
-<h1>@description.HttpMethod.Method @description.RelativePath</h1>
+<h1>@Description.HttpMethod.Method @Description.RelativePath</h1>
 <div>
-    <p>@description.Documentation</p>
+    <p>@Description.Documentation</p>
 
     <h2>Request Information</h2>
 
@@ -43,7 +43,7 @@
 
     <h3>Resource Description</h3>
 
-    <p>@description.ResponseDescription.Documentation</p>
+    <p>@Description.ResponseDescription.Documentation</p>
 
     @if (Model.ResourceDescription != null)
     {

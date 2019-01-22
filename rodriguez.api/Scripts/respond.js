@@ -4,7 +4,7 @@
   "use strict";
   w.matchMedia = w.matchMedia || function(doc, undefined) {
     var bool, docElem = doc.documentElement, refNode = docElem.firstElementChild || docElem.firstChild, fakeBody = doc.createElement("body"), div = doc.createElement("div");
-    div.id = "mq-test-1";
+    div.Id = "mq-test-1";
     div.style.cssText = "position:absolute;top:-100em";
     fakeBody.style.background = "none";
     fakeBody.appendChild(div);

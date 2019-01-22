@@ -10,11 +10,11 @@ namespace rodriguez.api.Areas.HelpPage
         /// <summary>
         /// Generates an URI-friendly ID for the <see cref="ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
         /// </summary>
-        /// <param name="description">The <see cref="ApiDescription"/>.</param>
+        /// <param name="Description">The <see cref="ApiDescription"/>.</param>
         /// <returns>The ID as a string.</returns>
-        public static string GetFriendlyId(this ApiDescription description)
+        public static string GetFriendlyId(this ApiDescription Description)
         {
-            string path = description.RelativePath;
+            string path = Description.RelativePath;
             string[] urlParts = path.Split('?');
             string localPath = urlParts[0];
             string queryKeyString = null;
@@ -27,7 +27,7 @@ namespace rodriguez.api.Areas.HelpPage
 
             StringBuilder friendlyPath = new StringBuilder();
             friendlyPath.AppendFormat("{0}-{1}",
-                description.HttpMethod.Method,
+                Description.HttpMethod.Method,
                 localPath.Replace("/", "-").Replace("{", String.Empty).Replace("}", String.Empty));
             if (queryKeyString != null)
             {

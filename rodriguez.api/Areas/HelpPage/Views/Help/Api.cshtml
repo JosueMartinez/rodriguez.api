@@ -3,8 +3,8 @@
 @model HelpPageApiModel
 
 @{
-    var description = Model.ApiDescription;
-    ViewBag.Title = description.HttpMethod.Method + " " + description.RelativePath;
+    var Description = Model.ApiDescription;
+    ViewBag.Title = Description.HttpMethod.Method + " " + Description.RelativePath;
 }
 
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />

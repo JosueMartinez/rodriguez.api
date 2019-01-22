@@ -554,8 +554,8 @@ if (typeof jQuery === 'undefined') {
   var Collapse = function (element, options) {
     this.$element      = $(element)
     this.options       = $.extend({}, Collapse.DEFAULTS, options)
-    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
-                           '[data-toggle="collapse"][data-target="#' + element.id + '"]')
+    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.Id + '"],' +
+                           '[data-toggle="collapse"][data-target="#' + element.Id + '"]')
     this.transitioning = null
 
     if (this.options.parent) {
@@ -1442,7 +1442,7 @@ if (typeof jQuery === 'undefined') {
 
       this.setContent()
       $tip.attr('id', tipId)
-      this.$element.attr('aria-describedby', tipId)
+      this.$element.attr('aria-Describedby', tipId)
 
       if (this.options.animation) $tip.addClass('fade')
 
@@ -1575,7 +1575,7 @@ if (typeof jQuery === 'undefined') {
       if (that.hoverState != 'in') $tip.detach()
       if (that.$element) { // TODO: Check whether guarding this code with this `if` is really necessary.
         that.$element
-          .removeAttr('aria-describedby')
+          .removeAttr('aria-Describedby')
           .trigger('hidden.bs.' + that.type)
       }
       callback && callback()
@@ -1971,7 +1971,7 @@ if (typeof jQuery === 'undefined') {
     }
 
     if (scrollTop >= maxScroll) {
-      return activeTarget != (i = targets[targets.length - 1]) && this.activate(i)
+      return activeTarget != (i = targets[targets.length - 1]) && this.Activate(i)
     }
 
     if (activeTarget && scrollTop < offsets[0]) {
@@ -1983,11 +1983,11 @@ if (typeof jQuery === 'undefined') {
       activeTarget != targets[i]
         && scrollTop >= offsets[i]
         && (offsets[i + 1] === undefined || scrollTop < offsets[i + 1])
-        && this.activate(targets[i])
+        && this.Activate(targets[i])
     }
   }
 
-  ScrollSpy.prototype.activate = function (target) {
+  ScrollSpy.prototype.Activate = function (target) {
     this.activeTarget = target
 
     this.clear()
@@ -2006,7 +2006,7 @@ if (typeof jQuery === 'undefined') {
         .addClass('active')
     }
 
-    active.trigger('activate.bs.scrollspy')
+    active.trigger('Activate.bs.scrollspy')
   }
 
   ScrollSpy.prototype.clear = function () {
@@ -2109,8 +2109,8 @@ if (typeof jQuery === 'undefined') {
 
     var $target = $(selector)
 
-    this.activate($this.closest('li'), $ul)
-    this.activate($target, $target.parent(), function () {
+    this.Activate($this.closest('li'), $ul)
+    this.Activate($target, $target.parent(), function () {
       $previous.trigger({
         type: 'hidden.bs.tab',
         relatedTarget: $this[0]
@@ -2122,7 +2122,7 @@ if (typeof jQuery === 'undefined') {
     })
   }
 
-  Tab.prototype.activate = function (element, container, callback) {
+  Tab.prototype.Activate = function (element, container, callback) {
     var $active    = container.find('> .active')
     var transition = callback
       && $.support.transition

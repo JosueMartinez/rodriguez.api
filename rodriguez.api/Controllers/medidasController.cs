@@ -1,52 +1,52 @@
-﻿using System.Data.Entity;
+﻿using Rodriguez.Data.Models;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using rodriguez.api.Models;
 
 namespace rodriguez.api.Controllers
 {
-    public class medidasController : ApiController
+    public class MedidasController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/medidas
-        public IQueryable<medida> Getmedidas()
+        // GET: api/Medidas
+        public IQueryable<Medida> GetMedidas()
         {
-            return db.medidas;
+            return db.Medidas;
         }
 
-        // GET: api/medidas/5
-        [ResponseType(typeof(medida))]
-        public async Task<IHttpActionResult> Getmedida(int id)
+        // GET: api/Medidas/5
+        [ResponseType(typeof(Medida))]
+        public async Task<IHttpActionResult> GetMedida(int id)
         {
-            medida medida = await db.medidas.FindAsync(id);
-            if (medida == null)
+            Medida Medida = await db.Medidas.FindAsync(id);
+            if (Medida == null)
             {
                 return NotFound();
             }
 
-            return Ok(medida);
+            return Ok(Medida);
         }
 
-        // PUT: api/medidas/5
+        // PUT: api/Medidas/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putmedida(int id, medida medida)
+        public async Task<IHttpActionResult> PutMedida(int id, Medida Medida)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != medida.id)
+            if (id != Medida.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(medida).State = EntityState.Modified;
+            db.Entry(Medida).State = EntityState.Modified;
 
             try
             {
@@ -54,7 +54,7 @@ namespace rodriguez.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!medidaExists(id))
+                if (!MedidaExists(id))
                 {
                     return NotFound();
                 }
@@ -67,35 +67,35 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/medidas
-        [ResponseType(typeof(medida))]
-        public async Task<IHttpActionResult> Postmedida(medida medida)
+        // POST: api/Medidas
+        [ResponseType(typeof(Medida))]
+        public async Task<IHttpActionResult> PostMedida(Medida Medida)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.medidas.Add(medida);
+            db.Medidas.Add(Medida);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = medida.id }, medida);
+            return CreatedAtRoute("DefaultApi", new { id = Medida.Id }, Medida);
         }
 
-        // DELETE: api/medidas/5
-        [ResponseType(typeof(medida))]
-        public async Task<IHttpActionResult> Deletemedida(int id)
+        // DELETE: api/Medidas/5
+        [ResponseType(typeof(Medida))]
+        public async Task<IHttpActionResult> DeleteMedida(int id)
         {
-            medida medida = await db.medidas.FindAsync(id);
-            if (medida == null)
+            Medida Medida = await db.Medidas.FindAsync(id);
+            if (Medida == null)
             {
                 return NotFound();
             }
 
-            db.medidas.Remove(medida);
+            db.Medidas.Remove(Medida);
             await db.SaveChangesAsync();
 
-            return Ok(medida);
+            return Ok(Medida);
         }
 
         protected override void Dispose(bool disposing)
@@ -107,9 +107,9 @@ namespace rodriguez.api.Controllers
             base.Dispose(disposing);
         }
 
-        public bool medidaExists(int id)
+        public bool MedidaExists(int id)
         {
-            return db.medidas.Count(e => e.id == id) > 0;
+            return db.Medidas.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace rodriguez.api.Areas.HelpPage
         }
 
         /// <summary>
-        /// Sets the objects that will be used by the formatters to produce sample requests/responses.
+        /// Sets the objects that will be used by the formatters to Produce sample requests/responses.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="sampleObjects">The sample objects.</param>
@@ -119,7 +119,7 @@ namespace rodriguez.api.Areas.HelpPage
 
         /// <summary>
         /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
-        /// The help page will use this information to produce more accurate request samples.
+        /// The help page will use this information to Produce more accurate request samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
@@ -132,7 +132,7 @@ namespace rodriguez.api.Areas.HelpPage
 
         /// <summary>
         /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> passed to the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
-        /// The help page will use this information to produce more accurate request samples.
+        /// The help page will use this information to Produce more accurate request samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
@@ -146,7 +146,7 @@ namespace rodriguez.api.Areas.HelpPage
 
         /// <summary>
         /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
-        /// The help page will use this information to produce more accurate response samples.
+        /// The help page will use this information to Produce more accurate response samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
@@ -159,7 +159,7 @@ namespace rodriguez.api.Areas.HelpPage
 
         /// <summary>
         /// Specifies the actual type of <see cref="System.Net.Http.ObjectContent{T}"/> returned as part of the <see cref="System.Net.Http.HttpRequestMessage"/> in an action.
-        /// The help page will use this information to produce more accurate response samples.
+        /// The help page will use this information to Produce more accurate response samples.
         /// </summary>
         /// <param name="config">The <see cref="HttpConfiguration"/>.</param>
         /// <param name="type">The type.</param>
@@ -197,7 +197,7 @@ namespace rodriguez.api.Areas.HelpPage
         }
 
         /// <summary>
-        /// Gets the model description generator.
+        /// Gets the model Description generator.
         /// </summary>
         /// <param name="config">The configuration.</param>
         /// <returns>The <see cref="ModelDescriptionGenerator"/></returns>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using rodriguez.api.Models;
+using Rodriguez.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,26 +20,26 @@ namespace rodriguez.api.Clases
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
         }
 
-        public async Task<IdentityResult> RegisterUser(usuario userModel)
+        public async Task<IdentityResult> RegisterUser(Usuario userModel)
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = userModel.nombreUsuario
+                UserName = userModel.NombreUsuario
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.contrasena);
+            var result = await _userManager.CreateAsync(user, userModel.Contrasena);
 
             return result;
         }
 
-        public async Task<IdentityResult> RegisterClient(cliente cliente)
+        public async Task<IdentityResult> RegisterClient(Cliente Cliente)
         {
             IdentityUser user = new IdentityUser
             {
-                UserName = cliente.usuario
+                UserName = Cliente.Usuario
             };
 
-            var result = await _userManager.CreateAsync(user, cliente.Password);
+            var result = await _userManager.CreateAsync(user, Cliente.Password);
 
             return result;
         }

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Rodriguez.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using rodriguez.api.Models;
 
 namespace rodriguez.api.Clases
 {
@@ -10,19 +10,19 @@ namespace rodriguez.api.Clases
     {
         private static RodriguezModel db = new RodriguezModel();
 
-        public static bool containsProduct(this listacompra lista, int productoId)
+        public static bool containsProduct(this ListaCompra lista, int ProductoId)
         {
-            var productos = lista.productosLista;
-            var producto = db.productos.FindAsync(productoId);
+            var Productos = lista.ProductosLista;
+            var Producto = db.Productos.FindAsync(ProductoId);
 
-            if(producto == null || productos == null || productos.Count() == 0)
+            if(Producto == null || Productos == null || Productos.Count() == 0)
             {
                 return false;
             }
             
-            foreach(var p in productos)
+            foreach(var p in Productos)
             {
-                if(p.productoId == productoId)
+                if(p.ProductoId == ProductoId)
                 {
                     return true;
                 }

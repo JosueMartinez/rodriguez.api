@@ -9,50 +9,50 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using rodriguez.api.Models;
 using rodriguez.api.Clases;
+using Rodriguez.Data.Models;
 
 namespace rodriguez.api.Controllers
 {
     [Authorize]
-    public class productosController : ApiController
+    public class ProductosController : ApiController
     {
         private RodriguezModel db = new RodriguezModel();
 
-        // GET: api/productos
-        public IQueryable<producto> Getproductos()
+        // GET: api/Productos
+        public IQueryable<Producto> GetProductos()
         {   
-            return db.productos.Include("categoria").Include("medida");
+            return db.Productos.Include("Categoria").Include("Medida");
         }
 
-        // GET: api/productos/5
-        [ResponseType(typeof(producto))]
-        public async Task<IHttpActionResult> Getproducto(int id)
+        // GET: api/Productos/5
+        [ResponseType(typeof(Producto))]
+        public async Task<IHttpActionResult> GetProducto(int id)
         {
-            producto producto = await db.productos.Where(x => x.id == id).Include("categoria").Include("medida").FirstOrDefaultAsync();//.FindAsync(id);
-            if (producto == null)
+            Producto Producto = await db.Productos.Where(x => x.Id == id).Include("Categoria").Include("Medida").FirstOrDefaultAsync();//.FindAsync(id);
+            if (Producto == null)
             {
                 return NotFound();
             }
 
-            return Ok(producto);
+            return Ok(Producto);
         }
 
-        // PUT: api/productos/5
+        // PUT: api/Productos/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putproducto(int id, producto producto)
+        public async Task<IHttpActionResult> PutProducto(int id, Producto Producto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != producto.id)
+            if (id != Producto.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(producto).State = EntityState.Modified;
+            db.Entry(Producto).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace rodriguez.api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!productoExists(id))
+                if (!ProductoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,72 +73,72 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/productosLista
-        [ResponseType(typeof(producto))]
-        public async Task<IHttpActionResult> Postproducto(producto producto)
+        // POST: api/ProductosLista
+        [ResponseType(typeof(Producto))]
+        public async Task<IHttpActionResult> PostProducto(Producto Producto)
         {
-            if (producto == null)  //el request no contiene producto
+            if (Producto == null)  //el request no contiene Producto
             {
                 return BadRequest(ModelState);
             }
 
-            //si el nombre del producto esta en blanco
-            if (String.IsNullOrEmpty(producto.nombre) || String.IsNullOrWhiteSpace(producto.nombre))
+            //si el Nombre del Producto esta en blanco
+            if (String.IsNullOrEmpty(Producto.Nombre) || String.IsNullOrWhiteSpace(Producto.Nombre))
             {
-                return BadRequest("El producto debe tener un nombre.");
+                return BadRequest("El Producto debe tener un Nombre.");
             }
 
-            producto.nombre = Utilidades.capitalize(producto.nombre);
-            if (productoExists(producto.nombre))
+            Producto.Nombre = Utilidades.capitalize(Producto.Nombre);
+            if (ProductoExists(Producto.Nombre))
             {
-                #region obtener categoria
-                categoriasController c = new categoriasController();
-                if (!c.categoriaExists(producto.categoriaId))
+                #region obtener Categoria
+                CategoriasController c = new CategoriasController();
+                if (!c.CategoriaExists(Producto.CategoriaId))
                 {
                     return BadRequest("Debe pertenecer a una categoría válida");
                 }
-                producto.categoria = db.categorias.Find(producto.categoriaId);
+                Producto.Categoria = db.Categorias.Find(Producto.CategoriaId);
 
                 #endregion
 
-                #region obtener medida
-                medidasController m = new medidasController();
-                if (!m.medidaExists(producto.medidaId))
+                #region obtener Medida
+                MedidasController m = new MedidasController();
+                if (!m.MedidaExists(Producto.MedidaId))
                 {
                     return BadRequest("Debe pertenecer a una categoría válida");
                 }
-                producto.medida = db.medidas.Find(producto.categoriaId);
+                Producto.Medida = db.Medidas.Find(Producto.CategoriaId);
                 #endregion
 
                 try
                 {
-                    db.productos.Add(producto);
+                    db.Productos.Add(Producto);
                     await db.SaveChangesAsync();
-                    return CreatedAtRoute("DefaultApi", new { id = producto.id }, producto);
+                    return CreatedAtRoute("DefaultApi", new { id = Producto.Id }, Producto);
                 }
                 catch (Exception e)
                 {
                     return InternalServerError(e);
                 }
             }
-            return BadRequest("Este producto ya existe");
+            return BadRequest("Este Producto ya existe");
             
         }
 
-        // DELETE: api/productosLista/5
-        [ResponseType(typeof(producto))]
-        public async Task<IHttpActionResult> Deleteproducto(int id)
+        // DELETE: api/ProductosLista/5
+        [ResponseType(typeof(Producto))]
+        public async Task<IHttpActionResult> DeleteProducto(int id)
         {
-            producto producto = await db.productos.FindAsync(id);
-            if (producto == null)
+            Producto Producto = await db.Productos.FindAsync(id);
+            if (Producto == null)
             {
                 return NotFound();
             }
 
-            db.productos.Remove(producto);
+            db.Productos.Remove(Producto);
             await db.SaveChangesAsync();
 
-            return Ok(producto);
+            return Ok(Producto);
         }
 
         protected override void Dispose(bool disposing)
@@ -150,14 +150,14 @@ namespace rodriguez.api.Controllers
             base.Dispose(disposing);
         }
 
-        private bool productoExists(int id)
+        private bool ProductoExists(int id)
         {
-            return db.productos.Count(e => e.id == id) > 0;
+            return db.Productos.Count(e => e.Id == id) > 0;
         }
 
-        private bool productoExists(String nombre)
+        private bool ProductoExists(String Nombre)
         {
-            return db.productos.Where(x => x.nombre.Equals(nombre)).Count() == 0;
+            return db.Productos.Where(x => x.Nombre.Equals(Nombre)).Count() == 0;
         }
     }
 }

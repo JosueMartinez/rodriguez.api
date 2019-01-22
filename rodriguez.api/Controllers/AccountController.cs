@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using rodriguez.api.Clases;
-using rodriguez.api.Models;
+using Rodriguez.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace rodriguez.api.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(usuario userModel)
+        public async Task<IHttpActionResult> Register(Usuario userModel)
         {
             //RodriguezModel db = new RodriguezModel();
             if (!ModelState.IsValid)
@@ -37,11 +37,11 @@ namespace rodriguez.api.Controllers
 
                 try
                 {
-                    rol r = db.rols.Where(rx => rx.descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
+                    Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
                     userModel.rol = r;
-                    userModel.rolId = r.id;
-                    userModel.activo = true;
-                    db.usuarios.Add(userModel);
+                    userModel.RolId = r.Id;
+                    userModel.Activo = true;
+                    db.Usuarios.Add(userModel);
                     await db.SaveChangesAsync();
                     IdentityResult result = await _repo.RegisterUser(userModel);
 
@@ -65,7 +65,7 @@ namespace rodriguez.api.Controllers
         // POST api/Account/RegisterClient
         [AllowAnonymous]
         [Route("RegisterClient")]
-        public async Task<IHttpActionResult> RegisterClient(cliente cliente)
+        public async Task<IHttpActionResult> RegisterClient(Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
@@ -75,9 +75,9 @@ namespace rodriguez.api.Controllers
             try
             {
 
-                db.clientes.Add(cliente);
+                db.Clientes.Add(Cliente);
                 await db.SaveChangesAsync();
-                IdentityResult result = await _repo.RegisterClient(cliente);
+                IdentityResult result = await _repo.RegisterClient(Cliente);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
 
