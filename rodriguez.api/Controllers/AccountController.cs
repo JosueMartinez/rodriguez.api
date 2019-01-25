@@ -35,29 +35,29 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-                try
+            try
+            {
+                Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
+                userModel.rol = r;
+                userModel.RolId = r.Id;
+                userModel.Activo = true;
+                db.Usuarios.Add(userModel);
+                await db.SaveChangesAsync();
+                IdentityResult result = await _repo.RegisterUser(userModel);
+
+                IHttpActionResult errorResult = GetErrorResult(result);
+
+                if (errorResult != null)
                 {
-                    Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
-                    userModel.rol = r;
-                    userModel.RolId = r.Id;
-                    userModel.Activo = true;
-                    db.Usuarios.Add(userModel);
-                    await db.SaveChangesAsync();
-                    IdentityResult result = await _repo.RegisterUser(userModel);
-
-                    IHttpActionResult errorResult = GetErrorResult(result);
-
-                    if (errorResult != null)
-                    {
-                        return errorResult;
-                    }
-
-                    return Ok();
+                    return errorResult;
                 }
-                catch (Exception e)
-                {
-                    return BadRequest(e.ToString());
-                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
             
             
         }

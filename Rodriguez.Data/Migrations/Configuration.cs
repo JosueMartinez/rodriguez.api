@@ -11,11 +11,13 @@ namespace Rodriguez.Data.Migrations
         {
             AutomaticMigrationsEnabled = false;
             // register mysql code generator
-            SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.Entity.MySqlMigrationSqlGenerator());
+            SetSqlGenerator("MySql.Data.MySqlClient", new MySql.Data.EntityFramework.MySqlMigrationSqlGenerator());
         }
 
         protected override void Seed(Rodriguez.Data.Models.RodriguezModel context)
         {
+            
+            
             #region Rol
             context.Roles.AddOrUpdate(
                    r => r.Descripcion,
@@ -25,6 +27,7 @@ namespace Rodriguez.Data.Migrations
                    new Models.Rol { Descripcion = "Empleado" }
                 );
             #endregion
+
             #region Medidas
             context.Medidas.AddOrUpdate(
                     m => m.Descripcion,
@@ -64,7 +67,28 @@ namespace Rodriguez.Data.Migrations
                     new Models.Categoria { Descripcion = "Limpieza" }
                 );
             #endregion
+                                
 
+            #region Monedas
+            context.Monedas.AddOrUpdate(
+                   m => m.Descripcion,
+                   new Models.Moneda { Descripcion = "Peso Dominicano", Simbolo = "RD" },
+                   new Models.Moneda { Descripcion = "Dolar Estadounidense", Simbolo = "USD" },
+                   new Models.Moneda { Descripcion = "Euro", Simbolo = "EUR" }
+
+                );
+            #endregion
+
+            #region estados
+            context.EstadosBonos.AddOrUpdate(
+                    m => m.Descripcion,
+                    new Models.EstadoBono { Descripcion = "Comprado" },
+                    new Models.EstadoBono { Descripcion = "Cobrado" },
+                    new Models.EstadoBono { Descripcion = "Cancelado" }
+                );
+            #endregion
+
+            context.SaveChanges();
 
             #region Productos
             context.Productos.AddOrUpdate(
@@ -161,34 +185,6 @@ namespace Rodriguez.Data.Migrations
                 }
             );
             #endregion  
-
-            #region Monedas
-            context.Monedas.AddOrUpdate(
-                   m => m.Descripcion,
-                   new Models.Moneda { Descripcion = "Peso Dominicano", Simbolo = "RD" },
-                   new Models.Moneda { Descripcion = "Dolar Estadounidense", Simbolo = "USD" },
-                   new Models.Moneda { Descripcion = "Euro", Simbolo = "EUR" }
-
-                );
-            #endregion
-
-            #region estados
-            context.EstadosBonos.AddOrUpdate(
-                    m => m.Descripcion,
-                    new Models.EstadoBono { Descripcion = "Comprado" },
-                    new Models.EstadoBono { Descripcion = "Cobrado" },
-                    new Models.EstadoBono { Descripcion = "Cancelado" }
-                );
-            #endregion
-
-            #region Monedas
-            context.Monedas.AddOrUpdate(
-                m => m.Descripcion,
-                new Models.Moneda { Descripcion = "PESO DOMINICANO", Simbolo = "RD" },
-                new Models.Moneda { Descripcion = "DOLAR ESTADOUNIDENSE", Simbolo = "USD" },
-                new Models.Moneda { Descripcion = "EURO", Simbolo = "EU" }
-                );
-            #endregion
         }
     }
 }
