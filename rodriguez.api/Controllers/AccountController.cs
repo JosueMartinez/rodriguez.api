@@ -13,7 +13,7 @@ using System.Web.Http.Cors;
 namespace rodriguez.api.Controllers
 {
     [RoutePrefix("api/Account")]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
@@ -37,9 +37,10 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
-                userModel.rol = r;
-                userModel.RolId = r.Id;
+                //Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
+                //userModel.rol = r;
+                //userModel.RolId = r.Id;
+               
                 userModel.Activo = true;
                 db.Usuarios.Add(userModel);
                 await db.SaveChangesAsync();

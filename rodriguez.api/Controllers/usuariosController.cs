@@ -124,6 +124,14 @@ namespace rodriguez.api.Controllers
             return Ok(Usuario);
         }
 
+        // GET: api/Roles
+        [Route("api/Rol")]
+        [HttpGet]
+        public IQueryable<Rol> GetRoles()
+        {
+            return db.Roles;//.Include(c => c.Productos).OrderBy(c => c.Descripcion);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -131,7 +131,7 @@ namespace rodriguez.api.Controllers
                 //return CreatedAtRoute("DefaultApi", new { id = Bono.Id }, Bono);
             }catch(Exception e)
             {
-                throw new HttpResponseException(HttpStatusCode.ExpectationFailed);
+                return InternalServerError();
             }
             
         }

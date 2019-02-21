@@ -14,7 +14,7 @@ using Rodriguez.Data.Models;
 
 namespace rodriguez.api.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    //[EnableCors(origins: "*", headers: "*", methods: "*")]
     [Authorize]
     public class TasasController : ApiController
     {
@@ -133,7 +133,7 @@ namespace rodriguez.api.Controllers
             {
                 Tasa.Fecha = DateTime.Now;
                 Tasa.Activa = true;
-                var Monedas = db.Monedas.Where(x => x.Id == Tasa.MonedaId);
+                var Monedas = db.Monedas.Where(x => x.Id == Tasa.Moneda.Id);
 
                 if(Tasa.Valor <= 0 && Monedas.Count() == 0)
                 {
