@@ -93,6 +93,36 @@ namespace rodriguez.api.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [ResponseType(typeof(void))]
+        [Route("api/Usuario/{usuarioId}/Rol/{RolId}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> CambiarRol(int usuarioId, int RolId)
+        {
+            Usuario usuario = db.Usuarios.Find(usuarioId);
+            if (usuario == null)
+                return NotFound();
+
+            Rol rol = db.Roles.Find(RolId);
+            if (rol == null)
+                return BadRequest();
+
+            usuario.RolId = rol.Id;
+            usuario.ConfirmarContrasena = usuario.Contrasena;
+            db.Entry(usuario).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+
         // POST: api/Usuarios
         [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> PostUsuario(Usuario Usuario)
@@ -118,10 +148,20 @@ namespace rodriguez.api.Controllers
                 return NotFound();
             }
 
-            db.Usuarios.Remove(Usuario);
-            await db.SaveChangesAsync();
+            Usuario.ConfirmarContrasena = Usuario.Contrasena;
+            Usuario.Activo = false;
+            db.Entry(Usuario).State = EntityState.Modified;
 
-            return Ok(Usuario);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return Ok();
         }
 
         // GET: api/Roles

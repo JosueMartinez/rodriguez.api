@@ -37,10 +37,6 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                //Rol r = db.Roles.Where(rx => rx.Descripcion.Equals("Empleado")).FirstOrDefault();    // TODO get rol correspondiente
-                //userModel.rol = r;
-                //userModel.RolId = r.Id;
-               
                 userModel.Activo = true;
                 db.Usuarios.Add(userModel);
                 await db.SaveChangesAsync();
@@ -59,8 +55,6 @@ namespace rodriguez.api.Controllers
             {
                 return BadRequest(e.ToString());
             }
-            
-            
         }
 
         // POST api/Account/RegisterClient
