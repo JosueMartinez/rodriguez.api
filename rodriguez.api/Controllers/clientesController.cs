@@ -1,7 +1,5 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,25 +15,19 @@ namespace rodriguez.api.Controllers
 {
     public class ClientesController : ApiController
     {
-        //private RodriguezModel db = new RodriguezModel();
-        private readonly Repository<Cliente> repo = null;
-
-        public ClientesController()
-        {
-            repo = new Repository<Cliente>();
-        }
+        private RodriguezModel db = new RodriguezModel();
 
         // GET: api/Clientes
-        public IEnumerable GetClientes()
+        public IQueryable<Cliente> GetClientes()
         {
-            return repo.Get();
+            return db.Clientes;
         }
 
         // GET: api/Clientes/5
         [ResponseType(typeof(Cliente))]
         public async Task<IHttpActionResult> GetCliente(int id)
         {
-            Cliente Cliente = repo.Get(id);
+            Cliente Cliente = await db.Clientes.FindAsync(id);
             if (Cliente == null)
             {
                 return NotFound();
@@ -48,9 +40,9 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         [Route("api/ClienteU/{Usuario}")]
         [HttpGet]
-        public IHttpActionResult GetClienteNombre(string Usuario)
+        public async Task<IHttpActionResult> GetClienteNombre(string Usuario)
         {
-            Cliente Cliente = repo.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
+            Cliente Cliente = await db.Clientes.Where(x => x.Usuario.Equals(Usuario)).FirstOrDefaultAsync();
             if (Cliente == null)
             {
                 return NotFound();
@@ -61,7 +53,7 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/Clientes/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCliente(int id, Cliente Cliente)
+        public async Task<IHttpActionResult> PutCliente(int id, Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
@@ -73,11 +65,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            repo.Update(Cliente);
+            db.Entry(Cliente).State = EntityState.Modified;
 
             try
             {
-                repo.Save();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -103,8 +95,8 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            repo.Insert(Cliente);
-            repo.Save();
+            db.Clientes.Add(Cliente);
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = Cliente.Id }, Cliente);
         }
@@ -113,14 +105,14 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Cliente))]
         public async Task<IHttpActionResult> DeleteCliente(int id)
         {
-            Cliente Cliente = repo.Get(id);
+            Cliente Cliente = await db.Clientes.FindAsync(id);
             if (Cliente == null)
             {
                 return NotFound();
             }
 
-            repo.Delete(id);
-            repo.Save();
+            db.Clientes.Remove(Cliente);
+            await db.SaveChangesAsync();
 
             return Ok(Cliente);
         }
@@ -129,14 +121,14 @@ namespace rodriguez.api.Controllers
         {
             if (disposing)
             {
-                //db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool ClienteExists(int id)
         {
-            return repo.Get(id) != null;
+            return db.Clientes.Count(e => e.ClienteId == id) > 0;
         }
     }
 }

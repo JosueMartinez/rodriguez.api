@@ -1,7 +1,5 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,29 +16,20 @@ namespace rodriguez.api.Controllers
     [Authorize]
     public class UsuariosController : ApiController
     {
-        //private RodriguezModel db = new RodriguezModel();
-        private readonly Repository<Usuario> repo = null;
-        private readonly UsuarioRepository userRepo = null;
-        private readonly Repository<Rol> rolRepo = null;
-
-        public UsuariosController()
-        {
-            repo = new Repository<Usuario>();
-            userRepo = new UsuarioRepository();
-            rolRepo = new Repository<Rol>();
-        }
+        private RodriguezModel db = new RodriguezModel();
 
         // GET: api/Usuarios
-        public IEnumerable GetUsuarios()
+        public IQueryable<Usuario> GetUsuarios()
         {
-            return repo.Get().Where(x => x.Activo);
+            return db.Usuarios.Include(x => x.rol).Where(x => x.Activo);
         }
 
         // GET: api/Usuarios/5
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult GetUsuario(int id)
+        public async Task<IHttpActionResult> GetUsuario(int id)
         {
-            var Usuario = repo.Get(id);
+            var Usuarios =  db.Usuarios.Include(x => x.rol).Where(x => x.Id == id);
+            var Usuario = Usuarios.Count() > 0 ? await Usuarios.FirstAsync() : null;
 
             if (Usuario == null)
             {
@@ -58,9 +47,9 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         [Route("api/UsuarioU/{Usuario}")]
         [HttpGet] //
-        public IHttpActionResult GetClienteNombre(string Usuario)
+        public async Task<IHttpActionResult> GetClienteNombre(string Usuario)
         {
-            Usuario u = userRepo.GetClienteNombre(Usuario);
+            Usuario u = await db.Usuarios.Include(x => x.rol).Where(x => x.NombreUsuario.ToLower().Equals(Usuario.ToLower()) && x.Activo).FirstOrDefaultAsync();
             if (u == null)
             {
                 return NotFound();
@@ -71,7 +60,7 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/Usuarios/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUsuario(int id, Usuario Usuario)
+        public async Task<IHttpActionResult> PutUsuario(int id, Usuario Usuario)
         {
             if (!ModelState.IsValid)
             {
@@ -83,11 +72,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            repo.Update(Usuario);
+            db.Entry(Usuario).State = EntityState.Modified;
 
             try
             {
-                repo.Save();
+                await db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -109,21 +98,21 @@ namespace rodriguez.api.Controllers
         [HttpPut]
         public async Task<IHttpActionResult> CambiarRol(int usuarioId, int RolId)
         {
-            Usuario usuario = repo.Get(usuarioId);
+            Usuario usuario = db.Usuarios.Find(usuarioId);
             if (usuario == null)
                 return NotFound();
 
-            Rol rol = rolRepo.Get(RolId);
+            Rol rol = db.Roles.Find(RolId);
             if (rol == null)
                 return BadRequest();
 
             usuario.RolId = rol.Id;
             usuario.ConfirmarContrasena = usuario.Contrasena;
-            repo.Update(usuario);
+            db.Entry(usuario).State = EntityState.Modified;
 
             try
             {
-                repo.Save();
+                await db.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -143,8 +132,8 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            repo.Insert(Usuario);
-            repo.Save();
+            db.Usuarios.Add(Usuario);
+            await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { id = Usuario.Id }, Usuario);
         }
@@ -153,17 +142,19 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> DeleteUsuario(int id)
         {
-            Usuario Usuario = repo.Get(id);
+            Usuario Usuario = await db.Usuarios.FindAsync(id);
             if (Usuario == null)
             {
                 return NotFound();
             }
 
-            userRepo.DisableUsuario(Usuario);
+            Usuario.ConfirmarContrasena = Usuario.Contrasena;
+            Usuario.Activo = false;
+            db.Entry(Usuario).State = EntityState.Modified;
 
             try
             {
-                repo.Save();
+                await db.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -176,23 +167,23 @@ namespace rodriguez.api.Controllers
         // GET: api/Roles
         [Route("api/Rol")]
         [HttpGet]
-        public IEnumerable GetRoles()
+        public IQueryable<Rol> GetRoles()
         {
-            return rolRepo.Get();
+            return db.Roles;//.Include(c => c.Productos).OrderBy(c => c.Descripcion);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                //db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool UsuarioExists(int id)
         {
-            return repo.Get(id) != null;
+            return db.Usuarios.Count(e => e.Id == id) > 0;
         }
     }
 }
