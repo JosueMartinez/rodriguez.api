@@ -244,13 +244,19 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Clases\AuthRepository.cs" />
+    <Compile Include="Clases\Extensions.cs" />
     <Compile Include="Clases\Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Clases\Startup.cs" />
     <Compile Include="Clases\Utilidades.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\bonosController.cs" />
+    <Compile Include="Controllers\categoriasController.cs" />
     <Compile Include="Controllers\clientesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\listacompraController.cs" />
+    <Compile Include="Controllers\medidasController.cs" />
     <Compile Include="Controllers\monedasController.cs" />
+    <Compile Include="Controllers\productosController.cs" />
     <Compile Include="Controllers\tasasController.cs" />
     <Compile Include="Controllers\usuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -340,10 +346,6 @@
     <ProjectReference Include="..\Rodriguez.Data\Rodriguez.Data.csproj">
       <Project>{d7af6ac1-82fb-44fc-9bf0-061e7cd88a6f}</Project>
       <Name>Rodriguez.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rodriguez.Repo\Rodriguez.Repo.csproj">
-      <Project>{2d927161-371e-4b0e-962d-622f31e70290}</Project>
-      <Name>Rodriguez.Repo</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
