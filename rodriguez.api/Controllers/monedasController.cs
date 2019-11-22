@@ -16,14 +16,11 @@ namespace rodriguez.api.Controllers
     public class MonedasController : ApiController
     {
         private readonly IRepository<Moneda> repo = null;
-        private readonly IMonedaRepository monedaRepo = null;
 
         public MonedasController()
         {
             repo = new Repository<Moneda>();
-            monedaRepo = new MonedaRepository();
         }
-
 
         // GET: api/Monedas
         public IEnumerable GetMonedas()

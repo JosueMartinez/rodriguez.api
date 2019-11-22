@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using rodriguez.api.Clases;
 using Rodriguez.Data.Models;
+using Rodriguez.Repo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,15 @@ namespace rodriguez.api.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
-        private RodriguezModel db = new RodriguezModel();
+        private Repository<Usuario> _userRepo = null;
+        private Repository<Cliente> _clientRepo = null;
+        //private RodriguezModel db = new RodriguezModel();
 
         public AccountController()
         {
             _repo = new AuthRepository();
+            _userRepo = new Repository<Usuario>();
+            _clientRepo = new Repository<Cliente>();
         }
 
         // POST api/Account/Register
@@ -38,8 +43,10 @@ namespace rodriguez.api.Controllers
             try
             {
                 userModel.Activo = true;
-                db.Usuarios.Add(userModel);
-                await db.SaveChangesAsync();
+                _userRepo.Insert(userModel);
+                _userRepo.Save();
+                //db.Usuarios.Add(userModel);
+                //await db.SaveChangesAsync();
                 IdentityResult result = await _repo.RegisterUser(userModel);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -69,9 +76,10 @@ namespace rodriguez.api.Controllers
 
             try
             {
-
-                db.Clientes.Add(Cliente);
-                await db.SaveChangesAsync();
+                _clientRepo.Insert(Cliente);
+                _clientRepo.Save();
+                //db.Clientes.Add(Cliente);
+                //await db.SaveChangesAsync();
                 IdentityResult result = await _repo.RegisterClient(Cliente);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -126,7 +134,7 @@ namespace rodriguez.api.Controllers
             if (disposing)
             {
                 _repo.Dispose();
-                db.Dispose();
+                //db.Dispose();
             }
 
             base.Dispose(disposing);
