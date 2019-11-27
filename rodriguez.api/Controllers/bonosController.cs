@@ -18,24 +18,16 @@ namespace rodriguez.api.Controllers
     [Authorize]
     public class BonosController : ApiController
     {
-        //private RodriguezModel db = new RodriguezModel();
-        private readonly Repository<Bono> repo = null;
-        //private readonly BonoRepository bonoRepo = null;
-        private readonly Repository<EstadoBono> estadoRepo = null;
-        private readonly Repository<HistorialBono> histRepo = null;
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public BonosController()
         {
-            repo = new Repository<Bono>();
-            //bonoRepo = new BonoRepository();
-            estadoRepo = new Repository<EstadoBono>();
-            histRepo = new Repository<HistorialBono>();
         }
 
         // GET: api/Bonos
         public IEnumerable GetBonos()
         {
-            return repo.Get().Where(p => p.EstadoBono.Descripcion.ToLower().Equals("comprado"))
+            return unitOfWork.Bonos.Get().Where(p => p.EstadoBono.Descripcion.ToLower().Equals("comprado"))
                         .OrderByDescending(x => x.FechaCompra);
 
             //return db.Bonos.Include(p => p.Cliente)
@@ -50,7 +42,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetBonosPagados()
         {
-            return repo.Get().Where(p => p.EstadoBono.Descripcion.ToLower().Equals("cobrado"))
+            return unitOfWork.Bonos.Get().Where(p => p.EstadoBono.Descripcion.ToLower().Equals("cobrado"))
                         .OrderByDescending(x => x.FechaCompra);
             //return db.Bonos.Include(p => p.Cliente)
             //            .Include(p => p.Tasa)
@@ -64,7 +56,7 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         public IHttpActionResult GetBono(int id)
         {
-            Bono Bono = repo.Get(id);//await db.Bonos.Include(p => p.Cliente).Include(p => p.Tasa).Include("Tasa.Moneda").Include(p => p.EstadoBono).SingleOrDefaultAsync(i => i.Id == id);
+            Bono Bono = unitOfWork.Bonos.Get(id);//await db.Bonos.Include(p => p.Cliente).Include(p => p.Tasa).Include("Tasa.Moneda").Include(p => p.EstadoBono).SingleOrDefaultAsync(i => i.Id == id);
             if (Bono == null)
             {
                 return NotFound();
@@ -79,7 +71,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetBonoCliente(int ClienteId)
         {
-            return repo.Get().Where(x => x.ClienteId == ClienteId).OrderByDescending(x => x.FechaCompra);
+            return unitOfWork.Bonos.Get().Where(x => x.ClienteId == ClienteId).OrderByDescending(x => x.FechaCompra);
             //return db.Bonos.Where(x => x.ClienteId == ClienteId)
             //    .Include(p => p.Cliente).Include(p => p.Tasa)
             //    .Include("Tasa.Moneda")
@@ -93,8 +85,8 @@ namespace rodriguez.api.Controllers
         [HttpPut]
         public IHttpActionResult PutBono(int BonoId)
         {
-            Bono Bono = repo.Get(BonoId);
-            int idCobrado = estadoRepo.Get().Where(x => x.Descripcion.Equals("Cobrado")).FirstOrDefault().Id;
+            Bono Bono = unitOfWork.Bonos.Get(BonoId);
+            int idCobrado = unitOfWork.Estados.Get().Where(x => x.Descripcion.Equals("Cobrado")).FirstOrDefault().Id;
 
             if (Bono == null)
             {
@@ -110,12 +102,12 @@ namespace rodriguez.api.Controllers
             Bono.EstadoBonoId = idCobrado;
             if (Bono.EstadoBonoId != 0)
             {
-                repo.Update(Bono);
+                unitOfWork.Bonos.Update(Bono);
 
                 try
                 {
-                    histRepo.Insert(hist);
-                    repo.Save();
+                    unitOfWork.Historiales.Insert(hist);
+                    unitOfWork.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,7 +128,7 @@ namespace rodriguez.api.Controllers
             try
             {
                 //ESTADO Bono SIEMPRE COMPRADO
-                Bono.EstadoBonoId = estadoRepo.Get().Where(x => x.Descripcion.Equals("comprado")).FirstOrDefault().Id;
+                Bono.EstadoBonoId = unitOfWork.Estados.Get().Where(x => x.Descripcion.Equals("comprado")).FirstOrDefault().Id;
                 //Fecha COMPRA NOW
                 Bono.FechaCompra = DateTime.Now;
 
@@ -145,8 +137,8 @@ namespace rodriguez.api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                repo.Insert(Bono);
-                repo.Save();
+                unitOfWork.Bonos.Insert(Bono);
+                unitOfWork.Commit();
                 return Ok(Bono);
                 //return CreatedAtRoute("DefaultApi", new { id = Bono.Id }, Bono);
             }
@@ -161,30 +153,27 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         public IHttpActionResult DeleteBono(int id)
         {
-            Bono Bono = repo.Get(id);
+            Bono Bono = unitOfWork.Bonos.Get(id);
             if (Bono == null)
             {
                 return NotFound();
             }
 
-            repo.Delete(id);
-            repo.Save();
+            unitOfWork.Bonos.Delete(id);
+            unitOfWork.Commit();
 
             return Ok(Bono);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                //db.Dispose();
-            }
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool BonoExists(int id)
         {
-            return repo.Get(id) != null;
+            return unitOfWork.Bonos.Get(id) != null;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Rodriguez.Repo
     public class TasaRepository : Repository<TasaMoneda>, ITasaRepository
     {
         
+
         public void DisableTasa(int monedaId)
         {
             var Tasas = _db.TasasMonedas.Where(x => x.Moneda.Id == (monedaId));
@@ -30,6 +31,8 @@ namespace Rodriguez.Repo
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
+
+        public TasaRepository() : base(new RodriguezModel()) { }
 
         protected virtual void Dispose(bool disposing)
         {

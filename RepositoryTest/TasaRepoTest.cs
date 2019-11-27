@@ -14,8 +14,7 @@ namespace RepositoryTest
     [TestClass]
     public class TasaRepoTest
     {
-        ITasaRepository _tasaRepo;
-        IRepository<TasaMoneda> _repo;
+        IUnitOfWork unitOfWork;
 
         public TasaRepoTest()
         {
@@ -46,8 +45,7 @@ namespace RepositoryTest
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            _tasaRepo = new TasaRepository();
-            _repo = new Repository<TasaMoneda>();
+            unitOfWork = new UnitOfWork();
         }
 
         #region Additional test attributes
@@ -75,7 +73,7 @@ namespace RepositoryTest
         [TestMethod]
         public void TestMethod1()
         {
-            var exist = _repo.Get();
+            var exist = unitOfWork.Tasas.Get();
             Assert.IsNotNull(exist);
         }
     }

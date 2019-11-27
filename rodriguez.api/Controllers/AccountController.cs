@@ -18,15 +18,11 @@ namespace rodriguez.api.Controllers
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
-        private Repository<Usuario> _userRepo = null;
-        private Repository<Cliente> _clientRepo = null;
-        //private RodriguezModel db = new RodriguezModel();
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public AccountController()
         {
             _repo = new AuthRepository();
-            _userRepo = new Repository<Usuario>();
-            _clientRepo = new Repository<Cliente>();
         }
 
         // POST api/Account/Register
@@ -34,7 +30,6 @@ namespace rodriguez.api.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(Usuario userModel)
         {
-            //RodriguezModel db = new RodriguezModel();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -43,10 +38,9 @@ namespace rodriguez.api.Controllers
             try
             {
                 userModel.Activo = true;
-                _userRepo.Insert(userModel);
-                _userRepo.Save();
-                //db.Usuarios.Add(userModel);
-                //await db.SaveChangesAsync();
+                unitOfWork.Usuarios.Insert(userModel);
+                unitOfWork.Commit();
+
                 IdentityResult result = await _repo.RegisterUser(userModel);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -76,10 +70,8 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                _clientRepo.Insert(Cliente);
-                _clientRepo.Save();
-                //db.Clientes.Add(Cliente);
-                //await db.SaveChangesAsync();
+                unitOfWork.Clientes.Insert(Cliente);
+                unitOfWork.Commit();
                 IdentityResult result = await _repo.RegisterClient(Cliente);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -134,7 +126,7 @@ namespace rodriguez.api.Controllers
             if (disposing)
             {
                 _repo.Dispose();
-                //db.Dispose();
+                unitOfWork.Dispose();
             }
 
             base.Dispose(disposing);

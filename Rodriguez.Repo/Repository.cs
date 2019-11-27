@@ -12,9 +12,9 @@ namespace Rodriguez.Repo
         public readonly RodriguezModel _db = null;
         public DbSet<T> table = null;
 
-        public Repository()
+        public Repository(RodriguezModel db)
         {
-            _db = new RodriguezModel();
+            _db = db;
             this.table = _db.Set<T>();
         }
 

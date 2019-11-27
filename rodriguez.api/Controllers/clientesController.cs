@@ -17,25 +17,23 @@ namespace rodriguez.api.Controllers
 {
     public class ClientesController : ApiController
     {
-        //private RodriguezModel db = new RodriguezModel();
-        private readonly Repository<Cliente> repo = null;
+        private UnitOfWork unitOfWork = new UnitOfWork();
 
         public ClientesController()
         {
-            repo = new Repository<Cliente>();
         }
 
         // GET: api/Clientes
         public IEnumerable GetClientes()
         {
-            return repo.Get();
+            return unitOfWork.Clientes.Get();
         }
 
         // GET: api/Clientes/5
         [ResponseType(typeof(Cliente))]
-        public async Task<IHttpActionResult> GetCliente(int id)
+        public IHttpActionResult GetCliente(int id)
         {
-            Cliente Cliente = repo.Get(id);
+            Cliente Cliente = unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
@@ -50,7 +48,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IHttpActionResult GetClienteNombre(string Usuario)
         {
-            Cliente Cliente = repo.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
+            Cliente Cliente = unitOfWork.Clientes.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
             if (Cliente == null)
             {
                 return NotFound();
@@ -73,11 +71,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            repo.Update(Cliente);
+            unitOfWork.Clientes.Update(Cliente);
 
             try
             {
-                repo.Save();
+                unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -103,40 +101,37 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            repo.Insert(Cliente);
-            repo.Save();
+            unitOfWork.Clientes.Insert(Cliente);
+            unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Cliente.Id }, Cliente);
         }
 
         // DELETE: api/Clientes/5
         [ResponseType(typeof(Cliente))]
-        public async Task<IHttpActionResult> DeleteCliente(int id)
+        public IHttpActionResult DeleteCliente(int id)
         {
-            Cliente Cliente = repo.Get(id);
+            Cliente Cliente = unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
             }
 
-            repo.Delete(id);
-            repo.Save();
+            unitOfWork.Clientes.Delete(id);
+            unitOfWork.Commit();
 
             return Ok(Cliente);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                //db.Dispose();
-            }
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool ClienteExists(int id)
         {
-            return repo.Get(id) != null;
+            return unitOfWork.Clientes.Get(id) != null;
         }
     }
 }

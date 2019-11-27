@@ -7,6 +7,8 @@ namespace Rodriguez.Repo
 {
     public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     {
+        public UsuarioRepository():base(new RodriguezModel()) { }
+
         public Usuario GetClienteNombre(string usuario)
         {
             Usuario user = _db.Usuarios.Where(x => x.NombreUsuario.ToLower().Equals(usuario.ToLower()) && x.Activo).FirstOrDefault();

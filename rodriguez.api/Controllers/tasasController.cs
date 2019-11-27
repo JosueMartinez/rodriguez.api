@@ -21,21 +21,16 @@ namespace rodriguez.api.Controllers
     //[Authorize]
     public class TasasController : ApiController
     {
-        private readonly ITasaRepository tasaRepo = null;
-        private readonly IRepository<TasaMoneda> repo = null;
-        private readonly IRepository<Moneda> monedaRepo = null;
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public TasasController()
         {
-            this.tasaRepo = new TasaRepository();
-            this.repo = new Repository<TasaMoneda>();
-            this.monedaRepo = new Repository<Moneda>();
         }
 
         // GET: api/Tasas
         public IEnumerable GetTasasMonedas()
         {
-            return repo.Get();
+            return unitOfWork.Tasas.Get();
         }
 
         [ResponseType(typeof(TasaMoneda))]
@@ -43,7 +38,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetHistorial(int MonedaId)
         {
-            return tasaRepo.GetHistorial(MonedaId);
+            return unitOfWork.TasasCustom.GetHistorial(MonedaId);
         }
         
         [ResponseType(typeof(TasaMoneda))]
@@ -51,7 +46,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IHttpActionResult GetTasaMoneda(int MonedaId)
         {
-            var Tasa = repo.Get(MonedaId);
+            var Tasa = unitOfWork.Tasas.Get(MonedaId);
             if (Tasa == null)
             {
                 return NotFound();
@@ -68,7 +63,7 @@ namespace rodriguez.api.Controllers
         {
             try
             {
-                var Tasa = tasaRepo.GetTasaMoneda(Simbolo);
+                var Tasa = unitOfWork.TasasCustom.GetTasaMoneda(Simbolo);
                 if (Tasa == null)
                 {
                     return NotFound();
@@ -99,7 +94,7 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                repo.Update(TasaMoneda);
+                unitOfWork.Tasas.Update(TasaMoneda);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -125,7 +120,7 @@ namespace rodriguez.api.Controllers
             {
                 Tasa.Fecha = DateTime.Now;
                 Tasa.Activa = true;
-                var Monedas = monedaRepo.Get().Where(x => x.Id == Tasa.Moneda.Id);
+                var Monedas = unitOfWork.Monedas.Get().Where(x => x.Id == Tasa.Moneda.Id);
 
                 if (Tasa.Valor <= 0 && Monedas.Count() == 0)
                 {
@@ -134,8 +129,8 @@ namespace rodriguez.api.Controllers
 
                 Tasa.Moneda = Monedas.First();
                 disableTasas(Tasa.Moneda.Id);    //desActivando todas demas Tasas
-                tasaRepo.Insert(Tasa);
-                repo.Save();
+                unitOfWork.Tasas.Insert(Tasa);
+                unitOfWork.Commit();
 
                 return Ok(Tasa);
             }
@@ -150,28 +145,33 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(TasaMoneda))]
         public IHttpActionResult DeleteTasaMoneda(int id)
         {
-            TasaMoneda TasaMoneda = repo.Get(id);
+            TasaMoneda TasaMoneda = unitOfWork.Tasas.Get(id);
             if (TasaMoneda == null)
             {
                 return NotFound();
             }
 
-            repo.Delete(id);
-            repo.Save();
+            unitOfWork.Tasas.Delete(id);
+            unitOfWork.Commit();
 
             return Ok(TasaMoneda);
         }
 
         private bool TasaMonedaExists(int id)
         {
-            return repo.Get(id) != null; 
+            return unitOfWork.Tasas.Get(id) != null; 
         }
 
         private void disableTasas(int MonedaId)
         {
-            tasaRepo.DisableTasa(MonedaId);
+            unitOfWork.TasasCustom.DisableTasa(MonedaId);
+            unitOfWork.Commit();
+        }
 
-            repo.Save();
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

@@ -18,29 +18,24 @@ namespace rodriguez.api.Controllers
     [Authorize]
     public class UsuariosController : ApiController
     {
-        //private RodriguezModel db = new RodriguezModel();
-        private readonly Repository<Usuario> repo = null;
-        private readonly UsuarioRepository userRepo = null;
-        private readonly Repository<Rol> rolRepo = null;
+
+        private readonly UnitOfWork unitOfWork = new UnitOfWork();
 
         public UsuariosController()
         {
-            repo = new Repository<Usuario>();
-            userRepo = new UsuarioRepository();
-            rolRepo = new Repository<Rol>();
         }
 
         // GET: api/Usuarios
         public IEnumerable GetUsuarios()
         {
-            return repo.Get().Where(x => x.Activo);
+            return unitOfWork.Usuarios.Get().Where(x => x.Activo);
         }
 
         // GET: api/Usuarios/5
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuario(int id)
         {
-            var Usuario = repo.Get(id);
+            var Usuario = unitOfWork.Usuarios.Get(id);
 
             if (Usuario == null)
             {
@@ -60,7 +55,7 @@ namespace rodriguez.api.Controllers
         [HttpGet] //
         public IHttpActionResult GetClienteNombre(string Usuario)
         {
-            Usuario u = userRepo.GetClienteNombre(Usuario);
+            Usuario u = unitOfWork.UsuariosCustom.GetClienteNombre(Usuario);
             if (u == null)
             {
                 return NotFound();
@@ -83,11 +78,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            repo.Update(Usuario);
+            unitOfWork.Usuarios.Update(Usuario);
 
             try
             {
-                repo.Save();
+                unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -107,23 +102,23 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(void))]
         [Route("api/Usuario/{usuarioId}/Rol/{RolId}")]
         [HttpPut]
-        public async Task<IHttpActionResult> CambiarRol(int usuarioId, int RolId)
+        public IHttpActionResult CambiarRol(int usuarioId, int RolId)
         {
-            Usuario usuario = repo.Get(usuarioId);
+            Usuario usuario = unitOfWork.Usuarios.Get(usuarioId);
             if (usuario == null)
                 return NotFound();
 
-            Rol rol = rolRepo.Get(RolId);
+            Rol rol = unitOfWork.Roles.Get(RolId);
             if (rol == null)
                 return BadRequest();
 
             usuario.RolId = rol.Id;
             usuario.ConfirmarContrasena = usuario.Contrasena;
-            repo.Update(usuario);
+            unitOfWork.Usuarios.Update(usuario);
 
             try
             {
-                repo.Save();
+                unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -136,34 +131,34 @@ namespace rodriguez.api.Controllers
 
         // POST: api/Usuarios
         [ResponseType(typeof(Usuario))]
-        public async Task<IHttpActionResult> PostUsuario(Usuario Usuario)
+        public IHttpActionResult PostUsuario(Usuario Usuario)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            repo.Insert(Usuario);
-            repo.Save();
+            unitOfWork.Usuarios.Insert(Usuario);
+            unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Usuario.Id }, Usuario);
         }
 
         // DELETE: api/Usuarios/5
         [ResponseType(typeof(Usuario))]
-        public async Task<IHttpActionResult> DeleteUsuario(int id)
+        public IHttpActionResult DeleteUsuario(int id)
         {
-            Usuario Usuario = repo.Get(id);
+            Usuario Usuario = unitOfWork.Usuarios.Get(id);
             if (Usuario == null)
             {
                 return NotFound();
             }
 
-            userRepo.DisableUsuario(Usuario);
+            unitOfWork.UsuariosCustom.DisableUsuario(Usuario);
 
             try
             {
-                repo.Save();
+                unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -178,21 +173,18 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetRoles()
         {
-            return rolRepo.Get();
+            return unitOfWork.Roles.Get();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                //db.Dispose();
-            }
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool UsuarioExists(int id)
         {
-            return repo.Get(id) != null;
+            return unitOfWork.Usuarios.Get(id) != null;
         }
     }
 }
