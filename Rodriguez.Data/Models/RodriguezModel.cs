@@ -1,10 +1,8 @@
 namespace Rodriguez.Data.Models
 {
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
-    using System.Linq;
 
     public class RodriguezModel : IdentityDbContext<IdentityUser>
     {

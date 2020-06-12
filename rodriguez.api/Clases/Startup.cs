@@ -1,10 +1,14 @@
-﻿using Microsoft.Owin;
+﻿using Autofac;
+using Autofac.Integration.WebApi;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using Rodriguez.Data.Models;
+using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Data.Entity;
+using System.Reflection;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(rodriguez.api.Clases.Startup))]
@@ -14,10 +18,28 @@ namespace rodriguez.api.Clases
     {
         public void Configuration(IAppBuilder app)
         {
+            var builder = new ContainerBuilder();
+
             ConfigureOAuth(app);
-            HttpConfiguration config = new HttpConfiguration();
+            var config = new HttpConfiguration();
+
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            //register dependencies
+            builder.RegisterType<RodriguezModel>().InstancePerLifetimeScope();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+
+            var container = builder.Build();
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
             WebApiConfig.Register(config);
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);            
+
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+
+            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
+            // and finally the standard Web API middleware.
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(config);
             app.UseWebApi(config);
         }
 

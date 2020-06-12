@@ -1,8 +1,9 @@
 ﻿using Rodriguez.Data.Models;
+using System;
 
 namespace Rodriguez.Repo.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<TasaMoneda> Tasas { get; }
         TasaRepository TasasCustom { get; }

@@ -1,12 +1,11 @@
-﻿using System;
-using Rodriguez.Data.Models;
+﻿using Rodriguez.Data.Models;
 using Rodriguez.Repo.Interfaces;
 
 namespace Rodriguez.Repo
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private RodriguezModel _db;
+        private readonly RodriguezModel _db;
         private Repository<TasaMoneda> _tasas;
         private TasaRepository _tasasCustom;
         private Repository<Usuario> _usuarios;
@@ -18,9 +17,9 @@ namespace Rodriguez.Repo
         private Repository<Moneda> _monedas;
         private Repository<Rol> _roles;
 
-        public UnitOfWork()
+        public UnitOfWork(RodriguezModel db)
         {
-            _db = new RodriguezModel();
+            _db = db;
         }
 
 

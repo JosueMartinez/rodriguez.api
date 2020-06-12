@@ -14,6 +14,7 @@ using Rodriguez.Data.Models;
 using Rodriguez.Repo;
 using System.Collections;
 using Rodriguez.Repo.Interfaces;
+using Autofac.Integration.WebApi;
 
 namespace rodriguez.api.Controllers
 {
@@ -21,16 +22,17 @@ namespace rodriguez.api.Controllers
     //[Authorize]
     public class TasasController : ApiController
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TasasController()
+        public TasasController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Tasas
         public IEnumerable GetTasasMonedas()
         {
-            return unitOfWork.Tasas.Get();
+            return _unitOfWork.Tasas.Get();
         }
 
         [ResponseType(typeof(TasaMoneda))]
@@ -38,7 +40,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetHistorial(int MonedaId)
         {
-            return unitOfWork.TasasCustom.GetHistorial(MonedaId);
+            return _unitOfWork.TasasCustom.GetHistorial(MonedaId);
         }
         
         [ResponseType(typeof(TasaMoneda))]
@@ -46,7 +48,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IHttpActionResult GetTasaMoneda(int MonedaId)
         {
-            var Tasa = unitOfWork.Tasas.Get(MonedaId);
+            var Tasa = _unitOfWork.Tasas.Get(MonedaId);
             if (Tasa == null)
             {
                 return NotFound();
@@ -63,7 +65,7 @@ namespace rodriguez.api.Controllers
         {
             try
             {
-                var Tasa = unitOfWork.TasasCustom.GetTasaMoneda(Simbolo);
+                var Tasa = _unitOfWork.TasasCustom.GetTasaMoneda(Simbolo);
                 if (Tasa == null)
                 {
                     return NotFound();
@@ -94,7 +96,7 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                unitOfWork.Tasas.Update(TasaMoneda);
+                _unitOfWork.Tasas.Update(TasaMoneda);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -120,7 +122,7 @@ namespace rodriguez.api.Controllers
             {
                 Tasa.Fecha = DateTime.Now;
                 Tasa.Activa = true;
-                var Monedas = unitOfWork.Monedas.Get().Where(x => x.Id == Tasa.Moneda.Id);
+                var Monedas = _unitOfWork.Monedas.Get().Where(x => x.Id == Tasa.Moneda.Id);
 
                 if (Tasa.Valor <= 0 && Monedas.Count() == 0)
                 {
@@ -129,8 +131,8 @@ namespace rodriguez.api.Controllers
 
                 Tasa.Moneda = Monedas.First();
                 disableTasas(Tasa.Moneda.Id);    //desActivando todas demas Tasas
-                unitOfWork.Tasas.Insert(Tasa);
-                unitOfWork.Commit();
+                _unitOfWork.Tasas.Insert(Tasa);
+                _unitOfWork.Commit();
 
                 return Ok(Tasa);
             }
@@ -145,32 +147,32 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(TasaMoneda))]
         public IHttpActionResult DeleteTasaMoneda(int id)
         {
-            TasaMoneda TasaMoneda = unitOfWork.Tasas.Get(id);
+            TasaMoneda TasaMoneda = _unitOfWork.Tasas.Get(id);
             if (TasaMoneda == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Tasas.Delete(id);
-            unitOfWork.Commit();
+            _unitOfWork.Tasas.Delete(id);
+            _unitOfWork.Commit();
 
             return Ok(TasaMoneda);
         }
 
         private bool TasaMonedaExists(int id)
         {
-            return unitOfWork.Tasas.Get(id) != null; 
+            return _unitOfWork.Tasas.Get(id) != null; 
         }
 
         private void disableTasas(int MonedaId)
         {
-            unitOfWork.TasasCustom.DisableTasa(MonedaId);
-            unitOfWork.Commit();
+            _unitOfWork.TasasCustom.DisableTasa(MonedaId);
+            _unitOfWork.Commit();
         }
 
         protected override void Dispose(bool disposing)
         {
-            unitOfWork.Dispose();
+            _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
     }
