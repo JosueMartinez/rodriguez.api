@@ -1,12 +1,10 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo.Interfaces;
-using System;
 using System.Collections;
 using static Rodriguez.Data.Utils.Constants;
 
 namespace Rodriguez.Services.Interfaces
 {
-    public interface IBonoService //: IUnitOfWork
+    public interface IBonoService
     {
         IEnumerable Get(EstadosBonos estado);
         Bono Get(int id);

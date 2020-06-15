@@ -1,5 +1,4 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo;
 using Rodriguez.Services.Interfaces;
 using System;
 using System.Collections;
@@ -10,7 +9,7 @@ using static Rodriguez.Data.Utils.Constants;
 
 namespace rodriguez.api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class BonosController : ApiController
     {
         private readonly IBonoService _bonoService;
