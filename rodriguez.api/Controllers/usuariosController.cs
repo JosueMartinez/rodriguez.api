@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using rodriguez.api.Clases;
 using Rodriguez.Data.Models;
+using Rodriguez.Repo;
 using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections;
@@ -18,17 +19,19 @@ namespace rodriguez.api.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly AuthRepository _repo = null;
+        private readonly RodriguezModel _db;
 
-        public UsuariosController(IUnitOfWork unitOfWork)
+        public UsuariosController(IUnitOfWork unitOfWork, RodriguezModel db)
         {
             _unitOfWork = unitOfWork;
             _repo = new AuthRepository();
+            _db = db;
         }
 
         // GET: api/Usuarios
         public IEnumerable GetUsuarios()
         {
-            return _unitOfWork.Usuarios.Get().Where(x => x.Activo);
+            return _unitOfWork.UsuariosCustom.GetUsuariosDetails();
         }
 
         // GET: api/Usuarios/5
