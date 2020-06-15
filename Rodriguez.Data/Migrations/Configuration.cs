@@ -1,5 +1,8 @@
 namespace Rodriguez.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Rodriguez.Data.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -45,6 +48,31 @@ namespace Rodriguez.Data.Migrations
                     new Models.EstadoBono { Descripcion = "Cobrado" },
                     new Models.EstadoBono { Descripcion = "Cancelado" }
                 );
+            #endregion
+
+            #region adminUser
+
+            var admin = new Usuario
+            {
+                NombreCompleto = "Admin",
+                NombreUsuario = "admin",
+                Contrasena = "rodriguezAdmin!",
+                ConfirmarContrasena = "rodriguezAdmin!",
+                RolId = context.Roles.FirstOrDefault(x => x.Descripcion.Equals("Admin")).Id,
+                Activo = true
+            };            
+
+            context.Usuarios.Add(admin);
+
+            IdentityUser user = new IdentityUser
+            {
+                UserName = admin.NombreUsuario
+            };
+
+            UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+            userManager.Create(user, "rodriguezAdmin!");
+
+
             #endregion
 
             context.SaveChanges();
