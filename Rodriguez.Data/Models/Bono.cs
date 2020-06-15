@@ -42,6 +42,5 @@ namespace Rodriguez.Data.Models
         public DateTime FechaCompra { get; set; }
 
         public virtual ICollection<HistorialBono> HistorialBonos { get; set; }
-
     }
 }

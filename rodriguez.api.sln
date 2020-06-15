@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rodriguez.api", "rodriguez.api\rodriguez.api.csproj", "{063E4147-6CA5-4E76-9B27-D6A8BA0E4CC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Data", "Rodriguez.Data\Rodriguez.Data.csproj", "{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Repo", "Rodriguez.Repo\Rodriguez.Repo.csproj", "{2D927161-371E-4B0E-962D-622F31E70290}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Services", "Rodriguez.Services\Rodriguez.Services.csproj", "{039EC83D-F7BE-47F6-B590-C784D6BD06DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D927161-371E-4B0E-962D-622F31E70290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D927161-371E-4B0E-962D-622F31E70290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D927161-371E-4B0E-962D-622F31E70290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D927161-371E-4B0E-962D-622F31E70290}.Release|Any CPU.Build.0 = Release|Any CPU
+		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
