@@ -2,6 +2,7 @@
 using rodriguez.api.Clases;
 using Rodriguez.Data.Models;
 using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace rodriguez.api.Controllers
     //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
-        private AuthRepository _repo = null;
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly AuthRepository _repo = null;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AccountController()
+
+        public AccountController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _repo = new AuthRepository();
         }
 
@@ -38,8 +41,8 @@ namespace rodriguez.api.Controllers
             try
             {
                 userModel.Activo = true;
-                unitOfWork.Usuarios.Insert(userModel);
-                unitOfWork.Commit();
+                _unitOfWork.Usuarios.Insert(userModel);
+                _unitOfWork.Commit();
 
                 IdentityResult result = await _repo.RegisterUser(userModel);
 
@@ -70,8 +73,8 @@ namespace rodriguez.api.Controllers
 
             try
             {
-                unitOfWork.Clientes.Insert(Cliente);
-                unitOfWork.Commit();
+                _unitOfWork.Clientes.Insert(Cliente);
+                _unitOfWork.Commit();
                 IdentityResult result = await _repo.RegisterClient(Cliente);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -88,9 +91,6 @@ namespace rodriguez.api.Controllers
                 return BadRequest(e.ToString());
             }
         }
-
-
-
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
@@ -126,7 +126,7 @@ namespace rodriguez.api.Controllers
             if (disposing)
             {
                 _repo.Dispose();
-                unitOfWork.Dispose();
+                _unitOfWork.Dispose();
             }
 
             base.Dispose(disposing);
