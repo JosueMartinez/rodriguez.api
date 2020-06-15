@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class MonedasController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;

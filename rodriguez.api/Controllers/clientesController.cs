@@ -1,5 +1,6 @@
 ﻿using Rodriguez.Data.Models;
 using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,25 +16,27 @@ using System.Web.Http.Description;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class ClientesController : ApiController
     {
-        private UnitOfWork unitOfWork = new UnitOfWork();
+        private IUnitOfWork _unitOfWork;
 
-        public ClientesController()
+        public ClientesController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Clientes
         public IEnumerable GetClientes()
         {
-            return unitOfWork.Clientes.Get();
+            return _unitOfWork.Clientes.Get();
         }
 
         // GET: api/Clientes/5
         [ResponseType(typeof(Cliente))]
         public IHttpActionResult GetCliente(int id)
         {
-            Cliente Cliente = unitOfWork.Clientes.Get(id);
+            Cliente Cliente = _unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
@@ -48,7 +51,7 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IHttpActionResult GetClienteNombre(string Usuario)
         {
-            Cliente Cliente = unitOfWork.Clientes.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
+            Cliente Cliente = _unitOfWork.Clientes.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
             if (Cliente == null)
             {
                 return NotFound();
@@ -71,11 +74,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            unitOfWork.Clientes.Update(Cliente);
+            _unitOfWork.Clientes.Update(Cliente);
 
             try
             {
-                unitOfWork.Commit();
+                _unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -101,8 +104,8 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Clientes.Insert(Cliente);
-            unitOfWork.Commit();
+            _unitOfWork.Clientes.Insert(Cliente);
+            _unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Cliente.Id }, Cliente);
         }
@@ -111,27 +114,27 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Cliente))]
         public IHttpActionResult DeleteCliente(int id)
         {
-            Cliente Cliente = unitOfWork.Clientes.Get(id);
+            Cliente Cliente = _unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Clientes.Delete(id);
-            unitOfWork.Commit();
+            _unitOfWork.Clientes.Delete(id);
+            _unitOfWork.Commit();
 
             return Ok(Cliente);
         }
 
         protected override void Dispose(bool disposing)
         {
-            unitOfWork.Dispose();
+            _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool ClienteExists(int id)
         {
-            return unitOfWork.Clientes.Get(id) != null;
+            return _unitOfWork.Clientes.Get(id) != null;
         }
     }
 }

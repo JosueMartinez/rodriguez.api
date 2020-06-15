@@ -1,15 +1,10 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -19,23 +14,24 @@ namespace rodriguez.api.Controllers
     public class UsuariosController : ApiController
     {
 
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UsuariosController()
+        public UsuariosController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Usuarios
         public IEnumerable GetUsuarios()
         {
-            return unitOfWork.Usuarios.Get().Where(x => x.Activo);
+            return _unitOfWork.Usuarios.Get().Where(x => x.Activo);
         }
 
         // GET: api/Usuarios/5
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult GetUsuario(int id)
         {
-            var Usuario = unitOfWork.Usuarios.Get(id);
+            var Usuario = _unitOfWork.Usuarios.Get(id);
 
             if (Usuario == null)
             {
@@ -55,7 +51,7 @@ namespace rodriguez.api.Controllers
         [HttpGet] //
         public IHttpActionResult GetClienteNombre(string Usuario)
         {
-            Usuario u = unitOfWork.UsuariosCustom.GetClienteNombre(Usuario);
+            Usuario u = _unitOfWork.UsuariosCustom.GetClienteNombre(Usuario);
             if (u == null)
             {
                 return NotFound();
@@ -78,11 +74,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            unitOfWork.Usuarios.Update(Usuario);
+            _unitOfWork.Usuarios.Update(Usuario);
 
             try
             {
-                unitOfWork.Commit();
+                _unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -104,21 +100,21 @@ namespace rodriguez.api.Controllers
         [HttpPut]
         public IHttpActionResult CambiarRol(int usuarioId, int RolId)
         {
-            Usuario usuario = unitOfWork.Usuarios.Get(usuarioId);
+            Usuario usuario = _unitOfWork.Usuarios.Get(usuarioId);
             if (usuario == null)
                 return NotFound();
 
-            Rol rol = unitOfWork.Roles.Get(RolId);
+            Rol rol = _unitOfWork.Roles.Get(RolId);
             if (rol == null)
                 return BadRequest();
 
             usuario.RolId = rol.Id;
             usuario.ConfirmarContrasena = usuario.Contrasena;
-            unitOfWork.Usuarios.Update(usuario);
+            _unitOfWork.Usuarios.Update(usuario);
 
             try
             {
-                unitOfWork.Commit();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -138,8 +134,8 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Usuarios.Insert(Usuario);
-            unitOfWork.Commit();
+            _unitOfWork.Usuarios.Insert(Usuario);
+            _unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Usuario.Id }, Usuario);
         }
@@ -148,17 +144,17 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult DeleteUsuario(int id)
         {
-            Usuario Usuario = unitOfWork.Usuarios.Get(id);
+            Usuario Usuario = _unitOfWork.Usuarios.Get(id);
             if (Usuario == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.UsuariosCustom.DisableUsuario(Usuario);
+            _unitOfWork.UsuariosCustom.DisableUsuario(Usuario);
 
             try
             {
-                unitOfWork.Commit();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -173,18 +169,18 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetRoles()
         {
-            return unitOfWork.Roles.Get();
+            return _unitOfWork.Roles.Get();
         }
 
         protected override void Dispose(bool disposing)
         {
-            unitOfWork.Dispose();
+            _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool UsuarioExists(int id)
         {
-            return unitOfWork.Usuarios.Get(id) != null;
+            return _unitOfWork.Usuarios.Get(id) != null;
         }
     }
 }

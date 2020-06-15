@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using System.Web.Http.Cors;
 using Rodriguez.Data.Models;
-using Rodriguez.Repo;
 using System.Collections;
 using Rodriguez.Repo.Interfaces;
-using Autofac.Integration.WebApi;
 
 namespace rodriguez.api.Controllers
 {
     //[EnableCors(origins: "*", headers: "*", methods: "*")]
-    //[Authorize]
+    [Authorize]
     public class TasasController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
