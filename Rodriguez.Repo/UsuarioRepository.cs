@@ -11,7 +11,7 @@ namespace Rodriguez.Repo
 
         public Usuario GetClienteNombre(string usuario)
         {
-            Usuario user = _db.Usuarios.Where(x => x.NombreUsuario.ToLower().Equals(usuario.ToLower()) && x.Activo).FirstOrDefault();
+            Usuario user = _db.Usuarios.Include("Rol").FirstOrDefault(x => x.NombreUsuario.ToLower().Equals(usuario.ToLower()) && x.Activo);
             return user;
         }
 
