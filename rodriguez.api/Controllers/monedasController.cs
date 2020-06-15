@@ -1,5 +1,4 @@
 ﻿using Rodriguez.Data.Models;
-using Rodriguez.Repo;
 using Rodriguez.Repo.Interfaces;
 using System.Collections;
 using System.Data.Entity.Infrastructure;
@@ -11,23 +10,24 @@ namespace rodriguez.api.Controllers
 {
     public class MonedasController : ApiController
     {
-        private readonly UnitOfWork unitOfWork = new UnitOfWork();
+        private readonly IUnitOfWork _unitOfWork;
 
-        public MonedasController()
+        public MonedasController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Monedas
         public IEnumerable GetMonedas()
         {
-            return unitOfWork.Monedas.Get();
+            return _unitOfWork.Monedas.Get();
         }
 
         // GET: api/Monedas/5
         [ResponseType(typeof(Moneda))]
         public IHttpActionResult GetMoneda(int id)
         {
-            Moneda Moneda = unitOfWork.Monedas.Get(id);
+            Moneda Moneda = _unitOfWork.Monedas.Get(id);
             if (Moneda == null)
             {
                 return NotFound();
@@ -50,11 +50,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            unitOfWork.Monedas.Update(Moneda);
+            _unitOfWork.Monedas.Update(Moneda);
 
             try
             {
-                unitOfWork.Commit();
+                _unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +80,8 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            unitOfWork.Monedas.Insert(Moneda);
-            unitOfWork.Commit();
+            _unitOfWork.Monedas.Insert(Moneda);
+            _unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Moneda.Id }, Moneda);
         }
@@ -90,14 +90,14 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Moneda))]
         public IHttpActionResult DeleteMoneda(int id)
         {
-            Moneda Moneda = unitOfWork.Monedas.Get(id);
+            Moneda Moneda = _unitOfWork.Monedas.Get(id);
             if (Moneda == null)
             {
                 return NotFound();
             }
 
-            unitOfWork.Monedas.Delete(id);
-            unitOfWork.Commit();
+            _unitOfWork.Monedas.Delete(id);
+            _unitOfWork.Commit();
 
             return Ok(Moneda);
         }
@@ -105,7 +105,7 @@ namespace rodriguez.api.Controllers
 
         private bool MonedaExists(int id)
         {
-            return unitOfWork.Monedas.Get(id) != null;
+            return _unitOfWork.Monedas.Get(id) != null;
         }
     }
 }
