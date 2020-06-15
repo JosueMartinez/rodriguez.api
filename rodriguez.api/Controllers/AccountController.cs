@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using rodriguez.api.Clases;
 using Rodriguez.Data.Models;
+using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +18,13 @@ namespace rodriguez.api.Controllers
     //[EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
-        private AuthRepository _repo = null;
-        private RodriguezModel db = new RodriguezModel();
+        private readonly AuthRepository _repo = null;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AccountController()
+
+        public AccountController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _repo = new AuthRepository();
         }
 
@@ -29,7 +33,6 @@ namespace rodriguez.api.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(Usuario userModel)
         {
-            //RodriguezModel db = new RodriguezModel();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -38,8 +41,9 @@ namespace rodriguez.api.Controllers
             try
             {
                 userModel.Activo = true;
-                db.Usuarios.Add(userModel);
-                await db.SaveChangesAsync();
+                _unitOfWork.Usuarios.Insert(userModel);
+                _unitOfWork.Commit();
+
                 IdentityResult result = await _repo.RegisterUser(userModel);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -69,9 +73,8 @@ namespace rodriguez.api.Controllers
 
             try
             {
-
-                db.Clientes.Add(Cliente);
-                await db.SaveChangesAsync();
+                _unitOfWork.Clientes.Insert(Cliente);
+                _unitOfWork.Commit();
                 IdentityResult result = await _repo.RegisterClient(Cliente);
 
                 IHttpActionResult errorResult = GetErrorResult(result);
@@ -88,9 +91,6 @@ namespace rodriguez.api.Controllers
                 return BadRequest(e.ToString());
             }
         }
-
-
-
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
@@ -126,7 +126,7 @@ namespace rodriguez.api.Controllers
             if (disposing)
             {
                 _repo.Dispose();
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
 
             base.Dispose(disposing);

@@ -1,51 +1,42 @@
 ﻿using Rodriguez.Data.Models;
+using Rodriguez.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+using System.Collections;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using static Rodriguez.Data.Utils.Constants;
 
 namespace rodriguez.api.Controllers
 {
     [Authorize]
     public class BonosController : ApiController
     {
-        private RodriguezModel db = new RodriguezModel();
+        private readonly IBonoService _bonoService;
+
+        public BonosController(IBonoService bonoService)
+        {
+            _bonoService = bonoService;
+        }
 
         // GET: api/Bonos
-        public IQueryable<Bono> GetBonos()
-        {
-            return db.Bonos.Include(p => p.Cliente)
-                        .Include(p => p.Tasa)
-                        .Include("Tasa.Moneda")
-                        .Include(p => p.EstadoBono)
-                        .Where(p => p.EstadoBono.Descripcion.ToLower().Equals("comprado"))
-                        .OrderByDescending(x => x.FechaCompra);
+        public IEnumerable GetBonos()
+        {            
+            return _bonoService.Get(EstadosBonos.Comprado);
         }
 
         [Route("api/BonosPagados")]
         [HttpGet]
-        public IQueryable<Bono> GetBonosPagados()
+        public IEnumerable GetBonosPagados()
         {
-            return db.Bonos.Include(p => p.Cliente)
-                        .Include(p => p.Tasa)
-                        .Include("Tasa.Moneda")
-                        .Include(p => p.EstadoBono)
-                        .Where(p => p.EstadoBono.Descripcion.ToLower().Equals("cobrado"))
-                        .OrderByDescending(x => x.FechaCompra);
+            return _bonoService.Get(EstadosBonos.Cobrado);
         }
 
         // GET: api/Bonos/5
         [ResponseType(typeof(Bono))]
-        public async Task<IHttpActionResult> GetBono(int id)
+        public IHttpActionResult GetBono(int id)
         {
-            Bono Bono = await db.Bonos.Include(p => p.Cliente).Include(p => p.Tasa).Include("Tasa.Moneda").Include(p => p.EstadoBono).SingleOrDefaultAsync(i => i.Id == id);
+            Bono Bono = _bonoService.Get(id);
             if (Bono == null)
             {
                 return NotFound();
@@ -58,112 +49,58 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         [Route("api/Cliente/{ClienteId}/Bonos")]
         [HttpGet]
-        public IQueryable<Bono> GetBonoCliente(int ClienteId)
+        public IEnumerable GetBonoCliente(int ClienteId)
         {
-            return db.Bonos.Where(x => x.ClienteId == ClienteId)
-                .Include(p => p.Cliente).Include(p => p.Tasa)
-                .Include("Tasa.Moneda")
-                .Include(p => p.EstadoBono)
-                .OrderByDescending(x => x.FechaCompra); ;
+            return _bonoService.GetBonosCliente(ClienteId);
         }
 
         // PUT: api/Bonos/5/pagar
         [ResponseType(typeof(void))]
         [Route("api/Bonos/{BonoId}/pagar")]
         [HttpPut]
-        public async Task<IHttpActionResult> PutBono(int BonoId)
+        public IHttpActionResult PutBono(int BonoId)
         {
-            Bono Bono = await db.Bonos.FindAsync(BonoId);
-            int idCobrado = db.EstadosBonos.Where(x => x.Descripcion.Equals("Cobrado")).FirstOrDefault().Id;
-
-            if (Bono == null)
+            try
             {
-                return NotFound();
-            }
-
-            //creacion movimiento historial
-            HistorialBono hist = new HistorialBono();
-            hist.BonoId = Bono.Id;
-            hist.EstadoBonoId = idCobrado;
-            hist.FechaEntradaEstado = DateTime.Now;
-
-            Bono.EstadoBonoId = idCobrado;
-            if(Bono.EstadoBonoId != 0)
-            {
-                db.Entry(Bono).State = EntityState.Modified;
-
-                try
-                {
-                    db.HistorialBonos.Add(hist);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-
+                _bonoService.PagarBono(BonoId);
                 return StatusCode(HttpStatusCode.NoContent);
             }
-
-            return BadRequest();
-            
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
 
         // POST: api/Bonos
         [ResponseType(typeof(Bono))]
-        public async Task<IHttpActionResult> PostBono(Bono Bono)
+        public IHttpActionResult PostBono(Bono Bono)
         {
             try
             {
-                //ESTADO Bono SIEMPRE COMPRADO
-                Bono.EstadoBonoId =  db.EstadosBonos.Where(x => x.Descripcion.Equals("comprado")).FirstOrDefault().Id;
-                //Fecha COMPRA NOW
-                Bono.FechaCompra = DateTime.Now;
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                
-                db.Bonos.Add(Bono);
-                await db.SaveChangesAsync();
+                _bonoService.AddBono(Bono);
                 return Ok(Bono);
-                //return CreatedAtRoute("DefaultApi", new { id = Bono.Id }, Bono);
-            }catch(Exception e)
-            {
-                return InternalServerError();
             }
-            
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+
         }
 
         // DELETE: api/Bonos/5
         [ResponseType(typeof(Bono))]
-        public async Task<IHttpActionResult> DeleteBono(int id)
+        public IHttpActionResult DeleteBono(int id)
         {
-            Bono Bono = await db.Bonos.FindAsync(id);
+            Bono Bono = _bonoService.Get(id);
             if (Bono == null)
             {
                 return NotFound();
             }
 
-            db.Bonos.Remove(Bono);
-            await db.SaveChangesAsync();
+            _bonoService.DeleteBono(id);
 
             return Ok(Bono);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool BonoExists(int id)
-        {
-            return db.Bonos.Count(e => e.Id == id) > 0;
-        }
     }
 }

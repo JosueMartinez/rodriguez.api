@@ -1,5 +1,8 @@
 ﻿using Rodriguez.Data.Models;
+using Rodriguez.Repo;
+using Rodriguez.Repo.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -13,21 +16,27 @@ using System.Web.Http.Description;
 
 namespace rodriguez.api.Controllers
 {
+    [Authorize]
     public class ClientesController : ApiController
     {
-        private RodriguezModel db = new RodriguezModel();
+        private IUnitOfWork _unitOfWork;
+
+        public ClientesController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         // GET: api/Clientes
-        public IQueryable<Cliente> GetClientes()
+        public IEnumerable GetClientes()
         {
-            return db.Clientes;
+            return _unitOfWork.Clientes.Get();
         }
 
         // GET: api/Clientes/5
         [ResponseType(typeof(Cliente))]
-        public async Task<IHttpActionResult> GetCliente(int id)
+        public IHttpActionResult GetCliente(int id)
         {
-            Cliente Cliente = await db.Clientes.FindAsync(id);
+            Cliente Cliente = _unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
@@ -40,9 +49,9 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         [Route("api/ClienteU/{Usuario}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetClienteNombre(string Usuario)
+        public IHttpActionResult GetClienteNombre(string Usuario)
         {
-            Cliente Cliente = await db.Clientes.Where(x => x.Usuario.Equals(Usuario)).FirstOrDefaultAsync();
+            Cliente Cliente = _unitOfWork.Clientes.Get().Where(x => x.Usuario.Equals(Usuario)).FirstOrDefault();
             if (Cliente == null)
             {
                 return NotFound();
@@ -53,7 +62,7 @@ namespace rodriguez.api.Controllers
 
         // PUT: api/Clientes/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCliente(int id, Cliente Cliente)
+        public IHttpActionResult PutCliente(int id, Cliente Cliente)
         {
             if (!ModelState.IsValid)
             {
@@ -65,11 +74,11 @@ namespace rodriguez.api.Controllers
                 return BadRequest();
             }
 
-            db.Entry(Cliente).State = EntityState.Modified;
+            _unitOfWork.Clientes.Update(Cliente);
 
             try
             {
-                await db.SaveChangesAsync();
+                _unitOfWork.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,40 +104,37 @@ namespace rodriguez.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Clientes.Add(Cliente);
-            await db.SaveChangesAsync();
+            _unitOfWork.Clientes.Insert(Cliente);
+            _unitOfWork.Commit();
 
             return CreatedAtRoute("DefaultApi", new { id = Cliente.Id }, Cliente);
         }
 
         // DELETE: api/Clientes/5
         [ResponseType(typeof(Cliente))]
-        public async Task<IHttpActionResult> DeleteCliente(int id)
+        public IHttpActionResult DeleteCliente(int id)
         {
-            Cliente Cliente = await db.Clientes.FindAsync(id);
+            Cliente Cliente = _unitOfWork.Clientes.Get(id);
             if (Cliente == null)
             {
                 return NotFound();
             }
 
-            db.Clientes.Remove(Cliente);
-            await db.SaveChangesAsync();
+            _unitOfWork.Clientes.Delete(id);
+            _unitOfWork.Commit();
 
             return Ok(Cliente);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            _unitOfWork.Dispose();
             base.Dispose(disposing);
         }
 
         private bool ClienteExists(int id)
         {
-            return db.Clientes.Count(e => e.ClienteId == id) > 0;
+            return _unitOfWork.Clientes.Get(id) != null;
         }
     }
 }

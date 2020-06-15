@@ -1,10 +1,8 @@
 namespace Rodriguez.Data.Models
 {
     using Microsoft.AspNet.Identity.EntityFramework;
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.ModelConfiguration.Conventions;
-    using System.Linq;
 
     public class RodriguezModel : IdentityDbContext<IdentityUser>
     {
@@ -21,15 +19,10 @@ namespace Rodriguez.Data.Models
         }
 
         public virtual DbSet<Bono> Bonos { get; set; }
-        public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<EstadoBono> EstadosBonos { get; set; }
         public virtual DbSet<HistorialBono> HistorialBonos { get; set; }
-        public virtual DbSet<ListaCompra> Listascompra { get; set; }
-        public virtual DbSet<ListaCompraProducto> ListasCompraProductos { get; set; }
-        public virtual DbSet<Medida> Medidas { get; set; }
         public virtual DbSet<Moneda> Monedas { get; set; }
-        public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Rol> Roles { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<TasaMoneda> TasasMonedas { get; set; }
