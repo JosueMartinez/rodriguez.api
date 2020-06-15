@@ -6,8 +6,9 @@ using Owin;
 using Rodriguez.Data.Models;
 using Rodriguez.Repo;
 using Rodriguez.Repo.Interfaces;
+using Rodriguez.Services;
+using Rodriguez.Services.Interfaces;
 using System;
-using System.Data.Entity;
 using System.Reflection;
 using System.Web.Http;
 
@@ -28,6 +29,7 @@ namespace rodriguez.api.Clases
             //register dependencies
             builder.RegisterType<RodriguezModel>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<BonoService>().As<IBonoService>();
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
