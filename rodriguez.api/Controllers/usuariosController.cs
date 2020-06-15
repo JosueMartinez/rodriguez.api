@@ -1,4 +1,6 @@
-﻿using Rodriguez.Data.Models;
+﻿using Microsoft.AspNet.Identity;
+using rodriguez.api.Clases;
+using Rodriguez.Data.Models;
 using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections;
@@ -15,10 +17,12 @@ namespace rodriguez.api.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly AuthRepository _repo = null;
 
         public UsuariosController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _repo = new AuthRepository();
         }
 
         // GET: api/Usuarios
@@ -127,7 +131,7 @@ namespace rodriguez.api.Controllers
 
         // POST: api/Usuarios
         [ResponseType(typeof(Usuario))]
-        public IHttpActionResult PostUsuario(Usuario Usuario)
+        public async System.Threading.Tasks.Task<IHttpActionResult> PostUsuarioAsync(Usuario Usuario)
         {
             if (!ModelState.IsValid)
             {
@@ -136,6 +140,8 @@ namespace rodriguez.api.Controllers
 
             _unitOfWork.Usuarios.Insert(Usuario);
             _unitOfWork.Commit();
+
+            await _repo.RegisterUser(Usuario);
 
             return CreatedAtRoute("DefaultApi", new { id = Usuario.Id }, Usuario);
         }
