@@ -8,7 +8,10 @@ namespace Rodriguez.Repo
 {
     public class TasaRepository : Repository<TasaMoneda>, ITasaRepository
     {
-        
+        public IEnumerable GetAll()
+        {
+            return _db.TasasMonedas.Include("Moneda").Where(x => x.Activa);
+        }
 
         public void DisableTasa(int monedaId)
         {
@@ -23,6 +26,7 @@ namespace Rodriguez.Repo
         {
             return _db.TasasMonedas.Where(x => x.MonedaId == monedaId).OrderByDescending(x => x.Fecha).Take(10);
         }
+
         public TasaMoneda GetTasaMoneda(string simbolo)
         {
             var tasa = _db.TasasMonedas.Where(x => x.Moneda.Simbolo == simbolo).OrderByDescending(x => x.Fecha);

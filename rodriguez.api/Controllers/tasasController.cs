@@ -25,7 +25,7 @@ namespace rodriguez.api.Controllers
         // GET: api/Tasas
         public IEnumerable GetTasasMonedas()
         {
-            return _unitOfWork.Tasas.Get();
+            return _unitOfWork.TasasCustom.GetAll();
         }
 
         [ResponseType(typeof(TasaMoneda))]

@@ -26,10 +26,13 @@ namespace rodriguez.api.Clases
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            //register dependencies
+            #region dependencies
+
             builder.RegisterType<RodriguezModel>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<BonoService>().As<IBonoService>();
+
+            #endregion
 
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
