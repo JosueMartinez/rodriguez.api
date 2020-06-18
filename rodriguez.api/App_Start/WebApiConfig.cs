@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 using Newtonsoft.Json;
+using rodriguez.api.Clases;
 
 namespace rodriguez.api
 {
@@ -29,6 +31,9 @@ namespace rodriguez.api
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            // add your service here which will log any exceptions using your new logger class
+            config.Services.Add(typeof(IExceptionLogger), new NLogExceptionLogger());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
