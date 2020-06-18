@@ -40,7 +40,9 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetHistorial(int MonedaId)
         {
-            return _unitOfWork.TasasCustom.GetHistorial(MonedaId);
+            var historial = _unitOfWork.TasasCustom.GetHistorial(MonedaId);
+
+            return _Mapper.Map<IEnumerable<TasaDto>>(historial);
         }
         
         [ResponseType(typeof(TasaMoneda))]
