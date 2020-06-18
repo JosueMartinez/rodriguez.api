@@ -8,6 +8,9 @@ using System.Web.Http.Description;
 using Rodriguez.Data.Models;
 using System.Collections;
 using Rodriguez.Repo.Interfaces;
+using AutoMapper;
+using Rodriguez.Data.DTOs;
+using System.Collections.Generic;
 
 namespace rodriguez.api.Controllers
 {
@@ -16,16 +19,20 @@ namespace rodriguez.api.Controllers
     public class TasasController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _Mapper;
 
-        public TasasController(IUnitOfWork unitOfWork)
+        public TasasController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _Mapper = mapper;
         }
 
         // GET: api/Tasas
         public IEnumerable GetTasasMonedas()
         {
-            return _unitOfWork.Tasas.Get();
+            var tasas = _unitOfWork.TasasCustom.GetAll();
+
+            return _Mapper.Map<IEnumerable<TasaDto>>(tasas);
         }
 
         [ResponseType(typeof(TasaMoneda))]

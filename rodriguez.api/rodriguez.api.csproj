@@ -65,6 +65,9 @@
     <Reference Include="Autofac.Integration.WebApi.Owin, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.WebApi2.Owin.5.0.0\lib\net461\Autofac.Integration.WebApi.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="DevelopersDo.DataAnnotations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DevelopersDo.DataAnnotations.1.0.1.0\lib\net40\DevelopersDo.DataAnnotations.dll</HintPath>
     </Reference>
@@ -285,6 +288,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Clases\AuthRepository.cs" />
+    <Compile Include="Clases\AutoMapperConfiguration.cs" />
     <Compile Include="Clases\Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Clases\Startup.cs" />
     <Compile Include="Clases\Utilidades.cs" />

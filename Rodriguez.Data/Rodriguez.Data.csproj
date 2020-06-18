@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="DevelopersDo.DataAnnotations, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DevelopersDo.DataAnnotations.1.0.1.0\lib\net40\DevelopersDo.DataAnnotations.dll</HintPath>
     </Reference>
@@ -101,6 +104,9 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -127,6 +133,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\TasaDTO.cs" />
     <Compile Include="Migrations\201911221929023_init.cs" />
     <Compile Include="Migrations\201911221929023_init.Designer.cs">
       <DependentUpon>201911221929023_init.cs</DependentUpon>
