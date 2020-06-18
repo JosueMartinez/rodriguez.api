@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using AutoMapper;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
@@ -31,6 +32,10 @@ namespace rodriguez.api.Clases
             builder.RegisterType<RodriguezModel>().InstancePerLifetimeScope();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<BonoService>().As<IBonoService>();
+
+            //automapper
+            builder.Register<IConfigurationProvider>(ctx => new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperConfiguration()))).SingleInstance();
+            builder.Register<IMapper>(ctx => new Mapper(ctx.Resolve<IConfigurationProvider>(), ctx.Resolve)).SingleInstance();
 
             #endregion
 
