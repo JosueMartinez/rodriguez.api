@@ -13,6 +13,9 @@ namespace rodriguez.api.Clases
             CreateMap<TasaMoneda, TasaDto>()
                 .ForMember(dest => dest.Simbolo, opt => opt.MapFrom(src => src.Moneda.Simbolo))
                 .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => src.Moneda.Descripcion));
+
+            CreateMap<Usuario, UsuarioDto>()
+                .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.rol.Descripcion));
         }
 
     }

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using rodriguez.api.Clases;
+using Rodriguez.Data.DTOs;
 using Rodriguez.Data.Models;
 using Rodriguez.Repo;
 using Rodriguez.Repo.Interfaces;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -20,18 +23,22 @@ namespace rodriguez.api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly AuthRepository _repo = null;
         private readonly RodriguezModel _db;
+        private readonly IMapper _Mapper;
 
-        public UsuariosController(IUnitOfWork unitOfWork, RodriguezModel db)
+        public UsuariosController(IUnitOfWork unitOfWork, RodriguezModel db, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _repo = new AuthRepository();
             _db = db;
+            _Mapper = mapper;
         }
 
         // GET: api/Usuarios
         public IEnumerable GetUsuarios()
         {
-            return _unitOfWork.UsuariosCustom.GetUsuariosDetails();
+            var usuarios = _unitOfWork.UsuariosCustom.GetUsuariosDetails();
+
+            return _Mapper.Map<IEnumerable<UsuarioDto>>(usuarios);
         }
 
         // GET: api/Usuarios/5
