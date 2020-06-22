@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{039EC83D-F7BE-47F6-B590-C784D6BD06DD}</ProjectGuid>
+    <ProjectGuid>{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rodriguez.Services</RootNamespace>
-    <AssemblyName>Rodriguez.Services</AssemblyName>
+    <RootNamespace>Rodriguez.Common</RootNamespace>
+    <AssemblyName>Rodriguez.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,23 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BonoService.cs" />
-    <Compile Include="Interfaces\IBonoService.cs" />
+    <Compile Include="Utilidades.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Rodriguez.Common\Rodriguez.Common.csproj">
-      <Project>{cce3e1d7-f28f-4aea-a19b-ea615276deb7}</Project>
-      <Name>Rodriguez.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rodriguez.Data\Rodriguez.Data.csproj">
-      <Project>{D7AF6AC1-82FB-44FC-9BF0-061E7CD88A6F}</Project>
-      <Name>Rodriguez.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rodriguez.Repo\Rodriguez.Repo.csproj">
-      <Project>{2D927161-371E-4B0E-962D-622F31E70290}</Project>
-      <Name>Rodriguez.Repo</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

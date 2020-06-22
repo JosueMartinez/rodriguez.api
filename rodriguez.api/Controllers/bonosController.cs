@@ -1,11 +1,11 @@
 ﻿using Rodriguez.Data.Models;
+using Rodriguez.Data.Utils;
 using Rodriguez.Services.Interfaces;
 using System;
 using System.Collections;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
-using static Rodriguez.Data.Utils.Constants;
 
 namespace rodriguez.api.Controllers
 {

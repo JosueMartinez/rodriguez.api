@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BonoRepository.cs" />
+    <Compile Include="Interfaces\IBonoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ITasaRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -91,6 +93,10 @@
     <Compile Include="UsuarioRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rodriguez.Common\Rodriguez.Common.csproj">
+      <Project>{cce3e1d7-f28f-4aea-a19b-ea615276deb7}</Project>
+      <Name>Rodriguez.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rodriguez.Data\Rodriguez.Data.csproj">
       <Project>{d7af6ac1-82fb-44fc-9bf0-061e7cd88a6f}</Project>
       <Name>Rodriguez.Data</Name>

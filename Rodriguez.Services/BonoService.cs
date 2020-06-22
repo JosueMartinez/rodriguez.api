@@ -2,38 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Rodriguez.Common;
 using Rodriguez.Data.Models;
+using Rodriguez.Data.Utils;
 using Rodriguez.Repo;
 using Rodriguez.Services.Interfaces;
-using static Rodriguez.Data.Utils.Constants;
 
 namespace Rodriguez.Services
 {
     public class BonoService : IBonoService
     {
         private readonly RodriguezModel _db;
-        private readonly Repository<Bono> bonoRepo;
+        //private readonly Repository<Bono> bonoRepo;
+        private readonly BonoRepository bonoRepo;
 
         public BonoService(RodriguezModel db)
         {
             _db = db;
-            bonoRepo = new Repository<Bono>(_db);
+            bonoRepo = new BonoRepository();
         }
 
         public Bono AddBono(Bono bono)
         {
-            try
-            {
                 InflateNewBono(bono);
                 bonoRepo.Insert(bono);
                 bonoRepo.Save();
-                return bono;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
 
+                return bono;
         }
 
         private void InflateNewBono(Bono bono)
@@ -57,9 +52,9 @@ namespace Rodriguez.Services
 
         public IEnumerable Get(EstadosBonos estado)
         {
-            return bonoRepo.Get()
-                    .Where(x => x.EstadoBono.Descripcion.Equals(estado))
-                    .OrderByDescending(p => p.FechaCompra);
+            return bonoRepo.Get(estado);
+                    //.Where(x => x.EstadoBono.Id.Equals(getEstadoId(estado)))
+                    //.OrderByDescending(p => p.FechaCompra);
         }
 
         public Bono Get(int id)

@@ -1,6 +1,6 @@
 ﻿using Rodriguez.Data.Models;
+using Rodriguez.Data.Utils;
 using System.Collections;
-using static Rodriguez.Data.Utils.Constants;
 
 namespace Rodriguez.Services.Interfaces
 {
