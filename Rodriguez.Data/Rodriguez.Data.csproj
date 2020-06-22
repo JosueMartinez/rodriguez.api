@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\TasaDTO.cs" />
+    <Compile Include="DTOs\UsuarioDto.cs" />
     <Compile Include="Migrations\201911221929023_init.cs" />
     <Compile Include="Migrations\201911221929023_init.Designer.cs">
       <DependentUpon>201911221929023_init.cs</DependentUpon>

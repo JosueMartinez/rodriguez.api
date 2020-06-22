@@ -12,7 +12,11 @@ namespace rodriguez.api.Clases
         {
             CreateMap<TasaMoneda, TasaDto>()
                 .ForMember(dest => dest.Simbolo, opt => opt.MapFrom(src => src.Moneda.Simbolo))
-                .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => src.Moneda.Descripcion));
+                .ForMember(dest => dest.Moneda, opt => opt.MapFrom(src => src.Moneda.Descripcion))
+                .ForMember(dest => dest.MonedaId, opt => opt.MapFrom(src => src.Moneda.Id));
+
+            CreateMap<Usuario, UsuarioDto>()
+                .ForMember(dest => dest.Rol, opt => opt.MapFrom(src => src.rol.Descripcion));
         }
 
     }

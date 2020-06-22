@@ -15,16 +15,18 @@ namespace Rodriguez.Repo
 
         public void DisableTasa(int monedaId)
         {
-            var Tasas = _db.TasasMonedas.Where(x => x.Moneda.Id == (monedaId));
+            var Tasas = _db.TasasMonedas.Where(x => x.Moneda.Id == monedaId && x.Activa);
             Tasas.ForEachAsync((TasaMoneda t) => {
                 t.Activa = false;
                 _db.Entry(t).State = EntityState.Modified;
             });
+
+            _db.SaveChanges();
         }
 
         public IEnumerable GetHistorial(int monedaId)
         {
-            return _db.TasasMonedas.Where(x => x.MonedaId == monedaId).OrderByDescending(x => x.Fecha).Take(10);
+            return _db.TasasMonedas.Include(x => x.Moneda).Where(x => x.MonedaId == monedaId).OrderByDescending(x => x.Fecha).Take(10);
         }
 
         public TasaMoneda GetTasaMoneda(string simbolo)
