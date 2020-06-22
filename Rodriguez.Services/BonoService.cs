@@ -53,8 +53,6 @@ namespace Rodriguez.Services
         public IEnumerable Get(EstadosBonos estado)
         {
             return bonoRepo.Get(estado);
-                    //.Where(x => x.EstadoBono.Id.Equals(getEstadoId(estado)))
-                    //.OrderByDescending(p => p.FechaCompra);
         }
 
         public Bono Get(int id)
