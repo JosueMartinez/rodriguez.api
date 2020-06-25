@@ -23,7 +23,10 @@ namespace rodriguez.api.Clases
                 .ForMember(dest => dest.Remitente, opt => opt.MapFrom(src => src.Cliente.NombreCompleto))
                 .ForMember(dest => dest.EstadoBono, opt => opt.MapFrom(src => src.EstadoBono.Descripcion))
                 .ForMember(dest => dest.SimboloMonedaOriginal, opt => opt.MapFrom(src => src.Tasa.Moneda.Simbolo))
-                .ForMember(dest => dest.Tasa, opt => opt.MapFrom(src => src.Tasa.Valor));
+                .ForMember(dest => dest.Tasa, opt => opt.MapFrom(src => src.Tasa.Valor))
+                .ForMember(dest => dest.CedulaRemitente, opt => opt.MapFrom(src => src.Cliente.Cedula))
+                .ForMember(dest => dest.telefonoRemitente, opt => opt.MapFrom(src => src.Cliente.Celular))
+                .ForMember(dest => dest.TelefonoDestino, opt => opt.MapFrom(src => src.TelefonoDestino));
         }
 
     }

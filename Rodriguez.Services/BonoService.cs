@@ -85,10 +85,10 @@ namespace Rodriguez.Services
         private void SetBonoPagado(Bono bono)
         {
             var estadosRepo = new Repository<EstadoBono>(_db);
-            var estadoCobrado = estadosRepo.Get().FirstOrDefault(x => x.Descripcion.Equals(EstadosBonos.Cobrado));
+            var estadoCobradoId = getEstadoId(EstadosBonos.Cobrado);  //estadosRepo.Get().FirstOrDefault(x => x.Descripcion.Equals(EstadosBonos.Cobrado));
 
-            if (estadoCobrado != null)
-                bono.EstadoBonoId = estadoCobrado.Id;
+            //if (estadoCobradoId != null)
+                bono.EstadoBonoId = estadoCobradoId;
         }
 
         private void CrearHistorialBonoPagado(int bonoId)
@@ -111,7 +111,7 @@ namespace Rodriguez.Services
             var estadosRepo = new Repository<EstadoBono>(_db);
 
             int id = 0;
-            var est = estadosRepo.Get().FirstOrDefault(x => x.Descripcion.Equals(estado));
+            var est = estadosRepo.Get().FirstOrDefault(x => x.Descripcion.Equals(estado.GetDescription()));
             if (est != null)
                 id = est.Id;
 

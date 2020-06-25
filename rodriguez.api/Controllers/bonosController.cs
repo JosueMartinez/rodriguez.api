@@ -45,13 +45,13 @@ namespace rodriguez.api.Controllers
         [ResponseType(typeof(Bono))]
         public IHttpActionResult GetBono(int id)
         {
-            Bono Bono = _bonoService.Get(id);
-            if (Bono == null)
+            var bono = _bonoService.Get(id);
+            if (bono == null)
             {
                 return NotFound();
             }
 
-            return Ok(Bono);
+            return Ok(_Mapper.Map<BonoDetailDto>(bono));
         }
 
         // GET: api/Cliente/1/Bonos
