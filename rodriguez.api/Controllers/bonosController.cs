@@ -1,8 +1,11 @@
-﻿using Rodriguez.Data.Models;
+﻿using AutoMapper;
+using Rodriguez.Data.DTOs;
+using Rodriguez.Data.Models;
 using Rodriguez.Data.Utils;
 using Rodriguez.Services.Interfaces;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -13,36 +16,42 @@ namespace rodriguez.api.Controllers
     public class BonosController : ApiController
     {
         private readonly IBonoService _bonoService;
+        private readonly IMapper _Mapper;
 
-        public BonosController(IBonoService bonoService)
+        public BonosController(IBonoService bonoService, IMapper mapper)
         {
             _bonoService = bonoService;
+            _Mapper = mapper;
         }
 
         // GET: api/Bonos
         public IEnumerable GetBonos()
-        {            
-            return _bonoService.Get(EstadosBonos.Comprado);
+        { 
+            var bonos = _bonoService.Get(EstadosBonos.Comprado);
+
+            return _Mapper.Map<IEnumerable<BonoDetailDto>>(bonos);
         }
 
         [Route("api/BonosPagados")]
         [HttpGet]
         public IEnumerable GetBonosPagados()
         {
-            return _bonoService.Get(EstadosBonos.Cobrado);
+            var bonos = _bonoService.Get(EstadosBonos.Cobrado);
+
+            return _Mapper.Map<IEnumerable<BonoDetailDto>>(bonos);
         }
 
         // GET: api/Bonos/5
         [ResponseType(typeof(Bono))]
         public IHttpActionResult GetBono(int id)
         {
-            Bono Bono = _bonoService.Get(id);
-            if (Bono == null)
+            var bono = _bonoService.Get(id);
+            if (bono == null)
             {
                 return NotFound();
             }
 
-            return Ok(Bono);
+            return Ok(_Mapper.Map<BonoDetailDto>(bono));
         }
 
         // GET: api/Cliente/1/Bonos
