@@ -8,6 +8,7 @@ namespace Rodriguez.Repo
         private readonly RodriguezModel _db;
         private Repository<TasaMoneda> _tasas;
         private TasaRepository _tasasCustom;
+        private BonoRepository _bonosCustom;
         private Repository<Usuario> _usuarios;
         private UsuarioRepository _usuariosCustom;
         private Repository<Cliente> _clientes;
@@ -94,6 +95,15 @@ namespace Rodriguez.Repo
                 return _tasasCustom ?? (_tasasCustom = new TasaRepository());
             }
         }
+
+        public BonoRepository BonosCustom
+        {
+            get
+            {
+                return _bonosCustom ?? (_bonosCustom = new BonoRepository());
+            }
+        }
+
 
         public UsuarioRepository UsuariosCustom
         {

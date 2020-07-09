@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Repo", "Rodriguez
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Services", "Rodriguez.Services\Rodriguez.Services.csproj", "{039EC83D-F7BE-47F6-B590-C784D6BD06DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rodriguez.Common", "Rodriguez.Common\Rodriguez.Common.csproj", "{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{039EC83D-F7BE-47F6-B590-C784D6BD06DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE3E1D7-F28F-4AEA-A19B-EA615276DEB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

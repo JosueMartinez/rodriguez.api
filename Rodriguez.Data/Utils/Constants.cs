@@ -2,16 +2,13 @@
 
 namespace Rodriguez.Data.Utils
 {
-    public static class Constants
+    public enum EstadosBonos
     {
-        public enum EstadosBonos
-        {
-            [Description("Comprado")]
-            Comprado,
-            [Description("Cobrado")]
-            Cobrado,
-            [Description("Cancelado")]
-            Cancelado
-        }
+        [Description("Comprado")]
+        Comprado,
+        [Description("Cobrado")]
+        Cobrado,
+        [Description("Cancelado")]
+        Cancelado
     }
 }

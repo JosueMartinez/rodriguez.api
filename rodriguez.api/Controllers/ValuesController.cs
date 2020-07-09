@@ -1,4 +1,4 @@
-﻿using rodriguez.api.Clases;
+﻿using Rodriguez.Common;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -16,7 +16,7 @@ namespace rodriguez.api.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return Utilidades.capitalize("value");
+            return Utilidades.Capitalize("value");
         }
 
         // POST api/values

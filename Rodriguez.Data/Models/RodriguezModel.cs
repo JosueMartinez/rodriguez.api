@@ -33,10 +33,4 @@ namespace Rodriguez.Data.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
-
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

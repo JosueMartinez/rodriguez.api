@@ -7,6 +7,7 @@ namespace Rodriguez.Repo.Interfaces
     {
         IRepository<TasaMoneda> Tasas { get; }
         TasaRepository TasasCustom { get; }
+        BonoRepository BonosCustom { get; }
         IRepository<Usuario> Usuarios { get; }
         UsuarioRepository UsuariosCustom { get; }
         IRepository<Cliente> Clientes { get; }
