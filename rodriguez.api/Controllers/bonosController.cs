@@ -60,7 +60,8 @@ namespace rodriguez.api.Controllers
         [HttpGet]
         public IEnumerable GetBonoCliente(int ClienteId)
         {
-            return _bonoService.GetBonosCliente(ClienteId);
+            var bonos = _bonoService.GetBonosCliente(ClienteId);
+            return _Mapper.Map<IEnumerable<BonoDetailDto>>(bonos);
         }
 
         // PUT: api/Bonos/5/pagar

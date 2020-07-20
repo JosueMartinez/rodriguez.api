@@ -32,6 +32,17 @@ namespace Rodriguez.Repo
                 .Include(x => x.Tasa.Moneda)
                 .FirstOrDefault(x => x.Id.Equals(id));
         }
+
+        public IEnumerable GetClient(int clientId)
+        {
+            return _db.Bonos
+                .Include(x => x.EstadoBono)
+                .Include(x => x.Cliente)
+                .Include(x => x.Tasa)
+                .Include(x => x.Tasa.Moneda)
+                .Where(x => x.ClienteId.Equals(clientId))
+                .OrderByDescending(x => x.FechaCompra);
+        }
     }
 }
 

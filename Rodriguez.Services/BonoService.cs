@@ -62,9 +62,7 @@ namespace Rodriguez.Services
 
         public IEnumerable GetBonosCliente(int clientId)
         {
-            return bonoRepo.Get()
-                .Where(x => x.ClienteId == clientId)
-                .OrderByDescending(x => x.FechaCompra);
+            return bonoRepo.GetClient(clientId);
         }
 
         public void PagarBono(int bonoId)
