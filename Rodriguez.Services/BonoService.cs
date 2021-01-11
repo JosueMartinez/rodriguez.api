@@ -13,7 +13,6 @@ namespace Rodriguez.Services
     public class BonoService : IBonoService
     {
         private readonly RodriguezModel _db;
-        //private readonly Repository<Bono> bonoRepo;
         private readonly BonoRepository bonoRepo;
 
         public BonoService(RodriguezModel db)
